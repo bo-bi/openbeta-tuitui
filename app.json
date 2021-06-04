@@ -1,0 +1,9 @@
+{
+  "appId": "7777777",
+  "pages": [
+    "pages/home/index"
+  ],
+  "window": {
+    "navigationBarTitleText": "360 小程序"
+  }
+}

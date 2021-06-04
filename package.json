@@ -1,0 +1,17 @@
+{
+  "name": "openbeta-tuitui",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "serve": "umapp-cli-service serve",
+    "build": "umapp-cli-service build",
+    "bundle": "npm run build && umapp-cli-service archive",
+    "debug": "adb-binary",
+    "debug:off": "adb-binary kill",
+    "debug-pc": "miniapp-devtools"
+  },
+  "devDependencies": {
+    "@q/umapp-cli-service": "^1.0.26",
+    "postcss-px-to-viewport": "^1"
+  }
+}
