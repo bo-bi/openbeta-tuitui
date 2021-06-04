@@ -1,0 +1,88 @@
+.convention {
+  padding: 30px 42px 192px 44px;
+
+  .van-skeleton {
+    padding: 0;
+    margin-top: 10px;
+  }
+
+  .title {
+    font-size: 30px;
+    font-weight: 500;
+    color: #181818;
+    text-align: center;
+    letter-spacing: 1px;
+  }
+
+  ::v-deep(.content) {
+    font-size: 24px;
+    color: #242424;
+    line-height: 32px;
+    overflow: hidden;
+
+    a {
+      color: #4486DD;
+      background: none !important;
+    }
+
+    p, span, div, b, strong, i, h1, h2, h3, h4, h5, h6, font {
+      padding: 0 !important;
+      margin: 0 !important;
+      // font-family: "PingFangSC-Regular", "PingFang SC" !important;
+      // font-size: 0.28rem !important;
+      // color: rgba(51, 55, 65, 0.9) !important;
+      // line-height: 0.52rem !important;
+      text-indent: 0 !important;
+      text-decoration: none !important;
+      // 允许长串字母或者数字换行
+      word-wrap: break-word;
+    }
+
+    img {
+      display: block;
+      margin: 10px auto;
+    }
+  }
+
+  .confirm,
+  .bottom-button {
+    position: fixed;
+    left: 50%;
+    bottom: 30px;
+    width: 690px;
+    height: 88px;
+    margin-left: -345px;
+    font-size: 34px;
+    color: #FFF;
+    line-height: 88px;
+
+    &.confirm {
+      text-align: center;
+      background-color: #F5222D;
+      border-radius: 8px;
+    }
+
+    &.bottom-button {
+      display: flex;
+
+      .cancel,
+      .sign-up {
+        width: 50%;
+        height: 100%;
+        text-align: center;
+      }
+
+      .cancel {
+        background-color: #3873FA;
+        border-top-left-radius: 8px;
+        border-bottom-left-radius: 8px;
+      }
+
+      .sign-up {
+        background-color: #F5222D;
+        border-top-right-radius: 8px;
+        border-bottom-right-radius: 8px;
+      }
+    }
+  }
+}

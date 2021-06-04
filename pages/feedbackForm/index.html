@@ -1,0 +1,24 @@
+<div class="feedback-form">
+  <input class="name" type="text" v-model="form.name" placeholder="请输入标题" />
+
+  <div class="editor-wrapper">
+    <QuillEditor
+      class="custom-editor"
+      ref="customEditor"
+      :options="options"
+      contentType="html"
+      v-model:content="form.content"
+      @ready="handleReady"
+    >
+    </QuillEditor>
+  </div>
+
+  <van-button
+    class="submit"
+    :loading="submitLoading"
+    loading-text="提交中..."
+    @click="handleSubmit"
+  >
+    提交
+  </van-button>
+</div>

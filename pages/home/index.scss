@@ -1,0 +1,33 @@
+@import '/common/variables';
+
+.home {
+  .banner-container {
+    .van-skeleton {
+      padding: 0;
+
+      ::v-deep(.van-skeleton__row) {
+        height: 330px;
+        background-color: #F2F3F5;
+      }
+    }
+  }
+
+  .box {
+    width: 92px;
+    height: 46px;
+    // background-color: $main-color;
+  }
+
+  .test-box {
+    z-index: 100;
+    position: relative;
+    width: 100px;
+    height: 50px;
+    background-color: red;
+  }
+
+  .text {
+    width: 300px;
+    @include text-overflow-line(2);
+  }
+}

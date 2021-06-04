@@ -13,5 +13,10 @@
   "devDependencies": {
     "@q/umapp-cli-service": "^1.0.26",
     "postcss-px-to-viewport": "^1"
+  },
+  "dependencies": {
+    "@vueup/vue-quill": "^1.0.0-beta.7",
+    "vant": "^3.1.5",
+    "vconsole": "^3.8.1"
   }
 }

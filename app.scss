@@ -1,4 +1,81 @@
-body {
+@import '/common/reset', '/common/variables';
+
+p {
   margin: 0;
-  font-family: sans-serif;
+}
+
+.pull-left {
+  float: left;
+}
+
+.pull-right {
+  float: right;
+}
+
+.clearfix {
+  &:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+  }
+}
+
+.empty {
+  // position: absolute;
+  // top: 0;
+  // right: 0;
+  // bottom: 0;
+  // left: 0;
+  // background-color: #FFF;
+
+  .van-empty {
+    margin-top: 40%;
+
+    .van-empty__bottom {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 0;
+
+      .description {
+        font-size: 32px;
+        color: #969799;
+      }
+
+      .bottom-button {
+        width: 200px;
+        height: 68px;
+        margin-top: 20px;
+        font-size: 30px;
+        font-weight: 500;
+        color: #FFF;
+        line-height: 68px;
+        text-align: center;
+        background: linear-gradient(225deg, #7787FF 0%, #1869FF 100%);
+        border-radius: 12px;
+      }
+    }
+  }
+}
+
+.flex-center {
+  @include flex-center();
+}
+
+.flex-between {
+  @include flex-between();
+}
+
+.text-overflow-ellipsis {
+  @include text-overflow-line(1);
+}
+
+.center-item {
+  @include center-item();
+}
+
+.center-block {
+  @include center-block();
 }

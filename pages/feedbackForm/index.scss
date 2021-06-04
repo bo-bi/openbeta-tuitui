@@ -1,0 +1,76 @@
+.feedback-form {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding-top: 30px;
+  overflow: hidden;
+
+  input.name {
+    width: 88%;
+    margin-left: 30px;
+    padding-left: 0;
+    padding-bottom: 30px;
+    font-size: 30px;
+    line-height: 42px;
+    background-color: #EFEFEF;
+    border: none;
+    border-bottom: 4px solid #BDBDBD;
+    border-radius: 0;
+
+    &::placeholder {
+      color: #A5A5A5;
+    }
+  }
+
+  .editor-wrapper {
+    // 限制内容区高度
+    height: calc(100% - 320px);
+
+    // 工具栏
+    ::v-deep(.ql-toolbar.ql-snow) {
+      border: none;
+      padding-top: 30px;
+      padding-bottom: 30px;
+    }
+
+    // 内容区
+    ::v-deep(.custom-editor) {
+      border-color: #EFEFEF;
+      // 解决ios编辑器不可输入
+      -webkit-user-select: text;
+
+      .ql-editor {
+        padding-top: 0;
+        padding-bottom: 0;
+
+        &::before {
+          color: #A5A5A5;
+        }
+      }
+    }
+  }
+
+  .submit {
+    position: fixed;
+    left: 50%;
+    // 写bottom 安卓ios 底部按钮都会在上面, 键盘弹起后底部不会有空白, 不用做兼容
+    // top: calc(100% - 118px);
+    bottom: 20px;
+    width: 690px;
+    height: 88px;
+    margin-left: -345px;
+    font-size: 34px;
+    color: #FFF;
+    line-height: 88px;
+    text-align: center;
+    background-color: #3873FA;
+    border-radius: 8px;
+
+    // 不用固定定位, 用margin的方式, 安卓不会弹起按钮, 但是还需要判断安卓键盘弹起的时候, 隐藏元素
+    // margin: 140px auto 0;
+    // z-index: 1;
+    // position: relative;
+  }
+}

@@ -1,0 +1,299 @@
+<div class="empty" v-if="isShowEmpty">
+  <van-empty>
+    <p class="description">活动不存在或下线</p>
+    <div class="bottom-button" @click="handleGoToHomePage">返回首页</div>
+  </van-empty>
+</div>
+
+<div class="activity" v-else>
+  <div class="banner-container">
+    <van-skeleton
+      row="1"
+      row-width="['100%']"
+      :loading="!Object.keys(activityDetail).length"
+    >
+      <banner :list="imageList" />
+    </van-skeleton>
+  </div>
+
+  <div class="basic">
+    <van-skeleton
+      title
+      :row="2"
+      :loading="!Object.keys(activityDetail).length"
+    >
+
+      <div class="info">
+        <p class="title text-overflow-ellipsis">
+          {{ activityDetail.name }}
+        </p>
+
+        <p class="time-remaining">
+          <span>{{ currentActivityState.detailTimeName }}：</span>
+          <b>{{ activityDetail.due_time }}</b>
+        </p>
+
+        <p class="number">
+          <span class="recruit-number">招募人数：{{ activityDetail.recruit }}</span>
+          <span class="split">｜</span>
+          <span class="signed-up-number">已报名：{{ activityDetail.reg_count }}</span>
+        </p>
+      </div>
+
+      <van-button
+        class="follow-button"
+        :loading="followLoading"
+        loading-text="更改中..."
+        @click="handleUpdateFollowStatus"
+      >
+        <div
+          class="flex-center"
+          :class="{ followed: activityDetail.attention_status === 2 }"
+        >
+          <span class="heart"></span>
+          {{ activityDetail.attention_status === 2 ? '已经关注' : '关注活动' }}
+        </div>
+      </van-button>
+    </van-skeleton>
+  </div>
+
+  <div class="steps block">
+    <van-skeleton
+      title
+      :row="1"
+      row-width="95%"
+      :loading="!Object.keys(activityDetail).length"
+    >
+
+      <p class="primary-title">活动流程</p>
+
+      <ul class="list">
+        <li class="item">
+          <span>1</span>
+          活动报名
+        </li>
+
+        <li class="item">
+          <span>2</span>
+          报名筛选
+        </li>
+
+        <li class="item">
+          <span>3</span>
+          产品内测
+        </li>
+
+        <li class="item">
+          <span>4</span>
+          活动奖励
+        </li>
+      </ul>
+
+    </van-skeleton>
+  </div>
+
+  <div class="rules block">
+    <van-skeleton
+      title
+      :row="10"
+      :loading="!Object.keys(activityDetail).length"
+    >
+      <p class="primary-title">活动规则</p>
+
+      <div class="content" v-html="activityDetail.content"></div>
+    </van-skeleton>
+  </div>
+
+  <div
+    class="signed-up block"
+    v-if="
+      Object.keys(activityDetail).length &&
+      [3, 4, 5, 6].includes(activityDetail.status)
+    "
+  >
+    <van-skeleton
+      title
+      :row="2"
+      :loading="!Object.keys(activityDetail).length && !signedUpUserListLoading"
+    >
+      <p class="primary-title">已报名</p>
+
+      <template v-if="signedUpUserList.length">
+        <ul class="list">
+          <li class="item" v-for="(item, index) in signedUpUserList" :key="index">
+            <img class="avatar" :src="item.avatar_url || defaultAvatar" />
+          </li>
+        </ul>
+
+        <p class="number">等{{ activityDetail.reg_count }}人</p>
+      </template>
+
+      <template v-else>
+        <p class="empty-text">名单待公布</p>
+      </template>
+    </van-skeleton>
+  </div>
+
+  <!-- <div
+    class="filter-passed block"
+    v-if="
+      Object.keys(activityDetail).length &&
+      [4, 5, 6].includes(activityDetail.status)
+    "
+  >
+    <van-skeleton
+      title
+      :row="2"
+      :loading="!Object.keys(activityDetail).length"
+    >
+      <p class="primary-title">筛选通过</p>
+
+      <ul class="list clearfix">
+        <li class="item pull-left" v-for="(item, index) in filterPassedUserList" :key="index">
+          <img class="avatar" :src="item.image || defaultAvatar" />
+        </li>
+
+        <van-button
+          v-if="filterPassedUserListHasMore"
+          class="load-more"
+          :loading="filterPassedUserListLoading"
+          loading-text="加载中..."
+          @click="getList"
+        >
+          <div class="flex-center">
+            点击加载
+            <div class="triangle-down"></div>
+          </div>
+        </van-button>
+
+      </ul>
+    </van-skeleton>
+  </div> -->
+
+  <!-- 筛选通过 start -->
+  <div
+    class="filter-passed block"
+    v-if="
+      Object.keys(activityDetail).length &&
+      [4, 5, 6].includes(activityDetail.status)
+    "
+  >
+    <van-skeleton
+      title
+      :row="2"
+      :loading="!Object.keys(activityDetail).length && !filterPassedUserListLoading"
+    >
+      <p class="primary-title">筛选通过</p>
+
+      <template v-if="filterPassedUserList.length">
+        <ul class="list clearfix">
+          <li
+            class="item pull-left"
+            v-for="(item, index) in filterPassedUserList"
+            :key="index"
+          >
+            <img class="avatar" :src="item.avatar_url || defaultAvatar" />
+          </li>
+
+          <van-button
+            v-if="filterPassedUserListHasMore"
+            class="load-more"
+            :loading="filterPassedUserListLoading"
+            loading-text="加载中..."
+            @click="getActivityFilterPassedUserList"
+          >
+            <div class="flex-center">
+              点击加载
+              <div class="triangle-down"></div>
+            </div>
+          </van-button>
+
+        </ul>
+      </template>
+
+      <template v-else>
+        <p class="empty-text">名单待公布</p>
+      </template>
+    </van-skeleton>
+  </div>
+  <!-- 筛选通过 end -->
+
+  <!-- <div class="contribution-list block" v-if="[4, 5, 6].includes(activityDetail.status)">
+    <van-skeleton
+      title
+      :row="6"
+      :loading="!Object.keys(activityDetail).length"
+    >
+      <p class="primary-title">产品体验贡献榜</p>
+
+      <ul class="list clearfix">
+        <li class="item pull-left" v-for="(item, index) in 16" :key="index">
+          <span>
+            <img class="avatar" src="https://avatars.githubusercontent.com/u/35414619?s=88&u=a88114e67bf3c874c64ad0cb976526182972f614&v=4" />
+          </span>
+          <p>12</p>
+        </li>
+      </ul>
+    </van-skeleton>
+  </div> -->
+
+  <!-- 产品体验贡献榜 start -->
+  <div
+    class="contribution-list block"
+    v-if="
+      Object.keys(activityDetail).length &&
+      [4, 5, 6].includes(activityDetail.status)
+    "
+  >
+    <van-skeleton
+      title
+      :row="6"
+      :loading="!Object.keys(activityDetail).length"
+    >
+      <p class="primary-title">产品体验贡献榜</p>
+
+      <template v-if="contributionUserList.length">
+        <ul class="list clearfix">
+          <li
+            class="item pull-left"
+            v-for="(item, index) in contributionUserList"
+            :key="index"
+          >
+            <span>
+              <img class="avatar" :src="item.avatar_url || defaultAvatar" />
+            </span>
+            <p>{{ item.count }}</p>
+          </li>
+
+          <van-button
+            v-if="contributionUserListHasMore"
+            class="load-more"
+            :loading="contributionUserListLoading"
+            loading-text="加载中..."
+            @click="getActivityContributionList"
+          >
+            <div class="flex-center">
+              点击加载
+              <div class="triangle-down"></div>
+            </div>
+          </van-button>
+
+        </ul>
+      </template>
+
+      <template v-else>
+        <p class="empty-text">榜单待公布</p>
+      </template>
+    </van-skeleton>
+  </div>
+  <!-- 产品体验贡献榜 end -->
+
+  <template v-if="activityDetail.reg_status === 2">
+    <div class="state-submit-feedback" @click="handleClickStateButton()">提交反馈</div>
+  </template>
+  <template v-else>
+    <div :class="currentActivityState.type" @click="handleClickStateButton()">
+      {{ currentActivityState.name }}
+    </div>
+  </template>
+</div>

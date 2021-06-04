@@ -1,3 +1,22 @@
-<div class="container">
-  <p>欢迎使用 360 小程序</p>
+<div class="home">
+  <!-- 为了页面刚加载的时候, 列表处于banner下方, 而不从头部加载-->
+  <div class="banner-container">
+    <van-skeleton
+      row="1"
+      row-width="['100%']"
+      :loading="!bannerList.length"
+    >
+      <banner :list="bannerList" />
+    </van-skeleton>
+  </div>
+
+  <ActivityList type="index">
+    <template #empty>
+      <div class="empty">
+        <van-empty style="margin-top: 0;">
+          <p class="description">一大波活动马上上架哦~</p>
+        </van-empty>
+      </div>
+    </template>
+  </ActivityList>
 </div>

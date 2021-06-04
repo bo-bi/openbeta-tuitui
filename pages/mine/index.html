@@ -1,0 +1,73 @@
+<div class="mine">
+  <div class="wall">
+    <van-skeleton
+      title
+      avatar
+      avatar-size="80"
+      :row="1"
+      :loading="Object.keys(myDetail).length <= 0"
+    >
+
+      <div class="basic">
+        <div class="avtar">
+          <img :src="myDetail.avatar_url || defaultAvatar" />
+        </div>
+        <div>
+          <p class="name">{{ myDetail.name }}</p>
+          <p class="number"><span>已参加活动：</span><b>{{ myDetail.act_count }} 场</b></p>
+        </div>
+      </div>
+
+    </van-skeleton>
+  </div>
+
+  <div class="panel-wrapper">
+    <div
+      class="panel"
+      v-for="(panelItem, panelItemIndex) in panelList"
+      :key="panelItemIndex"
+    >
+
+      <van-skeleton
+        title
+        title-width="25%"
+        :row="2"
+        row-width="['100%']"
+        :loading="Object.keys(myDetail).length <= 0"
+      >
+
+        <p class="name">{{ panelItem.name }}</p>
+
+        <ul class="list clearfix">
+          <li
+            class="item"
+            v-for="(item, index) in panelItem.list"
+            :key="index"
+            @click="handleOpen(item)"
+          >
+            <div class="icon">
+              <img :src="item.image" />
+            </div>
+
+            <p>{{ item.name }}</p>
+          </li>
+        </ul>
+
+      </van-skeleton>
+
+    </div>
+  </div>
+</div>
+
+<div style="margin-top: 230px;">
+  <div v-if="Object.keys(myDetail).length > 0">
+    {{ myDetail }}
+    {{ Object.keys(myDetail).length }}
+  </div>
+  <br>
+  <div @click="getToken">获取token</div>
+  <br>
+  <div @click="removeToken">删除token</div>
+  <br>
+  <div @click="setToken">种过期token</div>
+</div>
