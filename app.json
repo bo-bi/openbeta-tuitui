@@ -1,9 +1,29 @@
 {
-  "appId": "7777777",
+  "appId": "7652738368277135",
   "pages": [
-    "pages/home/index"
+    "pages/home/index",
+    "pages/mine/index"
   ],
+  "tabBar": {
+    "color": "#666666",
+    "selectedColor": "#ff0000",
+    "backgroundColor": "#ebfff0",
+    "list": [
+      {
+        "pagePath": "pages/home/index",
+        "text": "首页",
+        "iconPath": "public/images/home@2x.png",
+        "selectedIconPath": "public/images/home_active@2x.png"
+      },
+      {
+        "pagePath": "pages/mine/index",
+        "text": "我的",
+        "iconPath": "public/images/mine@2x.png",
+        "selectedIconPath": "public/images/mine_active@2x.png"
+      }
+    ]
+  },
   "window": {
-    "navigationBarTitleText": "360 小程序"
+    "navigationBarTitleText": "360 内测"
   }
 }
