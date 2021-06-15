@@ -1,0 +1,11 @@
+<div class="router">
+  <h2>路由</h2>
+  <button @click="handleNavigateTo">qh.navigateTo</button>
+  <p>解释： 保留当前页面，跳转到应用内的某个页面，使用 qh.navigateBack 可以返回到原页面。</p>
+
+  <button @click="handleRedirectTo">qh.redirectTo</button>
+  <p>解释： 关闭当前页面，跳转到应用内的某个页面，不会向history栈中添加记录。</p>
+
+  <button @click="handleSwitchTab">qh.switchTab</button>
+  <p>解释： 跳转到 tabBar 页面，并关闭其他所有非 tabBar 页面。</p>
+</div>

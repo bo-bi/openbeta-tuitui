@@ -1,6 +1,9 @@
 {
   "appId": "7652738368277135",
   "pages": [
+    "pages/router/index",
+    "pages/one/index",
+    "pages/jiemian/index",
     "pages/home/index",
     "pages/mine/index"
   ],
