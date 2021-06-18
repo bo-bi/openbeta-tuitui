@@ -1,4 +1,39 @@
-body {
-  margin: 0;
-  font-family: sans-serif;
+@import '/common/reset', '/common/variables';
+
+.pull-left {
+  float: left;
+}
+
+.pull-right {
+  float: right;
+}
+
+.clearfix {
+  &:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+  }
+}
+
+.flex-center {
+  @include flex-center();
+}
+
+.flex-between {
+  @include flex-between();
+}
+
+.text-overflow-ellipsis {
+  @include text-overflow-line(1);
+}
+
+.center-item {
+  @include center-item();
+}
+
+.center-block {
+  @include center-block();
 }
