@@ -13,5 +13,8 @@
   "devDependencies": {
     "@q/umapp-cli-service": "^1.0.26",
     "postcss-px-to-viewport": "^1"
+  },
+  "dependencies": {
+    "vant": "^3.1.0-beta.0"
   }
 }
