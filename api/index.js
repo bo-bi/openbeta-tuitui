@@ -9,6 +9,10 @@ const getCircleInfo = (data) => {
   return post('http://qaapiclub.bbs.360.cn/api/page/getcircleinfo', data);
 }
 
+const getBanner = (data) => {
+  return post('http://qaapiclub.bbs.360.cn/api/page/pagebanner', data);
+}
+
 // 小程序有专门上传文件的api, 不用调用接口
 const upload = (data) => {
   return post('http://inn.qiwoo.org/api/uploadfile', data);
@@ -17,5 +21,7 @@ const upload = (data) => {
 export {
   getShareInfo,
   getCircleInfo,
+  getBanner,
+
   upload,
 }
