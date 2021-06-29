@@ -1,7 +1,30 @@
+@import '/common/variables';
+
 .home {
+  .banner-skeleton {
+    // padding: 0;
+  }
+
+  .banner-wrapper {
+    background-color: $skeleton-background-color;
+  }
+
   .box {
     width: 92px;
     height: 46px;
-    background-color: pink;
+    // background-color: $main-color;
+  }
+
+  .test-box {
+    z-index: 100;
+    position: relative;
+    width: 100px;
+    height: 50px;
+    background-color: red;
+  }
+
+  .text {
+    width: 300px;
+    @include text-overflow-line(2);
   }
 }

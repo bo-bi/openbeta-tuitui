@@ -1,4 +1,13 @@
+// 这里会转化为vw
 /* 添加这段样式后，Primary Button 会变成红色 */
 :root {
   --van-button-primary-background-color: red !important;
+
+  /* 下拉加载列表 */
+  /* 控制 “没有更多了” 文案, 不能控制 “加载中...” 文案*/
+  // --van-list-text-color: pink !important;
+  --van-list-text-font-size: 30px !important;
+  --van-list-text-line-height: 100px !important;
+  /* 加载中... 左侧的圆圈 */
+  --van-list-loading-icon-size: 45px !important;
 }

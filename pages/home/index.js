@@ -1,15 +1,24 @@
 // 此处引入一次, 所有页面无需再按需引入所使用组件的样式
 import 'vant/lib/index.css';
-import Banner   from '/components/Banner.vue'
-import * as api from '/api/index.js'
+import Banner    from '/components/Banner.vue'
+import AlphaList from '/components/AlphaList.vue'
+import * as api  from '/api'
+import { Button } from 'vant'
+import { Tag } from 'vant';
+import { Skeleton } from 'vant';
 
 Page({
   components: {
     Banner,
+    AlphaList,
+    [Button.name]: Button,
+    [Tag.name]: Tag,
+    [Skeleton.name]: Skeleton,
   },
 
   data() {
     return {
+      bannerSkeletonLoading: true,
       bannerList: [],
     }
   },
@@ -58,6 +67,7 @@ Page({
       })
         .then(data => {
           this.bannerList = data;
+          this.bannerSkeletonLoading = false;
         });
     },
   },

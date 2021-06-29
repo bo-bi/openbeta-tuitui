@@ -38,6 +38,7 @@ export default {
     // width、height 不要加 px
     height: {
       type: Number,
+      // 只能是px, vant组件内部转化不了vw
       default: 160,
     },
 

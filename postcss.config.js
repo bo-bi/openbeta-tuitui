@@ -6,6 +6,7 @@ module.exports = {
     }),
     require("postcss-px-to-viewport")({
       viewportWidth: 750,
+      // viewportWidth: 375,
       include: [/node_modules/],
     }),
   ]
