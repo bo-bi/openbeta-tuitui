@@ -1,13 +1,118 @@
 // 这里会转化为vw
-/* 添加这段样式后，Primary Button 会变成红色 */
 :root {
-  --van-button-primary-background-color: red !important;
+  // eg: 添加这段样式后，Primary Button 会变成红色
+  // --van-button-primary-background-color: red !important;
 
-  /* 下拉加载列表 */
-  /* 控制 “没有更多了” 文案, 不能控制 “加载中...” 文案*/
+  // 上拉加载列表
+  // 控制 “没有更多了” 文案, 不能控制 “加载中...” 文案
   // --van-list-text-color: pink !important;
-  --van-list-text-font-size: 30px !important;
-  --van-list-text-line-height: 100px !important;
-  /* 加载中... 左侧的圆圈 */
-  --van-list-loading-icon-size: 45px !important;
+  --van-list-text-font-size: 24px !important;
+  --van-list-text-line-height: 75px !important;
+  // 加载中... 左侧的圆圈
+  --van-list-loading-icon-size: 30px !important;
+
+  // tab选中背景色
+  // --van-tabs-default-color: purple !important;
+  --van-tabs-card-height: 76px !important;
+  // --van-tabs-card-height: 40px !important;
+}
+
+// 重置样式
+
+// 下拉刷新
+.van-pull-refresh {
+  .van-pull-refresh__head {
+    font-size: 24px;
+    font-weight: 500;
+    color: #525252;
+
+    .van-loading {
+      .van-loading__spinner {
+        width: 30px;
+        height: 30px;
+      }
+
+      .van-loading__text {
+        font-size: 24px;
+        font-weight: 500;
+        color: #525252;
+        line-height: 75px;
+      }
+    }
+  }
+}
+
+// 上拉加载
+// 控制 “加载中...” 文案
+.van-list {
+  .van-list__loading {
+    .van-loading__text {
+      font-size: 24px;
+      font-weight: 500;
+      color: #525252;
+      line-height: 75px;
+    }
+  }
+
+  // 没有更多了
+  .van-list__finished-text {
+    font-weight: 500;
+    color: #525252;
+  }
+
+  // 错误提示
+  .van-list__error-text {
+    font-size: 24px;
+    font-weight: 500;
+    color: #525252;
+  }
+}
+
+// Tab
+.head-tabs {
+  // 内容区域
+  .van-tabs__content {
+    padding-top: 76px;
+  }
+
+  // tab
+  .van-tabs__wrap {
+    z-index: 1;
+    position: fixed;
+    left: 0;
+    top: 0;
+    min-width: calc(100% - 80px);
+    padding: 0 40px;
+    background-color: #FFF;
+
+    div[role="tablist"] {
+      align-items: center;
+      padding-left: 0;
+      padding-right: 0;
+      margin: 0;
+      border: none;
+
+      .van-tab {
+        flex: none;
+        height: 40px;
+        padding: 0 16px;
+        margin: 0 10px;
+        font-size: 24px;
+        font-weight: 500;
+        border-right: none;
+        border: 2px solid #3873FA;
+        border-radius: 8px;
+        letter-spacing: 1px;
+
+        &:first-child {
+          margin-left: 0;
+        }
+
+        &.van-tab--active {
+          background: linear-gradient(54deg, #1C6BFF 0%, #7587FF 100%);
+          border: none;
+        }
+      }
+    }
+  }
 }

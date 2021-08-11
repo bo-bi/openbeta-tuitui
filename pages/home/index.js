@@ -1,24 +1,21 @@
-// 此处引入一次, 所有页面无需再按需引入所使用组件的样式
+// 此处引入一次vant的css, 所有页面无需再按需引入所使用组件的样式
 import 'vant/lib/index.css';
-import Banner    from '/components/Banner.vue'
-import AlphaList from '/components/AlphaList.vue'
-import * as api  from '/api'
-import { Button } from 'vant'
-import { Tag } from 'vant';
-import { Skeleton } from 'vant';
+import * as api     from '/api';
+import Banner       from '/components/Banner.vue';
+import ActivityList from '/components/ActivityList.vue';
+import Skeleton     from 'vant/es/skeleton';
+import Empty        from 'vant/es/empty';
 
 Page({
   components: {
     Banner,
-    AlphaList,
-    [Button.name]: Button,
-    [Tag.name]: Tag,
+    ActivityList,
     [Skeleton.name]: Skeleton,
+    [Empty.name]: Empty,
   },
 
   data() {
     return {
-      bannerSkeletonLoading: true,
       bannerList: [],
     }
   },
@@ -27,7 +24,7 @@ Page({
     // Do some initialize when page load.
     console.log('onLoad -- 监听页面加载')
 
-    this.getBanner();
+    this.getBannerList();
   },
 
   onShow: function () {
@@ -51,24 +48,36 @@ Page({
   },
 
   onShareAppMessage: function () {
-    // 用户点击右上角转发
     return {
-      title: '快来试下这是360er内测~',
-      // path: '/page/user?id=123',
-      path: '/page/mine/index?id=456',
-      imageUrl: 'http://p4.music.126.net/VDUjBvzZdMV8Hn_lYTt8fw==/109951165756214678.jpg'
+      title: '360er内测来啦~',
+      path: '/pages/home/index',
+      // imageUrl: '',
     }
   },
 
   methods: {
-    getBanner() {
-      api.getBanner({
-        cid: 1,
+    getBannerList() {
+      api.getBannerList()
+      .then(({ data }) => {
+        console.log('getBannerList', data);
+        const { code, msg } = data;
+
+        if (code === 200) {
+          this.bannerList = data.data;
+        } else {
+          qh.showToast({
+            title: `${msg}`,
+          });
+        }
+
       })
-        .then(data => {
-          this.bannerList = data;
-          this.bannerSkeletonLoading = false;
+      .catch(e => {
+        console.log('e', e);
+        qh.showToast({
+          title: `${e}`,
         });
+      });
     },
+
   },
 })

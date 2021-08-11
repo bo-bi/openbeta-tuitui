@@ -2,13 +2,24 @@
   "appId": "7652738368277135",
   "pages": [
     "pages/home/index",
+
+    "pages/activity/index",
+    "pages/longImage/index",
+    "pages/convention/index",
+    "pages/feedbackForm/index",
+
+    "pages/mine/index",
+    "pages/mine/published/index",
+    "pages/mine/joined/index",
+    "pages/mine/followed/index",
+    "pages/mine/feedback/index",
+
     "pages/login/index",
     "pages/storage/index",
     "pages/request/index",
     "pages/router/index",
     "pages/one/index",
-    "pages/jiemian/index",
-    "pages/mine/index"
+    "pages/jiemian/index"
   ],
   "tabBar": {
     "color": "#666666",
@@ -30,6 +41,7 @@
     ]
   },
   "window": {
-    "navigationBarTitleText": "360er 内测"
+    "navigationBarTitleText": "360er 内测",
+    "backgroundColor": "#EFEFEF"
   }
 }

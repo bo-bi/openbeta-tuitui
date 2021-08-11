@@ -1,12 +1,15 @@
 @import '/common/variables';
 
 .home {
-  .banner-skeleton {
-    // padding: 0;
-  }
+  .banner-container {
+    .van-skeleton {
+      padding: 0;
 
-  .banner-wrapper {
-    background-color: $skeleton-background-color;
+      ::v-deep(.van-skeleton__row) {
+        height: 330px;
+        background-color: #F2F3F5;
+      }
+    }
   }
 
   .box {

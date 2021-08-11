@@ -1,0 +1,51 @@
+<div class="published">
+  <van-tabs
+    class="head-tabs"
+    v-model:active="activeTab"
+    type="card"
+    title-active-color="#FFF"
+    title-inactive-color="#3873FA"
+    offset-top="-1px"
+    :ellipsis="false"
+  >
+
+    <van-tab title="已上线" name="online">
+      <ActivityList
+        v-if="activeTab === 'online'"
+        type="joined"
+        :params="{
+          status: 1,
+        }"
+        size="small"
+      >
+        <template #empty>
+          <div class="empty">
+            <van-empty style="margin-top: 35%;">
+              <p class="description">还没有哦~</p>
+            </van-empty>
+          </div>
+        </template>
+      </ActivityList>
+    </van-tab>
+
+    <van-tab title="已结束" name="ended">
+      <ActivityList
+        v-if="activeTab === 'ended'"
+        type="joined"
+        :params="{
+          status: 3,
+        }"
+        size="small"
+      >
+        <template #empty>
+          <div class="empty">
+            <van-empty style="margin-top: 35%;">
+              <p class="description">还没有哦~</p>
+            </van-empty>
+          </div>
+        </template>
+      </ActivityList>
+    </van-tab>
+
+  </van-tabs>
+</div>

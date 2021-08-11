@@ -1,0 +1,49 @@
+<div class="join">
+  <van-tabs
+    class="head-tabs"
+    v-model:active="activeTab"
+    type="card"
+    title-active-color="#FFF"
+    title-inactive-color="#3873FA"
+    offset-top="-1px"
+    :ellipsis="false"
+  >
+
+    <van-tab title="进行中" name="inProgress">
+      <ActivityList
+        v-if="activeTab === 'inProgress'"
+        type="joined"
+        :params="{
+          status: 1,
+        }"
+      >
+        <template #empty>
+          <div class="empty">
+            <van-empty style="margin-top: 35%;">
+              <p class="description">还没有哦, 赶快参与吧~</p>
+            </van-empty>
+          </div>
+        </template>
+      </ActivityList>
+    </van-tab>
+
+    <van-tab title="已结束" name="ended">
+      <ActivityList
+        v-if="activeTab === 'ended'"
+        type="joined"
+        :params="{
+          status: 3,
+        }"
+      >
+        <template #empty>
+          <div class="empty">
+            <van-empty style="margin-top: 35%;">
+              <p class="description">还没有哦, 赶快参与吧~</p>
+            </van-empty>
+          </div>
+        </template>
+      </ActivityList>
+    </van-tab>
+
+  </van-tabs>
+</div>

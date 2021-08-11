@@ -1,0 +1,346 @@
+.activity {
+  padding-bottom: 116px;
+
+  .block {
+    margin-top: 8px;
+    background-color: #FFF;
+    box-sizing: border-box;
+
+    .van-skeleton {
+      padding: 0;
+      margin-top: 10px;
+    }
+  }
+
+  .banner-container {
+    .van-skeleton {
+      padding: 0;
+
+      ::v-deep(.van-skeleton__row) {
+        height: 330px;
+        background-color: #F2F3F5;
+      }
+    }
+  }
+
+  .basic {
+    .van-skeleton {
+      padding: 0;
+      margin-top: 28px;
+    }
+  }
+
+  .primary-title {
+    margin-bottom: 20px;
+    font-size: 30px;
+    font-weight: 500;
+    color: #181818;
+    letter-spacing: 1px;
+  }
+
+  p.empty-text {
+    font-size: 26px;
+    color: #181818;
+    text-align: center;
+  }
+
+  .avatar {
+    width: 100px;
+    height: 100px;
+    background-color: #EFEFEF;
+    border-radius: 50%;
+    border: 4px solid #D8D8D8;
+    box-sizing: border-box;
+  }
+
+  .load-more {
+    display: block;
+    height: 50px;
+    margin: 0 auto;
+
+    &.van-button {
+      border: none;
+
+      &::before {
+        background-color: #FFF;
+      }
+
+      ::v-deep(.van-button__content) {
+        .van-loading {
+          display: none;
+          margin-bottom: 3px;
+
+          .van-loading__spinner {
+            width: 23px;
+            height: 23px;
+          }
+        }
+
+        .van-button__text {
+          font-size: 25px;
+        }
+      }
+    }
+
+    .triangle-down {
+      margin: 0 0 1px 8px;
+      border-width: 13px 11px 0;
+      border-style: solid;
+      border-color: #181818 transparent transparent;
+    }
+  }
+
+  [class^="state-"] {
+    position: fixed;
+    left: 50%;
+    bottom: 20px;
+    width: 690px;
+    height: 88px;
+    margin-left: -345px;
+    font-size: 34px;
+    font-weight: 500;
+    color: #FFF;
+    line-height: 88px;
+    text-align: center;
+    background-color: #3873fa;
+    border-radius: 8px;
+
+    &.state-join-now {
+      background-color: #F5222D;
+    }
+  }
+
+  .basic {
+    position: relative;
+    height: 220px;
+    padding: 0 40px;
+    background-color: #FFF;
+    overflow: hidden;
+
+    .info {
+      .title {
+        margin-top: 28px;
+        font-size: 34px;
+        font-weight: 500;
+        color: #181818;
+        letter-spacing: 1px;
+      }
+
+      .time-remaining {
+        margin-top: 8px;
+        font-size: 24px;
+        letter-spacing: 1px;
+
+        span {
+          font-weight: 500;
+          color: #181818;
+        }
+
+        b {
+          color: #F5222D;
+        }
+      }
+
+      .number {
+        margin-top: 28px;
+        font-size: 24px;
+        font-weight: 500;
+
+        .recruit-number {
+          color: #1b69ff;
+        }
+
+        .split {
+          margin: 0 4px;
+          color: #767676;
+        }
+
+        .signed-up-number {
+          color: rgba(0, 0, 0, 0.5);
+        }
+      }
+    }
+
+    .follow-button {
+      position: absolute;
+      right: 40px;
+      bottom: 40px;
+      width: 200px;
+      height: 68px;
+      font-size: 30px;
+      font-weight: 500;
+      color: #FFF;
+      background: linear-gradient(225deg, #7787FF 0%, #1869FF 100%);
+      border-radius: 12px;
+
+      &.van-button {
+        padding: 0;
+        border: none;
+
+        ::v-deep(.van-button__content) {
+          .van-loading {
+            .van-loading__spinner {
+              width: 30px;
+              height: 30px;
+            }
+          }
+
+          .van-button__text {
+            font-size: 30px;
+            font-weight: 500;
+            color: #FFF;
+          }
+        }
+      }
+
+      .followed {
+        .heart {
+          background: url("http://p0.qhimg.com/t017f9991b9dd6628a4.png") no-repeat;
+          background-size: 100%;
+        }
+      }
+
+      .heart {
+        width: 30px;
+        height: 30px;
+        margin-right: 8px;
+        background: url("http://p4.qhimg.com/t01ccb8ef1f2e9800f2.png") no-repeat;
+        background-size: 100%;
+      }
+    }
+  }
+
+  .steps {
+    height: 174px;
+    padding: 30px 0 0 40px;
+
+    .list {
+      display: flex;
+
+      .item {
+        margin-right: 32px;
+        font-size: 24px;
+        font-weight: 500;
+        color: rgba(0, 0, 0, 0.5);
+
+        span {
+          display: inline-block;
+          width: 38px;
+          height: 38px;
+          margin-right: 3px;
+          font-size: 30px;
+          color: #FFF;
+          line-height: 38px;
+          text-align: center;
+          background-color: #1B69FF;
+          border-radius: 50%;
+        }
+      }
+    }
+  }
+
+  .rules {
+    // min-height: 676px;
+    min-height: 300px;
+    padding: 30px 40px 40px;
+
+    ::v-deep(.content) {
+      font-size: 24px;
+      color: #7F7F7F;
+      line-height: 32px;
+      overflow: hidden;
+
+      a {
+        color: #4486DD;
+        background: none !important;
+      }
+
+      p, span, div, b, strong, i, h1, h2, h3, h4, h5, h6, font {
+        padding: 0 !important;
+        margin: 0 !important;
+        // font-family: "PingFangSC-Regular", "PingFang SC" !important;
+        // font-size: 0.28rem !important;
+        // color: rgba(51, 55, 65, 0.9) !important;
+        // line-height: 0.52rem !important;
+        text-indent: 0 !important;
+        text-decoration: none !important;
+        // 允许长串字母或者数字换行
+        word-wrap: break-word;
+      }
+
+      img {
+        display: block;
+        margin: 10px auto;
+      }
+    }
+  }
+
+  .signed-up {
+    position: relative;
+    height: 232px;
+    padding: 30px 40px 40px;
+
+    .list {
+      display: flex;
+
+      .item {
+        max-width: 70px;
+        height: 100px;
+
+        &:last-child {
+          max-width: none;
+        }
+      }
+    }
+
+    .number {
+      position: absolute;
+      right: 80px;
+      bottom: 40px;
+      font-size: 24px;
+      color: rgba(0, 0, 0, 0.5);
+    }
+  }
+
+  .filter-passed {
+    min-height: 232px;
+    padding: 30px 40px;
+
+    .list {
+      .item {
+        margin: 0 14px 10px 0;
+
+        &:nth-child(6n) {
+          margin-right: 0;
+        }
+      }
+    }
+  }
+
+  .contribution-list {
+    // min-height: 438px;
+    min-height: 232px;
+    padding: 30px 40px;
+
+    .list {
+      .item {
+        margin: 0 14px 10px 0;
+        text-align: center;
+
+        &:nth-child(6n) {
+          margin-right: 0;
+        }
+
+        span {
+          display: block;
+        }
+
+        p {
+          margin-top: 6px;
+          font-size: 30px;
+          color: rgba(0, 0, 0, 0.5);
+        }
+      }
+    }
+  }
+}

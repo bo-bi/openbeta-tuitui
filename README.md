@@ -19,6 +19,43 @@
   x / 7.5px = 40vw
   x = 300px
 
+  tab props 设置title-class 不成功, 是因为这个文件的css默认是scoped, 加上了后面这个哈希值, 所以传不进去, 可以写入公共样式内, 如reset.scss、app.scss等, 不会是局部样式
+  .aaa[data-v-9bea351e] {
+    color: yellow !important;
+    font-size: 4vw !important;
+  }
+  .bbb[data-v-9bea351e] {
+    color: yellowgreen !important;
+    font-size: 4vw !important;
+  }
+
+  更改vant组件内部样式, 不生效, 是因为他们用的也是局部样式, 需要进行样式穿透, scss里用的::v-deep, 还要用新语法, ::v-deep(.child), 才可生效, 参考join的index.scss文件
+
+  ::v-deep(.van-tabs__content) {
+    padding-top: 76px;
+  }
+
+  ::v-deep(.van-tabs__wrap) {
+    z-index: 1;
+    position: fixed;
+    left: 0;
+    top: 0;
+    min-width: calc(100% - 80px);
+    padding: 0 40px;
+    background-color: #FFF;
+
+    div[role=tablist] {
+      margin: 0;
+      border: none;
+
+      padding-left: 0;
+      padding-right: 0;
+      // padding: 18px 40px 18px 30px;
+
+      align-items: center;
+    }
+  }
+
 - 有的vant组件里传入的属性是px单位的, 在页面中是px显示, 是不能转化为vw显示的, 怎么处理?
 
   如果涉及到计算, 那没有办法, 只能传px
@@ -71,3 +108,69 @@ scss 与 stylus 区别 https://www.cnblogs.com/fiona-zhong/p/13303582.html
   import 'vant/lib/index.css';
 
   我看了下 第一种引入组件的方式和第二种引入组件的方式, 打印的组件数据是一摸一样的
+
+
+在真机上(我只试了ios), qh.showToast() 和 qh.hideLoading() 若同时存在, 只能走一个, 比如之前出现了loading, 现在有错误出现, 先showToast, 再hideLoading, 则toast不会出现, 直接消失了, 因为hideLoading在最后, 就得先写hideLoading, 再写showToast, 但是这样在模拟器里不是这么表现的, 模拟器变现是对的, showLoading必须hideLoading才可以, showToast和showLoading不会冲突.而且当出现toast后, 后面的东西还可以点.基于以上问题, 所以我用了vant的toast
+
+而且vant的toast还可以禁止点后面的元素
+
+以上的解决方法 可以先qh.hideLoading() 再qh.showToast() 这样就不会有问题, 但是后面的元素可以点
+对于qh.showToast这样的方法, 是客户端内置的方法, 层级是最高的, 会显示在最上面, 但是vant的Toast不行, 也就是说app.html和其余页面的html是用两个webview, app.html是看不见的, 但是app.js里面的代码会执行, 所以想在app.js里面弹toast, 只能用内置的qh.showToast(), 因为可以显示在最上面
+
+// vant的Toast 中需要vue, 小程序初始化时找不到vue, 所以在此引入, 登录会不成功, qh.showToast也不会弹
+import Toast from 'vant/es/toast'
+window.Toast = Toast
+无论在app.js里面引入Toast, 还是在utils中引入Toast, App 中的onLoad中用qh.showToast都不会弹toast, 后来让小程序方人员看, 报vue找不到之类的错误
+
+用axios是因为, 有拦截器可以统一处理, 而且network里面可以看到响应, 本身也不大
+还是不用axios啦, 虽然有以上优点, 但是返回的错误信息和qh.request不一样(这里可能是ios和安卓返回的错误信息不一致, 不是axios和qh.request返回的错误信息不一致), 主要是写的公共登录方法, 在app.js里调用时, 若接口报错, 会重复执行, 我在App中打印的onLoad, 还有接口错误信心会一直弹.
+
+app.js由于看不到, 调试不便, 引入的Toast或其他, 有的莫名会影响, 也不知道, 在app.js中调用不稳定性大, 最好在app.js里调用简简单单的
+
+
+qh.setStorage({
+    key: 'access_token',
+    data: '',
+})
+set 不能设置空字符串, 否则会报错{errcode: "1", errmsg: " value is empty "}
+
+
+用异常情况登录后, 重新请求接口来代替刷新页面
+
+
+当一进入页面就需要token, 比如首页的接口, 在首页的Page的onLoad里面进行initLogin, App的onLoad里面就不需要initLogin
+
+比如分享出去的页面, 商品详情页, 不需要token, 我点收藏活动和立即参加, 就会进行initLogin
+
+在initLogin里面, 我先判断有没有, 然后再如果有就不请求接口, 如果没有就请求登录接口.拿到token, 我再去请求业务接口, 写成一个promise
+
+
+// 种过期的token, 接口返回已过期, 删除token
+qh.setStorage({
+  key: 'access_token',
+  data: 'ku1FrHNwJVFUNtXjvG258XwUNOkt+C0tg2J9yN645yQ=',
+  success (res) {
+    console.log(res)
+  }
+})
+
+
+
+此处不能直接给骨架屏添加class, 会有warning
+對 Vue component 傳入非 Prop 的 attribute
+参考: https://ithelp.ithome.com.tw/articles/10251062
+
+<van-skeleton
+  class="panel-skeleton"
+  title
+  title-width="25%"
+  :row="2"
+  row-width="['100%']"
+  :loading="Object.keys(myDetail).length <= 0"
+>
+  内容
+</van-skeleton>
+
+
+
+http可以访问https的资源, https的不能访问http的资源

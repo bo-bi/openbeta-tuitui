@@ -15,6 +15,8 @@
     "postcss-px-to-viewport": "^1"
   },
   "dependencies": {
-    "vant": "^3.1.0-beta.0"
+    "@vueup/vue-quill": "^1.0.0-beta.7",
+    "vant": "^3.1.5",
+    "vconsole": "^3.8.1"
   }
 }

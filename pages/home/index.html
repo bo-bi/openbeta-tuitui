@@ -1,15 +1,22 @@
 <div class="home">
   <!-- 为了页面刚加载的时候, 列表处于banner下方, 而不从头部加载-->
-  <van-skeleton
-    class="banner-skeleton"
-    style="--van-skeleton-row-height: 160px; --van-padding-md: 0;"
-    row="1"
-    row-width="['100%']"
-    :loading="bannerSkeletonLoading"
-  >
-    <banner :list="bannerList" />
-  </van-skeleton>
+  <div class="banner-container">
+    <van-skeleton
+      row="1"
+      row-width="['100%']"
+      :loading="!bannerList.length"
+    >
+      <banner :list="bannerList" />
+    </van-skeleton>
+  </div>
 
-  <AlphaList />
-
+  <ActivityList type="index">
+    <template #empty>
+      <div class="empty">
+        <van-empty style="margin-top: 0;">
+          <p class="description">一大波活动马上上架哦~</p>
+        </van-empty>
+      </div>
+    </template>
+  </ActivityList>
 </div>
