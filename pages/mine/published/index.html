@@ -12,7 +12,7 @@
     <van-tab title="已上线" name="online">
       <ActivityList
         v-if="activeTab === 'online'"
-        type="joined"
+        type="published"
         :params="{
           status: 1,
         }"
@@ -20,7 +20,7 @@
       >
         <template #empty>
           <div class="empty">
-            <van-empty style="margin-top: 35%;">
+            <van-empty style="margin-top: 25%;" image="https://p2.ssl.qhimg.com/d/inn/54056951d8c0/placeholder-published.png">
               <p class="description">还没有哦~</p>
             </van-empty>
           </div>
@@ -31,7 +31,7 @@
     <van-tab title="已结束" name="ended">
       <ActivityList
         v-if="activeTab === 'ended'"
-        type="joined"
+        type="published"
         :params="{
           status: 3,
         }"
@@ -39,7 +39,7 @@
       >
         <template #empty>
           <div class="empty">
-            <van-empty style="margin-top: 35%;">
+            <van-empty style="margin-top: 25%;" image="https://p2.ssl.qhimg.com/d/inn/54056951d8c0/placeholder-published.png">
               <p class="description">还没有哦~</p>
             </van-empty>
           </div>

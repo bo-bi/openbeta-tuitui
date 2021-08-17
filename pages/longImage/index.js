@@ -26,7 +26,13 @@ Page({
       imageUrl: 'http://qh.com/image.png'
     }
   },
+
   methods: {
+    handlePreviewImage() {
+      qh.previewImage({
+        images: [this.url],
+      });
+    },
 
   }
 })

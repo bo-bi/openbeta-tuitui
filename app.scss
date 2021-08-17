@@ -31,7 +31,12 @@ p {
   // background-color: #FFF;
 
   .van-empty {
-    margin-top: 40%;
+    margin-top: 30%;
+
+    .van-empty__image {
+      width: 450px;
+      height: 450px;
+    }
 
     .van-empty__bottom {
       display: flex;

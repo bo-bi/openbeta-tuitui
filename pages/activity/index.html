@@ -1,7 +1,7 @@
 <div class="empty" v-if="isShowEmpty">
-  <van-empty>
+  <van-empty image="https://p3.ssl.qhimg.com/d/inn/bf8a6ce0c558/placeholder-activity-detail.png">
     <p class="description">活动不存在或下线</p>
-    <div class="bottom-button" @click="handleGoToHomePage">返回首页</div>
+    <!-- <div class="bottom-button" @click="handleGoToHomePage">返回首页</div> -->
   </van-empty>
 </div>
 
@@ -100,7 +100,12 @@
     >
       <p class="primary-title">活动规则</p>
 
-      <div class="content" v-html="activityDetail.content"></div>
+      <div
+        class="content"
+        v-html="activityDetail.content"
+        @click="handlePreviewImage"
+      >
+      </div>
     </van-skeleton>
   </div>
 
@@ -125,7 +130,9 @@
           </li>
         </ul>
 
-        <p class="number">等{{ activityDetail.reg_count }}人</p>
+        <p class="number" v-if="signedUpUserList.length > 6">
+          等{{ activityDetail.reg_count }}人
+        </p>
       </template>
 
       <template v-else>

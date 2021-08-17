@@ -42,13 +42,13 @@
       </div>
     </div>
 
-    <template v-if="item.reg_status === 2">
-      <div class="state-submit-feedback" @click="handleGoToActivityDetail(item)">
+    <template v-if="item.reg_status === 2 && currentActivityState.value === 4">
+      <div class="state-submit-feedback">
         提交反馈
       </div>
     </template>
     <template v-else>
-      <div :class="currentActivityState.type" @click="handleGoToActivityDetail(item)">
+      <div :class="currentActivityState.type">
         {{ currentActivityState.name }}
       </div>
     </template>
@@ -56,7 +56,7 @@
 </template>
 
 <script>
-import { toRefs }       from 'vue'
+// import { toRefs }       from 'vue'
 import { useCountDown } from '@vant/use';
 
 export default {
@@ -68,16 +68,19 @@ export default {
   },
 
   setup(props) {
-    const { item } = toRefs(props);
+    // 若用 toRefs 取值方式为 item.value.status
+    // const { item } = toRefs(props);
+
+    const item = props.item;
 
     const appInstance = getApp();
     const activityStateList = appInstance.globalData.get('activityStateList');
     const currentActivityState =
-      activityStateList.filter(activityState => activityState.value === item.value.status)[0];
+      activityStateList.filter(activityState => activityState.value === item.status)[0];
 
     const countDown = useCountDown({
       // 单位毫秒
-      time: item.value.remainder_time * 1000,
+      time: item.remainder_time * 1000,
     });
 
     // 开始倒计时

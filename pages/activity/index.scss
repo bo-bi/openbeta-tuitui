@@ -2,6 +2,7 @@
   padding-bottom: 116px;
 
   .block {
+    position: relative;
     margin-top: 8px;
     background-color: #FFF;
     box-sizing: border-box;
@@ -39,9 +40,12 @@
   }
 
   p.empty-text {
+    position: absolute;
+    left: 50%;
+    top: 50%;
     font-size: 26px;
     color: #181818;
-    text-align: center;
+    transform: translate(-50%, -50%);
   }
 
   .avatar {
@@ -195,7 +199,7 @@
 
       .followed {
         .heart {
-          background: url("http://p0.qhimg.com/t017f9991b9dd6628a4.png") no-repeat;
+          background: url("https://p5.ssl.qhimg.com/d/inn/b9ba35fcd837/followed.png") no-repeat;
           background-size: 100%;
         }
       }
@@ -204,7 +208,7 @@
         width: 30px;
         height: 30px;
         margin-right: 8px;
-        background: url("http://p4.qhimg.com/t01ccb8ef1f2e9800f2.png") no-repeat;
+        background: url("https://p4.ssl.qhimg.com/d/inn/d04f176e9e11/not-followed.png") no-repeat;
         background-size: 100%;
       }
     }
@@ -225,12 +229,12 @@
 
         span {
           display: inline-block;
-          width: 38px;
-          height: 38px;
+          width: 36px;
+          height: 36px;
           margin-right: 3px;
           font-size: 30px;
           color: #FFF;
-          line-height: 38px;
+          line-height: 36px;
           text-align: center;
           background-color: #1B69FF;
           border-radius: 50%;

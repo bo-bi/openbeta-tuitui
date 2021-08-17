@@ -1,5 +1,5 @@
-// import VConsole from 'vconsole';
-// const vConsole = new VConsole();
+import VConsole from 'vconsole';
+const vConsole = new VConsole();
 
 import { ref }      from 'vue';
 import Tabs         from 'vant/es/tabs';

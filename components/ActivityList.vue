@@ -18,10 +18,14 @@
         @load="onLoad"
       >
 
+        <!--
+          此处的 key 不能使用index, 要使用id, 下拉刷新后会导致新增的活动 状态 和 剩余时间 错误,
+          因为使用的是index, 所以 setup 中得到的 item 还是 之前index 的item信息, 故错误
+        -->
         <template v-if="size === 'big'">
           <activity-list-item
             v-for="(item, index) in state.list"
-            :key="index"
+            :key="item.act_id"
             :item="item"
           >
           </activity-list-item>
@@ -30,7 +34,7 @@
         <template v-else-if="size === 'small'">
           <activity-list-item-small
             v-for="(item, index) in state.list"
-            :key="index"
+            :key="item.act_id"
             :item="item"
           >
           </activity-list-item-small>

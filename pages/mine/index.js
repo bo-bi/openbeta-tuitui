@@ -13,7 +13,7 @@ Page({
   data() {
     return {
       myDetail: {},
-      defaultAvatar: 'http://p8.qhimg.com/t013523d1083b9d349e.jpg',
+      defaultAvatar: 'https://p4.ssl.qhimg.com/d/inn/2c29efb0f3ff/default-avatar.jpg',
       panelList: [
         {
           name: '我的活动',
@@ -21,17 +21,17 @@ Page({
             {
               type: 'published',
               name: '我发布的',
-              image: 'http://s4.qhres2.com/static/0c7062e307ff8f1f.svg',
+              image: 'https://p4.ssl.qhimg.com/d/inn/18a37e0b6c27/published.jpg',
             },
             {
               type: 'joined',
               name: '我参与的',
-              image: 'http://s4.qhres2.com/static/0c7062e307ff8f1f.svg',
+              image: 'https://p2.ssl.qhimg.com/d/inn/e304d7192363/joined.jpg',
             },
             {
               type: 'followed',
               name: '我关注的',
-              image: 'http://s4.qhres2.com/static/0c7062e307ff8f1f.svg',
+              image: 'https://p5.ssl.qhimg.com/d/inn/baa89b677cc0/followed.jpg',
             },
           ]
         },
@@ -42,7 +42,7 @@ Page({
             {
               type: 'feedback',
               name: '意见反馈表',
-              image: 'http://s4.qhres2.com/static/0c7062e307ff8f1f.svg',
+              image: 'https://p2.ssl.qhimg.com/d/inn/e0b87c129e81/feedback.jpg',
             },
           ]
         },
@@ -145,6 +145,14 @@ Page({
 
       qh.navigateTo({
         url: `/pages/mine/${type}/index`,
+      });
+    },
+
+    handleShowTip() {
+      qh.alert({
+        title: '提示',
+        message: '小程序暂不支持更换头像，请您前往推推个人页更换头像',
+        buttonName: '好的',
       });
     },
 

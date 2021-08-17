@@ -10,10 +10,10 @@
     </van-skeleton>
   </div>
 
-  <ActivityList type="index">
+  <ActivityList type="index" v-if="isShowList">
     <template #empty>
       <div class="empty">
-        <van-empty style="margin-top: 0;">
+        <van-empty style="margin-top: 0;" image="https://p4.ssl.qhimg.com/d/inn/47987ed4d652/placeholder-activity-list.png">
           <p class="description">一大波活动马上上架哦~</p>
         </van-empty>
       </div>

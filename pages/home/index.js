@@ -17,6 +17,7 @@ Page({
   data() {
     return {
       bannerList: [],
+      isShowList: false,
     }
   },
 
@@ -25,6 +26,8 @@ Page({
     console.log('onLoad -- 监听页面加载')
 
     this.getBannerList();
+
+    this.isShowList = true;
   },
 
   onShow: function () {

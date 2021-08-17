@@ -20,7 +20,7 @@
 
         <feedback-list-item
           v-for="(item, index) in state.list"
-          :key="index"
+          :key="item.id"
           :item="item"
         >
         </feedback-list-item>

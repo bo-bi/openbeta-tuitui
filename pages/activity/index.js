@@ -45,7 +45,7 @@ Page({
       contributionUserList: [],
       contributionUserListHasMore: true,
 
-      defaultAvatar: 'http://p8.qhimg.com/t013523d1083b9d349e.jpg',
+      defaultAvatar: 'https://p4.ssl.qhimg.com/d/inn/2c29efb0f3ff/default-avatar.jpg',
     }
   },
   onLoad: function () {
@@ -55,7 +55,7 @@ Page({
     initLogin()
     .then((data) => {
       console.log('初始化登录成功后', data);
-      this.fetchData();
+      this.fetchData(true);
     })
     .catch(e => {
       console.log('初始化登录失败后', e);
@@ -90,7 +90,7 @@ Page({
   },
 
   methods: {
-    fetchData() {
+    fetchData(isFetchList = false) {
       return api.getActivityDetail(this.id)
       .then(({ data }) => {
         console.log('活动详情', data);
@@ -114,19 +114,7 @@ Page({
           this.currentActivityState =
             activityStateList.filter(activityState => activityState.value === this.activityDetail.status)[0];
 
-          // 请求已报名接口
-          if ([3, 4, 5, 6].includes(this.activityDetail.status)) {
-            this.getActivitySignedUpUserList();
-          }
-
-          // 请求 筛选通过 和 贡献榜 接口
-          if ([4, 5, 6].includes(this.activityDetail.status)) {
-            // 关注接口会刷新接口, 重置数组
-            this.filterPassedUserList = [];
-            this.contributionUserList = [];
-            this.getActivityFilterPassedUserList();
-            this.getActivityContributionList();
-          }
+          if (isFetchList) this.fetchList();
 
         } else {
           qh.showToast({
@@ -141,7 +129,7 @@ Page({
               return initLogin();
             }).then(data => {
               // 登录成功后 刷新接口(代替刷新页面)
-              this.fetchData();
+              this.fetchData(true);
             }).catch(e => {
               console.log('token异常, 进行登录错误', e);
             });
@@ -161,6 +149,25 @@ Page({
           title: `${e}`,
         });
       });
+    },
+
+    fetchList() {
+      // 请求已报名接口
+      if ([3, 4, 5, 6].includes(this.activityDetail.status)) {
+        this.getActivitySignedUpUserList();
+      }
+
+      // 请求 筛选通过 和 贡献榜 接口
+      if ([4, 5, 6].includes(this.activityDetail.status)) {
+        // 关注接口会刷新接口, 重置数组(这里暂时关注接口不刷新下方3个列表接口, 列表接口响应太频繁)
+        this.filterPassedUserListPage = 1;
+        this.filterPassedUserList = [];
+        this.contributionUserListPage = 1;
+        this.contributionUserList = [];
+
+        this.getActivityFilterPassedUserList();
+        this.getActivityContributionList();
+      }
     },
 
     handleUpdateFollowStatus() {
@@ -230,38 +237,38 @@ Page({
 
         if (code === 200) {
           // 模拟数据start
-          data.data = [
-            {
-              "act_id": 9,
-              "avatar_url": "https://p480.ssl.qhimgs4.com/t01547e7fd54c9cbfeb.jpg",
-              "name": "张三",
-              "uid": 3
-            },
-            {
-              "act_id": 9,
-              "avatar_url": "https://p480.ssl.qhimgs4.com/t01c339310ec6b6883d.jpg",
-              "name": "李四",
-              "uid": 2
-            },
-            {
-              "act_id": 9,
-              "avatar_url": "",
-              "name": "王六",
-              "uid": 1
-            },
-            {
-              "act_id": 9,
-              "avatar_url": "https://p480.ssl.qhimgs4.com/t01219ecfbfd2211064.jpg",
-              "name": "王六",
-              "uid": 4
-            },
-            {
-              "act_id": 9,
-              "avatar_url": "https://p480.ssl.qhimgs4.com/t01c339310ec6b6883d.jpg",
-              "name": "王六",
-              "uid": 5
-            },
-          ];
+          // data.data = [
+          //   {
+          //     "act_id": 9,
+          //     "avatar_url": "https://p480.ssl.qhimgs4.com/t01547e7fd54c9cbfeb.jpg",
+          //     "name": "张三",
+          //     "uid": 3
+          //   },
+          //   {
+          //     "act_id": 9,
+          //     "avatar_url": "https://p480.ssl.qhimgs4.com/t01c339310ec6b6883d.jpg",
+          //     "name": "李四",
+          //     "uid": 2
+          //   },
+          //   {
+          //     "act_id": 9,
+          //     "avatar_url": "",
+          //     "name": "王六",
+          //     "uid": 1
+          //   },
+          //   {
+          //     "act_id": 9,
+          //     "avatar_url": "https://p480.ssl.qhimgs4.com/t01219ecfbfd2211064.jpg",
+          //     "name": "王六",
+          //     "uid": 4
+          //   },
+          //   {
+          //     "act_id": 9,
+          //     "avatar_url": "https://p480.ssl.qhimgs4.com/t01c339310ec6b6883d.jpg",
+          //     "name": "王六",
+          //     "uid": 5
+          //   },
+          // ];
           // 模拟数据end
           this.signedUpUserList = data.data;
         } else {
@@ -323,48 +330,48 @@ Page({
         const { code, msg } = data;
 
         if (code === 200) {
-          // const { data: { list, total }} = data;
+          const { data: { list, total }} = data;
           // 模拟数据start
-          const list = [
-            {
-              "act_id": 9,
-              "avatar_url": "https://p480.ssl.qhimgs4.com/t01547e7fd54c9cbfeb.jpg",
-              "name": "张三",
-              "uid": 3
-            },
-            {
-              "act_id": 9,
-              "avatar_url": "https://p480.ssl.qhimgs4.com/t01c339310ec6b6883d.jpg",
-              "name": "李四",
-              "uid": 2
-            },
-            {
-              "act_id": 9,
-              "avatar_url": "",
-              "name": "王六",
-              "uid": 1
-            },
-            {
-              "act_id": 9,
-              "avatar_url": "https://p480.ssl.qhimgs4.com/t01219ecfbfd2211064.jpg",
-              "name": "王六",
-              "uid": 4
-            },
-            {
-              "act_id": 9,
-              "avatar_url": "https://p480.ssl.qhimgs4.com/t01c339310ec6b6883d.jpg",
-              "name": "王六",
-              "uid": 5
-            },
-            {
-              "act_id": 9,
-              "avatar_url": "https://p480.ssl.qhimgs4.com/t01c339310ec6b6883d.jpg",
-              "name": "adas",
-              "uid": 6
-            },
-          ];
+          // const list = [
+          //   {
+          //     "act_id": 9,
+          //     "avatar_url": "https://p480.ssl.qhimgs4.com/t01547e7fd54c9cbfeb.jpg",
+          //     "name": "张三",
+          //     "uid": 3
+          //   },
+          //   {
+          //     "act_id": 9,
+          //     "avatar_url": "https://p480.ssl.qhimgs4.com/t01c339310ec6b6883d.jpg",
+          //     "name": "李四",
+          //     "uid": 2
+          //   },
+          //   {
+          //     "act_id": 9,
+          //     "avatar_url": "",
+          //     "name": "王六",
+          //     "uid": 1
+          //   },
+          //   {
+          //     "act_id": 9,
+          //     "avatar_url": "https://p480.ssl.qhimgs4.com/t01219ecfbfd2211064.jpg",
+          //     "name": "王六",
+          //     "uid": 4
+          //   },
+          //   {
+          //     "act_id": 9,
+          //     "avatar_url": "https://p480.ssl.qhimgs4.com/t01c339310ec6b6883d.jpg",
+          //     "name": "王六",
+          //     "uid": 5
+          //   },
+          //   {
+          //     "act_id": 9,
+          //     "avatar_url": "https://p480.ssl.qhimgs4.com/t01c339310ec6b6883d.jpg",
+          //     "name": "adas",
+          //     "uid": 6
+          //   },
+          // ];
 
-          const total = 5;
+          // const total = 5;
           // 模拟数据end
           this.filterPassedUserList = this.filterPassedUserList.concat(list);
           this.filterPassedUserListPage ++;
@@ -402,54 +409,54 @@ Page({
         const { code, msg } = data;
 
         if (code === 200) {
-          // const { data: { list, total }} = data;
+          const { data: { list, total }} = data;
           // 模拟数据start
-          const list = [
-            {
-              "act_id": 9,
-              "avatar_url": "https://p480.ssl.qhimgs4.com/t01547e7fd54c9cbfeb.jpg",
-              "count": 6,
-              "name": "张三",
-              "uid": 3
-            },
-            {
-              "act_id": 9,
-              "avatar_url": "https://p480.ssl.qhimgs4.com/t01c339310ec6b6883d.jpg",
-              "count": 6,
-              "name": "李四",
-              "uid": 2
-            },
-            {
-              "act_id": 9,
-              "avatar_url": "",
-              "count": 6,
-              "name": "王六",
-              "uid": 1
-            },
-            {
-              "act_id": 9,
-              "avatar_url": "https://p480.ssl.qhimgs4.com/t01219ecfbfd2211064.jpg",
-              "count": 6,
-              "name": "王六",
-              "uid": 4
-            },
-            {
-              "act_id": 9,
-              "avatar_url": "https://p480.ssl.qhimgs4.com/t01c339310ec6b6883d.jpg",
-              "count": 6,
-              "name": "王六",
-              "uid": 5
-            },
-            {
-              "act_id": 9,
-              "avatar_url": "https://p480.ssl.qhimgs4.com/t01c339310ec6b6883d.jpg",
-              "count": 6,
-              "name": "adas",
-              "uid": 6
-            },
-          ];
+          // const list = [
+          //   {
+          //     "act_id": 9,
+          //     "avatar_url": "https://p480.ssl.qhimgs4.com/t01547e7fd54c9cbfeb.jpg",
+          //     "count": 6,
+          //     "name": "张三",
+          //     "uid": 3
+          //   },
+          //   {
+          //     "act_id": 9,
+          //     "avatar_url": "https://p480.ssl.qhimgs4.com/t01c339310ec6b6883d.jpg",
+          //     "count": 6,
+          //     "name": "李四",
+          //     "uid": 2
+          //   },
+          //   {
+          //     "act_id": 9,
+          //     "avatar_url": "",
+          //     "count": 6,
+          //     "name": "王六",
+          //     "uid": 1
+          //   },
+          //   {
+          //     "act_id": 9,
+          //     "avatar_url": "https://p480.ssl.qhimgs4.com/t01219ecfbfd2211064.jpg",
+          //     "count": 6,
+          //     "name": "王六",
+          //     "uid": 4
+          //   },
+          //   {
+          //     "act_id": 9,
+          //     "avatar_url": "https://p480.ssl.qhimgs4.com/t01c339310ec6b6883d.jpg",
+          //     "count": 6,
+          //     "name": "王六",
+          //     "uid": 5
+          //   },
+          //   {
+          //     "act_id": 9,
+          //     "avatar_url": "https://p480.ssl.qhimgs4.com/t01c339310ec6b6883d.jpg",
+          //     "count": 6,
+          //     "name": "adas",
+          //     "uid": 6
+          //   },
+          // ];
 
-          const total = 5;
+          // const total = 5;
           // 模拟数据end
           this.contributionUserList = this.contributionUserList.concat(list);
           this.contributionUserListPage ++;
@@ -499,14 +506,20 @@ Page({
     },
 
     handleGoToHomePage() {
-      console.log('去往首页')
-      qh.switchTab({
-        url: '/pages/home/index',
+      qh.navigateBack({
+        delta: 1,
       });
+    },
 
-      // qh.navigateBack({
-      //   delta: 1,
-      // });
+    handlePreviewImage(e) {
+      if (e.target.nodeName == 'IMG') {
+        // console.log('src', [e.target.currentSrc]);
+        qh.previewImage({
+          images: [e.target.currentSrc],
+        });
+      } else {
+        // console.log("点击内容不为img")
+      }
     },
 
   }

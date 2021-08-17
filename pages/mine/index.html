@@ -9,7 +9,7 @@
     >
 
       <div class="basic">
-        <div class="avtar">
+        <div class="avtar" @click="handleShowTip">
           <img :src="myDetail.avatar_url || defaultAvatar" />
         </div>
         <div>
@@ -59,7 +59,7 @@
   </div>
 </div>
 
-<div style="margin-top: 230px;">
+<!-- <div style="margin-top: 230px;">
   <div v-if="Object.keys(myDetail).length > 0">
     {{ myDetail }}
     {{ Object.keys(myDetail).length }}
@@ -70,4 +70,4 @@
   <div @click="removeToken">删除token</div>
   <br>
   <div @click="setToken">种过期token</div>
-</div>
+</div> -->
