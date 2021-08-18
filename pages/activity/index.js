@@ -492,8 +492,16 @@ Page({
       }
 
       if (status === 2) {
+        cid ?
         qh.navigateTo({
           url: `/pages/convention/index?id=${cid}&questionnaire_id=${this.questionnaire_id}`,
+        }) :
+        qh.navigateToMiniProgram({
+          appId: '7652669648848144',
+          path: `pages/view/index?id=${this.questionnaire_id}`,
+          success: res => {
+            console.log('跳转小程序成功', res);
+          },
         });
         return;
       }
