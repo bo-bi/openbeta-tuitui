@@ -26,15 +26,29 @@ App({
     // 在这里看下5分钟后小程序能不能销毁
     // 小程序销毁将本地存储的token移除
     qh.removeStorage({
-      key: 'access_token',
+      key: 'access_token_product',
       success() {
         qh.showToast({
-          title: '小程序销毁, 移除access_token成功',
+          title: `小程序销毁, 移除 access_token_product 成功`,
         });
       },
       fail() {
         qh.showToast({
-          title: '小程序销毁, 移除access_token失败',
+          title: `小程序销毁, 移除 access_token_product 失败`,
+        });
+      },
+    });
+
+    qh.removeStorage({
+      key: 'access_token_dev',
+      success() {
+        qh.showToast({
+          title: `小程序销毁, 移除 access_token_dev 成功`,
+        });
+      },
+      fail() {
+        qh.showToast({
+          title: `小程序销毁, 移除 access_token_dev 失败`,
         });
       },
     });

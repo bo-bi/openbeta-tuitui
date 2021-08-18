@@ -105,7 +105,7 @@ Page({
             // })
 
             // 先清除本地存储的token
-            removeLocalKey('access_token')
+            removeLocalKey(ACCESS_TOKEN)
             .then(data => {
               // 再重新登录
               return initLogin();
@@ -158,18 +158,18 @@ Page({
 
     getToken() {
       qh.getStorage({
-        key: 'access_token',
+        key: ACCESS_TOKEN,
         success(res) {
-          console.log('获取access_token成功', res)
+          console.log(`获取${ACCESS_TOKEN}成功`, res)
         },
       })
     },
 
     removeToken() {
       qh.removeStorage({
-        key: 'access_token',
+        key: ACCESS_TOKEN,
         success: res => {
-          console.log('删除access_token成功', res)
+          console.log(`删除${ACCESS_TOKEN}成功`, res)
           // 当前是Tab, 刷新当前Tab
           // qh.switchTab({
           //   url: '/pages/home/index'
@@ -183,10 +183,10 @@ Page({
     // 用于模拟接口返回登录过期场景
     setToken() {
       qh.setStorage({
-        key: 'access_token',
+        key: ACCESS_TOKEN,
         data: 'ku1FrHNwJVFUNtXjvG258XwUNOkt+C0tg2J9yN645yQ=',
         success: res => {
-          console.log('设置过期access_token成功', res)
+          console.log(`设置过期${ACCESS_TOKEN}成功`, res)
           this.fetchData()
         },
       })

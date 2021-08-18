@@ -129,7 +129,7 @@ app.js由于看不到, 调试不便, 引入的Toast或其他, 有的莫名会影
 
 
 qh.setStorage({
-    key: 'access_token',
+    key: 'access_token_dev',
     data: '',
 })
 set 不能设置空字符串, 否则会报错{errcode: "1", errmsg: " value is empty "}
@@ -147,7 +147,7 @@ set 不能设置空字符串, 否则会报错{errcode: "1", errmsg: " value is e
 
 // 种过期的token, 接口返回已过期, 删除token
 qh.setStorage({
-  key: 'access_token',
+  key: 'access_token_dev',
   data: 'ku1FrHNwJVFUNtXjvG258XwUNOkt+C0tg2J9yN645yQ=',
   success (res) {
     console.log(res)

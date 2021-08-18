@@ -1,19 +1,17 @@
 let apiAddress;
 
+const environment = 'pro';
+
 // 推推小程序无正式、测试环境之分, 会将小程序文件下载到本地, 所以接口域名只能写死
-if (location.host === 'xxx') {
+if (environment === 'pro') {
   window.isProduction = true
   window.environment = 'pro'
+  window.ACCESS_TOKEN = 'access_token_product'
   apiAddress = 'https://innertestapi.bbs.360.cn'
-} else if (location.host === '10.0.2.2:3360') {
-  // 10.0.2.2:3360 为本地启动的服务
-  window.isProduction = true
-  window.environment = 'test'
-  apiAddress = 'http://qainnertestapi.bbs.360.cn'
 } else {
   window.isProduction = false
   window.environment = 'dev'
-  // apiAddress = 'https://innertestapi.bbs.360.cn'
+  window.ACCESS_TOKEN = 'access_token_dev'
   apiAddress = 'http://qainnertestapi.bbs.360.cn'
 }
 

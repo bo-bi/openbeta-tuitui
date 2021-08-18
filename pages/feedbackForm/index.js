@@ -103,7 +103,7 @@ const handlers = {
 
             if (code === 401) {
               // 先清除本地存储的token
-              removeLocalKey('access_token')
+              removeLocalKey(ACCESS_TOKEN)
               .then(data => {
                 // 再重新登录
                 return initLogin();
@@ -250,7 +250,7 @@ Page({
 
           if (code === 401) {
             // 先清除本地存储的token
-            removeLocalKey('access_token')
+            removeLocalKey(ACCESS_TOKEN)
             .then(data => {
               // 再重新登录
               return initLogin();
@@ -328,7 +328,7 @@ Page({
 
           if (code === 401) {
             // 先清除本地存储的token
-            removeLocalKey('access_token')
+            removeLocalKey(ACCESS_TOKEN)
             .then(data => {
               // 再重新登录
               return initLogin();
@@ -391,7 +391,7 @@ Page({
 
           if (code === 401) {
             // 先清除本地存储的token
-            removeLocalKey('access_token')
+            removeLocalKey(ACCESS_TOKEN)
             .then(data => {
               // 再重新登录
               return initLogin();

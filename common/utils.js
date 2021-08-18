@@ -4,19 +4,19 @@ import * as api   from '/api'
 const get = (url, data = {}) => {
   return new Promise((resolve, reject) => {
     qh.getStorage({
-      key: 'access_token',
-      success(access_token) {
+      key: ACCESS_TOKEN,
+      success(ACCESS_TOKEN_RES) {
         // 必须有success, complete 才有
       },
-      complete(access_token) {
-        console.log('get access_token', access_token)
+      complete(ACCESS_TOKEN_RES) {
+        console.log(`get ${ACCESS_TOKEN}`, ACCESS_TOKEN_RES)
 
         qh.request({
           url: apiAddress + url,
           method: 'GET',
           data,
           header: {
-            Authorization: `Bearer ${access_token}`,
+            Authorization: `Bearer ${ACCESS_TOKEN_RES}`,
           },
           success(res) {
             resolve(res)
@@ -33,19 +33,19 @@ const get = (url, data = {}) => {
 const post = (url, data = {}) => {
   return new Promise((resolve, reject) => {
     qh.getStorage({
-      key: 'access_token',
-      success(access_token) {
+      key: ACCESS_TOKEN,
+      success(ACCESS_TOKEN_RES) {
         // 必须有success, complete 才有
       },
-      complete(access_token) {
-        console.log('post access_token', access_token)
+      complete(ACCESS_TOKEN_RES) {
+        console.log(`post ${ACCESS_TOKEN}`, ACCESS_TOKEN_RES)
 
         qh.request({
           url: apiAddress + url,
           method: 'POST',
           data,
           header: {
-            Authorization: `Bearer ${access_token}`,
+            Authorization: `Bearer ${ACCESS_TOKEN_RES}`,
           },
           success(res) {
             resolve(res)
@@ -62,19 +62,19 @@ const post = (url, data = {}) => {
 const uploadImage = (filePath) => {
   return new Promise((resolve, reject) => {
     qh.getStorage({
-      key: 'access_token',
-      success(access_token) {
+      key: ACCESS_TOKEN,
+      success(ACCESS_TOKEN_RES) {
         // 必须有success, complete 才有
       },
-      complete(access_token) {
-        console.log('uploadImage access_token', access_token)
+      complete(ACCESS_TOKEN_RES) {
+        console.log(`uploadImage ${ACCESS_TOKEN}`, ACCESS_TOKEN_RES)
 
         qh.uploadFile({
           url: apiAddress + '/api/upload/image',
           filePath,
           name: 'file',
           header: {
-            Authorization: `Bearer ${access_token}`,
+            Authorization: `Bearer ${ACCESS_TOKEN_RES}`,
           },
           success(res) {
             resolve(res)
@@ -158,10 +158,10 @@ const initLogin = () => {
   return new Promise((resolve, reject) => {
     // 获取本地存储的token start
     qh.getStorage({
-      key: 'access_token',
-      success: access_token => {
+      key: ACCESS_TOKEN,
+      success: ACCESS_TOKEN_RES => {
         // 若本地存储存在token 直接resolve出去(若本地存储的token已过期, 需在此处之前先清除)
-        if (access_token) return resolve(access_token)
+        if (ACCESS_TOKEN_RES) return resolve(ACCESS_TOKEN_RES)
 
         // 若不存在
         // 获取SSO参数start
@@ -172,19 +172,18 @@ const initLogin = () => {
             api.login(SSO)
             .then(({ data }) => {
               const { code, msg } = data
-              if (code === 200) {
-                const { data: { access_token } } = data
 
+              if (code === 200) {
                 // 将接口返回token存储到本地
                 qh.setStorage({
-                  key: 'access_token',
-                  data: access_token,
+                  key: ACCESS_TOKEN,
+                  data: data.data[ACCESS_TOKEN],
                   success: () => {
                     qh.showToast({
                       title: `登录成功`,
                     })
 
-                    resolve(access_token)
+                    resolve(data.data[ACCESS_TOKEN])
                   },
                 })
 
