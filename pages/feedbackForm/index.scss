@@ -48,6 +48,12 @@
         &::before {
           color: #A5A5A5;
         }
+
+        // 有序列表、无序列表
+        ol,
+        ul {
+          padding-left: 0;
+        }
       }
     }
   }

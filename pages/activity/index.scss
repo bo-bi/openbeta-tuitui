@@ -199,7 +199,7 @@
 
       .followed {
         .heart {
-          background: url("https://p5.ssl.qhimg.com/d/inn/b9ba35fcd837/followed.png") no-repeat;
+          background: url("https://p0.ssl.qhimg.com/d/inn/3b264b030898/heart-followed.jpg") no-repeat;
           background-size: 100%;
         }
       }
@@ -208,7 +208,7 @@
         width: 30px;
         height: 30px;
         margin-right: 8px;
-        background: url("https://p4.ssl.qhimg.com/d/inn/d04f176e9e11/not-followed.png") no-repeat;
+        background: url("https://p4.ssl.qhimg.com/d/inn/3b264b030898/heart-not-followed.jpg") no-repeat;
         background-size: 100%;
       }
     }
@@ -253,6 +253,16 @@
       color: #7F7F7F;
       line-height: 32px;
       overflow: hidden;
+
+      ol li {
+        list-style: decimal;
+        list-style-position: inside;
+      }
+
+      ul li {
+        list-style: disc;
+        list-style-position: inside;
+      }
 
       a {
         color: #4486DD;

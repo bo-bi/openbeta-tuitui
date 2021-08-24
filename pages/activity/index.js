@@ -496,11 +496,19 @@ Page({
         qh.navigateTo({
           url: `/pages/convention/index?id=${cid}&questionnaire_id=${this.questionnaire_id}`,
         }) :
-        qh.navigateToMiniProgram({
-          appId: '7652669648848144',
-          path: `pages/view/index?id=${this.questionnaire_id}`,
+        qh.alert({
+          title: '提示',
+          message: '即将跳转问卷小程序, 进行报名, 提交成功后, 即完成报名.',
+          buttonName: '确定',
           success: res => {
-            console.log('跳转小程序成功', res);
+            console.log('用户点击确定', res);
+            qh.navigateToMiniProgram({
+              appId: '7652669648848144',
+              path: `pages/view/index?id=${this.questionnaire_id}`,
+              success: res => {
+                console.log('跳转小程序成功', res);
+              },
+            });
           },
         });
         return;

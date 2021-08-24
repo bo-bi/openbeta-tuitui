@@ -7,7 +7,7 @@
 
       ::v-deep(.van-skeleton__row) {
         height: 330px;
-        background-color: #F2F3F5;
+        background-color: rgba(255, 255, 255, .8);
       }
     }
   }

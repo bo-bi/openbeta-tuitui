@@ -9,18 +9,23 @@
 
     <div class="content" v-html="detail.content"></div>
 
-    <template v-if="questionnaire_id">
-      <div class="bottom-button">
-        <div class="cancel" @click="handleGoBack">再考虑一下</div>
-        <div class="sign-up" @click="handleGoToSignUp">
+    <div class="bottom-button">
+      <template v-if="questionnaire_id">
+        <div class="cancel pull-left" @click="handleGoBack">再考虑一下</div>
+
+        <div
+          class="sign-up pull-right"
+          :class="{ 'time-up': isTimeUp }"
+          @click="handleGoToSignUp"
+        >
           去报名<span v-if="!isTimeUp">({{ countDown }}s)</span>
         </div>
-      </div>
-    </template>
+      </template>
 
-    <template v-else>
-      <div class="confirm" @click="handleGoBack">确认</div>
-    </template>
+      <template v-else>
+        <div class="confirm" @click="handleGoBack">确认</div>
+      </template>
+    </div>
 
   </van-skeleton>
 </div>

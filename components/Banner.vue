@@ -1,15 +1,33 @@
 <template>
   <div class="banner" v-if="list.length">
-    <van-swipe class="banner-swipe" :autoplay="4000">
+    <!--
+      style="transform: translate3d(0, 0, 0);"
+      开启硬件加速, 解决swipe切换图片闪烁
+      https://blog.csdn.net/superye7/article/details/118678256
+    -->
+    <van-swipe
+      style="transform: translate3d(0, 0, 0);"
+      class="banner-swipe"
+      :autoplay="4000"
+      lazy-render
+    >
       <van-swipe-item
         v-for="(item, index) in list"
         :key="index"
       >
         <template v-if="typeof item === 'string'">
-          <a :style="getBannerItemStyle(item)" @click="handleClick()"></a>
+          <!-- <a :style="getBannerItemStyle(item)" @click="handleClick()"></a> -->
+
+          <a @click="handleClick()">
+            <img :src="item" />
+          </a>
         </template>
         <template v-else>
-          <a :style="getBannerItemStyle(item.image)" @click="handleClick(item)"></a>
+          <!-- <a :style="getBannerItemStyle(item.image)" @click="handleClick(item)"></a> -->
+
+          <a @click="handleClick(item)">
+            <img :src="item.image" />
+          </a>
         </template>
       </van-swipe-item>
 
@@ -102,7 +120,12 @@ export default {
         a {
           display: block;
           height: 100%;
-          background-color: #f2f3f5;
+          // background-color: #f2f3f5;
+
+          img {
+            width: 100%;
+            height: 100%;
+          }
         }
       }
     }
@@ -115,8 +138,11 @@ export default {
 
       &-item {
         display: inline-block;
-        width: 16px;
-        height: 16px;
+        // width: 16px;
+        // height: 16px;
+        // 当宽度高度比较小(测试20px正常)、或者单位带有小数点时, 部分安卓手机会不圆, 所以此处用px单位, 不转化为vw
+        width: 8PX;
+        height: 8PX;
         margin: 0 10px;
         background-color: rgba(255, 255, 255, .3);
         border-radius: 50%;
