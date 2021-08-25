@@ -24,34 +24,34 @@ App({
     console.log('onUnload -- 监听小程序销毁');
 
     // 在这里看下5分钟后小程序能不能销毁, 经测试, 是会清除的
-    // 小程序销毁, 将本地存储的token移除(目前取消此操作, 保留登录状态一个礼拜, 不用再每次进入小程序重复登录)
-    // qh.removeStorage({
-    //   key: 'access_token_product',
-    //   success() {
-    //     qh.showToast({
-    //       title: `小程序销毁, 移除 access_token_product 成功`,
-    //     });
-    //   },
-    //   fail() {
-    //     qh.showToast({
-    //       title: `小程序销毁, 移除 access_token_product 失败`,
-    //     });
-    //   },
-    // });
+    // 小程序销毁, 将本地存储的token移除(目前取消此操作, 保留登录状态一个礼拜, 不用再每次进入小程序重复登录, 但为了保证用户头像更新, 所以还是启用了, 有 5min 小程序自动销毁才会更新头像的时间差)
+    qh.removeStorage({
+      key: 'access_token_product',
+      success() {
+        qh.showToast({
+          title: `小程序销毁, 移除 access_token_product 成功`,
+        });
+      },
+      fail() {
+        qh.showToast({
+          title: `小程序销毁, 移除 access_token_product 失败`,
+        });
+      },
+    });
 
-    // qh.removeStorage({
-    //   key: 'access_token_dev',
-    //   success() {
-    //     qh.showToast({
-    //       title: `小程序销毁, 移除 access_token_dev 成功`,
-    //     });
-    //   },
-    //   fail() {
-    //     qh.showToast({
-    //       title: `小程序销毁, 移除 access_token_dev 失败`,
-    //     });
-    //   },
-    // });
+    qh.removeStorage({
+      key: 'access_token_dev',
+      success() {
+        qh.showToast({
+          title: `小程序销毁, 移除 access_token_dev 成功`,
+        });
+      },
+      fail() {
+        qh.showToast({
+          title: `小程序销毁, 移除 access_token_dev 失败`,
+        });
+      },
+    });
   },
 
   onError (msg) {

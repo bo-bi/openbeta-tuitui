@@ -1,12 +1,6 @@
 <template>
   <div class="banner" v-if="list.length">
-    <!--
-      style="transform: translate3d(0, 0, 0);"
-      开启硬件加速, 解决swipe切换图片闪烁
-      https://blog.csdn.net/superye7/article/details/118678256
-    -->
     <van-swipe
-      style="transform: translate3d(0, 0, 0);"
       class="banner-swipe"
       :autoplay="4000"
       lazy-render
@@ -125,6 +119,9 @@ export default {
           img {
             width: 100%;
             height: 100%;
+            // 开启硬件加速, 解决swipe切换图片闪烁
+            // https://blog.csdn.net/superye7/article/details/118678256
+            transform: translate3d(0, 0, 0);
           }
         }
       }
