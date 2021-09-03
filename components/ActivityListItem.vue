@@ -57,7 +57,8 @@
 
 <script>
 // import { toRefs }       from 'vue'
-import { useCountDown } from '@vant/use';
+import { useCountDown }      from '@vant/use';
+import { activityStateList } from '/common/data';
 
 export default {
   props: {
@@ -73,8 +74,9 @@ export default {
 
     const item = props.item;
 
-    const appInstance = getApp();
-    const activityStateList = appInstance.globalData.get('activityStateList');
+    // 此处获取不到 globalData 中的数据, 会导致从未使用过小程序的用户第一次进入, 列表出不来, 莫名报错, 只显示 “没有更多了”
+    // const appInstance = getApp();
+    // const activityStateList = appInstance.globalData.get('activityStateList');
     const currentActivityState =
       activityStateList.filter(activityState => activityState.value === item.status)[0];
 

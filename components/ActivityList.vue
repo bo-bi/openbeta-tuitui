@@ -116,7 +116,7 @@ export default {
       pageSize: 10,
     });
 
-     const onLoad = () => {
+    const onLoad = () => {
       // 下拉刷新
       console.log('refreshing', state.refreshing);
       if (state.refreshing) {

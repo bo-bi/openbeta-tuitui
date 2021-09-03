@@ -7,6 +7,9 @@ import {
   initLogin,
   removeLocalKey,
 } from '/common/utils';
+import {
+  activityStateList,
+} from '/common/data';
 
 Page({
   components: {
@@ -109,8 +112,9 @@ Page({
             title: this.activityDetail.name,
           });
 
-          const appInstance = getApp();
-          const activityStateList = appInstance.globalData.get('activityStateList');
+          // 获取不到 globalData 中的数据
+          // const appInstance = getApp();
+          // const activityStateList = appInstance.globalData.get('activityStateList');
           this.currentActivityState =
             activityStateList.filter(activityState => activityState.value === this.activityDetail.status)[0];
 
