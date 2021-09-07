@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2021-09-07T12:25:31.122Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.63 Safari/537.36" etag="Jf03LPn2zjcFynSm5O1P" version="15.1.0" type="github">
+<mxfile host="app.diagrams.net" modified="2021-09-07T14:20:09.706Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.63 Safari/537.36" etag="UOIKiZCpUubvyokefgyr" version="15.1.0" type="github">
   <diagram id="aVke36S9Kl_TpLU73RCS" name="第 1 页">
     <mxGraphModel dx="946" dy="539" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -6,46 +6,47 @@
         <mxCell id="1" parent="0" />
         <mxCell id="8StqNC24kNaqRqgJd3lh-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="8StqNC24kNaqRqgJd3lh-1" target="8StqNC24kNaqRqgJd3lh-4">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="280" y="330" as="targetPoint" />
+            <mxPoint x="160" y="370" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="8StqNC24kNaqRqgJd3lh-1" value="&lt;b&gt;获取SSO参数&lt;br&gt;&lt;/b&gt;(调用qh.login())" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="200" y="200" width="160" height="80" as="geometry" />
+          <mxGeometry x="80" y="240" width="160" height="80" as="geometry" />
         </mxCell>
         <mxCell id="8StqNC24kNaqRqgJd3lh-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="8StqNC24kNaqRqgJd3lh-4" target="8StqNC24kNaqRqgJd3lh-10">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="8StqNC24kNaqRqgJd3lh-4" value="&lt;b&gt;获取个人token&lt;br&gt;&lt;/b&gt;&lt;font style=&quot;font-size: 10px&quot;&gt;(&lt;/font&gt;&lt;font style=&quot;font-size: 9px&quot;&gt;调用后台接口, &lt;br&gt;传递SSO参数&lt;/font&gt;&lt;font style=&quot;font-size: 10px&quot;&gt;)&lt;/font&gt;" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="200" y="360" width="160" height="80" as="geometry" />
+          <mxGeometry x="80" y="400" width="160" height="80" as="geometry" />
         </mxCell>
         <mxCell id="8StqNC24kNaqRqgJd3lh-10" value="&lt;b&gt;将token存于本地&lt;/b&gt;" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="200" y="520" width="160" height="80" as="geometry" />
+          <mxGeometry x="80" y="560" width="160" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="8StqNC24kNaqRqgJd3lh-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="8StqNC24kNaqRqgJd3lh-13" target="8StqNC24kNaqRqgJd3lh-15">
+        <mxCell id="8StqNC24kNaqRqgJd3lh-39" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="8StqNC24kNaqRqgJd3lh-13" target="8StqNC24kNaqRqgJd3lh-15">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="8StqNC24kNaqRqgJd3lh-24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="8StqNC24kNaqRqgJd3lh-13">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="600" y="360" as="targetPoint" />
-          </mxGeometry>
+        <mxCell id="8StqNC24kNaqRqgJd3lh-41" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="8StqNC24kNaqRqgJd3lh-13" target="8StqNC24kNaqRqgJd3lh-22">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="8StqNC24kNaqRqgJd3lh-13" value="&lt;b&gt;接口请求&lt;br&gt;&lt;/b&gt;(&lt;font style=&quot;font-size: 6px&quot;&gt;&lt;font style=&quot;font-size: 6px&quot;&gt;携带首部字段&lt;br style=&quot;font-size: 6px&quot;&gt;Authorization: `Bearer ${token&lt;/font&gt;}&lt;/font&gt;`)" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="520" y="440" width="160" height="80" as="geometry" />
+          <mxGeometry x="320" y="240" width="160" height="80" as="geometry" />
         </mxCell>
         <mxCell id="8StqNC24kNaqRqgJd3lh-15" value="&lt;b&gt;获取到数据&lt;/b&gt;" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="520" y="600" width="160" height="80" as="geometry" />
+          <mxGeometry x="560" y="240" width="160" height="80" as="geometry" />
         </mxCell>
         <mxCell id="8StqNC24kNaqRqgJd3lh-18" value="正常" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="1">
-          <mxGeometry x="600" y="540" width="60" height="26" as="geometry" />
+          <mxGeometry x="500" y="260" width="60" height="26" as="geometry" />
         </mxCell>
-        <mxCell id="8StqNC24kNaqRqgJd3lh-25" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="8StqNC24kNaqRqgJd3lh-22" target="8StqNC24kNaqRqgJd3lh-23">
+        <mxCell id="8StqNC24kNaqRqgJd3lh-42" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="8StqNC24kNaqRqgJd3lh-22" target="8StqNC24kNaqRqgJd3lh-23">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="8StqNC24kNaqRqgJd3lh-22" value="&lt;b&gt;接口返回401&lt;/b&gt;" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="520" y="280" width="160" height="80" as="geometry" />
+          <mxGeometry x="320" y="400" width="160" height="80" as="geometry" />
         </mxCell>
         <mxCell id="8StqNC24kNaqRqgJd3lh-23" value="&lt;b&gt;清除本地token&lt;/b&gt;" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="520" y="120" width="160" height="80" as="geometry" />
+          <mxGeometry x="320" y="560" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="8StqNC24kNaqRqgJd3lh-34" value="异常" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="1">
+          <mxGeometry x="400" y="347" width="60" height="26" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
