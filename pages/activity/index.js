@@ -536,6 +536,7 @@ Page({
         // console.log('src', [e.target.currentSrc]);
         qh.previewImage({
           images: [e.target.currentSrc],
+          current: e.target.currentSrc,
         });
       } else {
         // console.log("点击内容不为img")

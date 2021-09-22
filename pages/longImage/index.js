@@ -31,6 +31,7 @@ Page({
     handlePreviewImage() {
       qh.previewImage({
         images: [this.url],
+        current: this.url,
       });
     },
 
