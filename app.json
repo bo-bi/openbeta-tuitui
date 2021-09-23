@@ -43,5 +43,8 @@
   "window": {
     "navigationBarTitleText": "360er 产品内测",
     "backgroundColor": "#EFEFEF"
+  },
+  "feedback": {
+    "pic": "https://p0.ssl.qhimg.com/t01cebc1900039ae134.png"
   }
 }

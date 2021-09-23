@@ -49,7 +49,7 @@ Page({
 
   onShareAppMessage: function () {
     return {
-      title: '360er内测来啦~',
+      title: '360新品，邀您体验！',
       path: '/pages/home/index',
       // imageUrl: '',
     }

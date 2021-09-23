@@ -109,4 +109,22 @@
     }
 
   }
+
+  .contact-us {
+    position: absolute;
+    left: 0;
+    bottom: 30px;
+    width: 100%;
+    font-size: 26px;
+    text-align: center;
+
+    .title {
+      margin-bottom: 10px;
+      color: #181818;
+    }
+
+    p {
+      color: #777777;
+    }
+  }
 }

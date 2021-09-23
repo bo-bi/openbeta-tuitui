@@ -26,7 +26,7 @@ Page({
             {
               type: 'joined',
               name: '我参与的',
-              image: 'https://p2.ssl.qhimg.com/d/inn/e304d7192363/joined.jpg',
+              image: 'https://p1.ssl.qhimg.com/d/inn/8894d39e4203/joined.png',
             },
             {
               type: 'followed',
