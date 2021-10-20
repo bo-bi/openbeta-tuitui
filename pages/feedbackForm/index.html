@@ -1,5 +1,11 @@
 <div class="feedback-form">
-  <input class="name" type="text" v-model="form.name" placeholder="请输入标题" />
+  <input
+    class="name"
+    :class="{ pc: isPC }"
+    type="text"
+    v-model="form.name"
+    placeholder="请输入标题"
+  />
 
   <div class="editor-wrapper">
     <QuillEditor

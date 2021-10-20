@@ -125,7 +125,11 @@
 
       <template v-if="signedUpUserList.length">
         <ul class="list">
-          <li class="item" v-for="(item, index) in signedUpUserList" :key="index">
+          <li
+            class="item"
+            v-for="(item, index) in signedUpUserList.slice(0, 6)"
+            :key="index"
+          >
             <img class="avatar" :src="item.avatar_url || defaultAvatar" />
           </li>
         </ul>

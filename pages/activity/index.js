@@ -233,7 +233,7 @@ Page({
       this.signedUpUserListLoading = true;
 
       api.getActivitySignedUpUserList(this.id, {
-        limit: 6,
+        limit: 8,
       })
       .then(({ data }) => {
         console.log('已报名用户接口', data);

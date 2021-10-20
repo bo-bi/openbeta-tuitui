@@ -29,9 +29,12 @@
 
         <p class="time-remaining">
           <span>剩余时间：</span>
-          <b>
+
+          <b v-if="current.total">
             {{ current.days}}天{{ current.hours}}时{{ current.minutes}}分{{ current.seconds}}秒
           </b>
+
+          <span v-else>已结束</span>
         </p>
 
         <p class="number">

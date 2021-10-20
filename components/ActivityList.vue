@@ -58,6 +58,7 @@ import {
   removeLocalKey,
   initLogin,
   formatDate,
+  isWindows,
 } from '/common/utils.js';
 
 export default {
@@ -253,6 +254,16 @@ export default {
       onLoad,
       onRefresh,
       fetchData,
+    }
+  },
+
+  mounted() {
+    // 临时性解决 windows 端首次进入列表加载不出来
+    if (isWindows()) {
+      setTimeout(() => {
+          console.log('isWindows', isWindows());
+          this.onLoad();
+      }, 500)
     }
   },
 

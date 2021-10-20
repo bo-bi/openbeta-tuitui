@@ -269,6 +269,20 @@ function formatDate(timeStamp, fmt) {
   return fmt
 }
 
+const isWindows = () => {
+  const ua = window.navigator.userAgent;
+  return ua.indexOf('Windows') > 0;
+}
+
+const isMac = () => {
+  const ua = window.navigator.userAgent;
+  return ua.indexOf('Mac') > 0 && ua.indexOf('iPhone') < 0;
+}
+
+const isPC = () => {
+  return isWindows() || isMac();
+}
+
 export {
   get,
   post,
@@ -276,4 +290,7 @@ export {
   initLogin,
   removeLocalKey,
   formatDate,
+  isWindows,
+  isMac,
+  isPC,
 }
