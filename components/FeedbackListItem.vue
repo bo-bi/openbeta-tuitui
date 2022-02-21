@@ -1,6 +1,6 @@
 <template>
   <!-- 多条数据分页接口模拟 start -->
-  <!-- <div class="feedback-list-item" @click="handleGoToFeedbackForm(item)">
+  <!-- <div class="feedback-list-item" @click="handleGoToDetail(item)">
     <div class="info">
       <p class="title text-overflow-ellipsis">
         {{ item.title }}
@@ -23,7 +23,7 @@
   </div> -->
   <!-- 多条数据分页接口模拟 end -->
 
-  <div class="feedback-list-item" @click="handleGoToFeedbackForm(item)">
+  <div class="feedback-list-item" @click="handleGoToDetail(item)">
     <div class="info">
       <p class="title text-overflow-ellipsis">
         {{ item.name }}
@@ -52,16 +52,28 @@ export default {
     item: {
       type: Object,
       required: true,
-    }
+    },
+
+    type: {
+      type: String,
+    },
   },
 
   methods: {
-    handleGoToFeedbackForm(item) {
+    handleGoToDetail(item) {
       const { id, act_id, act_name } = item;
 
-      qh.navigateTo({
-        url: `/pages/feedbackForm/index?id=${id}&activity_id=${act_id}&activity_name=${act_name}`,
-      });
+      if (this.type === 'feedback') {
+        qh.navigateTo({
+          url: `/pages/feedbackForm/index?id=${id}&activity_id=${act_id}&activity_name=${act_name}`,
+        });
+      }
+
+      if (this.type === 'draft') {
+        qh.navigateTo({
+          url: `/pages/draft/index?id=${id}&activity_id=${act_id}&activity_name=${act_name}`,
+        });
+      }
     },
 
   },

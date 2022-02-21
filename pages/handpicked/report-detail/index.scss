@@ -1,0 +1,158 @@
+.handpicked-report-detail {
+  padding: 22px 36px 60px;
+
+  .van-skeleton {
+    padding: 0;
+    margin-top: 10px;
+  }
+
+  .title {
+    font-size: 45px;
+    font-weight: 700;
+    color: #181818;
+    letter-spacing: 1px;
+  }
+
+  .author {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 18px 0 16px 0;
+    font-size: 24px;
+    color: #242424;
+    line-height: 34px;
+
+    .avatar {
+      width: 56px;
+      height: 56px;
+      margin-right: auto;
+      background-color: #EFEFEF;
+      border-radius: 50%;
+      border: 2px solid #D8D8D8;
+      box-sizing: border-box;
+    }
+
+    .time {
+      font-size: 22px;
+    }
+  }
+
+  ::v-deep(.content) {
+    font-size: 30px;
+    color: #242424;
+    line-height: 45px;
+    overflow: hidden;
+
+    ol li {
+      list-style: decimal;
+      list-style-position: inside;
+    }
+
+    ul li {
+      list-style: disc;
+      list-style-position: inside;
+    }
+
+    a {
+      color: #4486DD;
+      background: none !important;
+    }
+
+    p, span, div, b, strong, i, h1, h2, h3, h4, h5, h6, font {
+      padding: 0 !important;
+      // margin: 0 !important;
+      // font-family: "PingFangSC-Regular", "PingFang SC" !important;
+      // font-size: 0.28rem !important;
+      // color: rgba(51, 55, 65, 0.9) !important;
+      // line-height: 0.52rem !important;
+      text-indent: 0 !important;
+      text-decoration: none !important;
+      // 允许长串字母或者数字换行
+      word-wrap: break-word;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+      margin: 10px auto;
+    }
+  }
+
+  .others {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    font-size: 25px;
+    color: #9C9D9E;
+    line-height: 32px;
+
+    .comments {
+      visibility: hidden;
+      margin-right: auto;
+    }
+
+    .medal {
+      margin: 0 10px 0 20px;
+    }
+  }
+
+  .send-medal {
+    width: 120px;
+    height: 200px;
+    margin: 34px auto 0;
+    text-align: center;
+
+    &.not-sent {
+      .icon {
+        filter: grayscale(100%);
+      }
+    }
+
+    &.sent {
+      .send-success {
+        display: block;
+      }
+    }
+
+    .icon {
+      width: 96px;
+      height: 96px;
+      margin: 0 auto;
+      background-color: #FFF9D2;
+      border-radius: 50%;
+      border: 1px solid #FFE271;
+      box-sizing: border-box;
+
+      img {
+        width: 44px;
+        height: 54px;
+      }
+    }
+
+    .name {
+      margin-top: 8px;
+      font-size: 20px;
+      color: #242424;
+      line-height: 28px;
+    }
+
+    .send-success {
+      display: none;
+      margin-top: 28px;
+  
+      img {
+        width: 24px;
+        height: 24px;
+        margin-right: 6px;
+        vertical-align: middle;
+      }
+  
+      span {
+        font-size: 22px;
+        color: #606060;
+        line-height: 32px;
+      }
+    }
+  }
+}

@@ -3,6 +3,7 @@
     <slot name="empty" v-if="state.isShowEmpty"></slot>
 
     <van-pull-refresh
+      style="min-height: 100vh;"
       v-model="state.refreshing"
       :success-text="getTime()"
       success-duration="600"
@@ -261,8 +262,8 @@ export default {
     // 临时性解决 windows 端首次进入列表加载不出来
     if (isWindows()) {
       setTimeout(() => {
-          console.log('isWindows', isWindows());
-          this.onLoad();
+        console.log('isWindows', isWindows());
+        this.onLoad();
       }, 500)
     }
   },

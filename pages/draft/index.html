@@ -1,4 +1,4 @@
-<div class="feedback-form">
+<div class="feedback-form draft-detail">
   <input
     class="name"
     :class="{ pc: isPC }"
@@ -19,17 +19,7 @@
     </QuillEditor>
   </div>
 
-  <van-button
-    class="submit"
-    v-if="id"
-    :loading="submitLoading"
-    loading-text="更新中..."
-    @click="handleSubmit"
-  >
-    更新反馈
-  </van-button>
-
-  <div class="bottom-button" v-else>
+  <div class="bottom-button">
     <van-button
       class="save-draft pull-left"
       :class="{ pc: isPC }"

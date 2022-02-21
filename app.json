@@ -19,7 +19,14 @@
     "pages/request/index",
     "pages/router/index",
     "pages/one/index",
-    "pages/jiemian/index"
+    "pages/jiemian/index",
+
+    "pages/handpicked/index",
+    "pages/handpicked/report-list/index",
+    "pages/handpicked/report-detail/index",
+
+    "pages/draft/index"
+
   ],
   "tabBar": {
     "color": "#525252",
@@ -31,6 +38,12 @@
         "text": "首页",
         "iconPath": "public/images/home@2x.jpg",
         "selectedIconPath": "public/images/home_active@2x.jpg"
+      },
+      {
+        "pagePath": "pages/handpicked/index",
+        "text": "精选",
+        "iconPath": "public/images/handpicked@2x.jpg",
+        "selectedIconPath": "public/images/handpicked_active@2x.jpg"
       },
       {
         "pagePath": "pages/mine/index",

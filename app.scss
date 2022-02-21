@@ -77,6 +77,14 @@ p {
   @include text-overflow-line(1);
 }
 
+.text-overflow-line2 {
+  @include text-overflow-line(2);
+}
+
+.text-overflow-line3 {
+  @include text-overflow-line(3);
+}
+
 .center-item {
   @include center-item();
 }

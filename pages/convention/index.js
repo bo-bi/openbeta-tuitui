@@ -16,8 +16,7 @@ Page({
       // id: 18,
       // questionnaire_id: 'a6955c6ff4c5d',
       detail: {},
-      countDown: 15,
-      // countDown: 3,
+      countDown: 5,
       isTimeUp: false,
     }
   },

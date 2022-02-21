@@ -214,6 +214,35 @@
     }
   }
 
+  .report {
+    height: 230px;
+    padding: 30px 40px 0;
+
+    .more {
+      position: absolute;
+      right: 36px;
+      top: 28px;
+      font-size: 32px;
+    }
+
+    .report-swipe {
+      height: 100px;
+
+      .report-swipe-item {
+        display: flex;
+        align-items: center;
+
+        .content {
+          width: 540px;
+          margin-left: 20px;
+          font-size: 24px;
+          color: #242424;
+          line-height: 38px;
+        }
+      }
+    }
+  }
+
   .steps {
     height: 174px;
     padding: 30px 0 0 40px;

@@ -1,5 +1,5 @@
 <template>
-  <div class="activity-list">
+  <div class="handpicked-section-list">
     <slot name="empty" v-if="state.isShowEmpty"></slot>
 
     <van-pull-refresh
@@ -19,13 +19,12 @@
         @load="onLoad"
       >
 
-        <feedback-list-item
+        <handpicked-section-list-item
           v-for="(item, index) in state.list"
           :key="item.id"
           :item="item"
-          :type="type"
         >
-        </feedback-list-item>
+        </handpicked-section-list-item>
 
       </van-list>
 
@@ -35,11 +34,11 @@
 </template>
 
 <script>
-import { reactive, toRef } from 'vue';
-import List                from 'vant/es/list';
-import PullRefresh         from 'vant/es/pull-refresh';
-import FeedbackListItem    from '/components/FeedbackListItem.vue';
-import * as api            from '/api';
+import { reactive }              from 'vue';
+import List                      from 'vant/es/list';
+import PullRefresh               from 'vant/es/pull-refresh';
+import HandpickedSectionListItem from '/components/HandpickedSectionListItem.vue';
+import * as api                  from '/api';
 import {
   removeLocalKey,
   initLogin,
@@ -51,32 +50,10 @@ export default {
   components: {
     [List.name]: List,
     [PullRefresh.name]: PullRefresh,
-    FeedbackListItem,
-  },
-
-  props: {
-    type: {
-      type: String,
-    },
-
-    params: {
-      type: Object,
-    },
-  },
-
-  data() {
-    return {
-      // page: 1,
-    }
+    HandpickedSectionListItem,
   },
 
   setup(props) {
-    // type、params属性不一定有 所以用 toRef 包裹
-    const type = toRef(props, 'type');
-    const params = toRef(props, 'params');
-    console.log('params', params);
-    // console.log('status', params.value.status);
-
     const state = reactive({
       // 基础属性
       list: [],
@@ -99,7 +76,6 @@ export default {
 
      const onLoad = () => {
       // 下拉刷新
-      console.log('refreshing', state.refreshing);
       if (state.refreshing) {
         state.page = 0;
       }
@@ -126,18 +102,6 @@ export default {
       state.loading = true;
       onLoad();
     };
-
-    const handleReset = () => {
-      state.finished = false;
-      state.loading = true;
-      state.page = 0;
-      state.list = [];
-      onLoad();
-
-      // 页面被通知刷新后, 将是否需要刷新的状态置为否
-      const appInstance = getApp();
-      appInstance.globalData.set('isNeedFreshMineFeedbackPage', 0);
-    }
 
     // 多条数据分页接口模拟 start
     // const fetchData = () => {
@@ -173,10 +137,9 @@ export default {
     // 多条数据分页接口模拟 end
 
     const fetchData = () => {
-      api.getActivityList(type, {
+      api.getSectionList({
         page: state.page,
         limit: state.pageSize,
-        status: params.value && params.value.status,
       })
       .then(({ data }) => {
         const { code, msg } = data;
@@ -244,23 +207,22 @@ export default {
       onLoad,
       onRefresh,
       fetchData,
-      handleReset,
     }
   },
 
   mounted() {
     // 临时性解决 windows 端首次进入列表加载不出来
-    if (isWindows()) {
-      setTimeout(() => {
-        console.log('isWindows', isWindows());
-        this.onLoad();
-      }, 500)
-    }
+    // 经测试 这里不需要 加了反而在 windows 会消失
+    // if (isWindows()) {
+    //   setTimeout(() => {
+    //     console.log('isWindows', isWindows());
+    //     this.onLoad();
+    //   }, 500)
+    // }
   },
 
   methods: {
     getTime() {
-      console.log(formatDate(+new Date, 'hh:mm'))
       return `最后更新: 今天 ${formatDate(+new Date, 'hh:mm')}`;
     },
 

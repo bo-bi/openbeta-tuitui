@@ -270,17 +270,29 @@ function formatDate(timeStamp, fmt) {
 }
 
 const isWindows = () => {
-  const ua = window.navigator.userAgent;
-  return ua.indexOf('Windows') > 0;
+  const ua = window.navigator.userAgent
+  return ua.indexOf('Windows') > 0
 }
 
 const isMac = () => {
-  const ua = window.navigator.userAgent;
-  return ua.indexOf('Mac') > 0 && ua.indexOf('iPhone') < 0;
+  const ua = window.navigator.userAgent
+  return ua.indexOf('Mac') > 0 && ua.indexOf('iPhone') < 0
 }
 
 const isPC = () => {
-  return isWindows() || isMac();
+  return isWindows() || isMac()
+}
+
+function filterAllTag(content) {
+  return content.replace(/<[^>]+>/g, '')
+}
+
+function filterAllTagExceptImg(content) {
+  return content.replace(/<(?!img).*?>/g, '')
+}
+
+function filterAllSpace(content) {
+  return content.replace(/&nbsp;/g, '')
 }
 
 export {
@@ -293,4 +305,7 @@ export {
   isWindows,
   isMac,
   isPC,
+  filterAllTag,
+  filterAllTagExceptImg,
+  filterAllSpace,
 }

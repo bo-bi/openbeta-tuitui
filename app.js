@@ -141,5 +141,7 @@ App({
       },
     ],
 
+    isNeedFreshMineFeedbackPage: 0,
+
   },
 })

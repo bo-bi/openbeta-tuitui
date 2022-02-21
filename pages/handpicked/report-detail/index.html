@@ -1,0 +1,59 @@
+<div v-if="isShowEmpty" class="empty">
+  <van-empty image="https://p3.ssl.qhimg.com/d/inn/bf8a6ce0c558/placeholder-activity-detail.png">
+    <p class="description">报告不存在</p>
+  </van-empty>
+</div>
+
+<div v-else class="handpicked-report-detail">
+  <van-skeleton
+    title
+    :row="20"
+    :loading="!Object.keys(detail).length"
+  >
+
+    <p class="title">{{ detail.name }}</p>
+
+    <div class="author">
+      <span>发布人：</span>
+      <img class="avatar" :src="detail.avatar_url || defaultAvatar" />
+      <span class="time">{{ detail.submit_time }}</span>
+    </div>
+
+    <div
+      class="content"
+      v-html="detail.content_modify || detail.content"
+      @click="handlePreviewImage"
+    >
+    </div>
+
+    <div class="others">
+      <span class="comments">评论数 18</span>
+      <span>浏览 {{ detail.total_view }}</span>
+      <span class="medal">奖章 {{ detail.medal_count }}</span>
+    </div>
+
+    <div
+      class="send-medal"
+      :class="{
+        1: 'not-sent',
+        2: 'sent',
+      }[detail.medal_status]"
+    >
+      <div class="icon flex-center" @click="handleSendMedal">
+        <img src="https://p3.ssl.qhimg.com/t01d064249b0a59560a.png" />
+      </div>
+
+      <p class="name">送奖章</p>
+
+      <div class="send-success">
+        <img src="https://p5.ssl.qhimg.com/t015b2aa439599565ee.png" />
+        <span>赞赏成功</span>
+      </div>
+    </div>
+
+  </van-skeleton>
+</div>
+
+<!-- 用于测试 start -->
+<!-- <div @click="handleCancelMedal">取消奖章</div> -->
+<!-- 用于测试 end -->

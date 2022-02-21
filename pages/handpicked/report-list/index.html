@@ -1,0 +1,51 @@
+<div class="report-list">
+  <van-tabs
+    class="head-tabs"
+    v-model:active="activeTab"
+    type="card"
+    title-active-color="#FFF"
+    title-inactive-color="#3873FA"
+    offset-top="-1px"
+    :ellipsis="false"
+  >
+
+    <van-tab title="精选" name="handpicked">
+      <HandpickedReportList
+        v-if="activeTab === 'handpicked'"
+        type="handpicked"
+        :params="{
+          act_id: $route.query.id,
+          chosen: 2,
+        }"
+      >
+        <template #empty>
+          <div class="empty">
+            <van-empty style="margin-top: 25%;" image="https://p2.ssl.qhimg.com/d/inn/54056951d8c0/placeholder-published.png">
+              <p class="description">还没有哦~</p>
+            </van-empty>
+          </div>
+        </template>
+      </HandpickedReportList>
+    </van-tab>
+
+    <van-tab title="实时" name="realtime">
+      <HandpickedReportList
+        v-if="activeTab === 'realtime'"
+        type="realtime"
+        :params="{
+          act_id: $route.query.id,
+          chosen: 1,
+        }"
+      >
+        <template #empty>
+          <div class="empty">
+            <van-empty style="margin-top: 25%;" image="https://p2.ssl.qhimg.com/d/inn/54056951d8c0/placeholder-published.png">
+              <p class="description">还没有哦~</p>
+            </van-empty>
+          </div>
+        </template>
+      </HandpickedReportList>
+    </van-tab>
+
+  </van-tabs>
+</div>

@@ -137,7 +137,7 @@ Page({
       if (type === 'published' && !isAdmin) {
         qh.alert({
           title: '提示',
-          message: '您还没有发起内测活动的权限，请联系刘波开启',
+          message: '您还没有发起内测活动的权限，请联系李秋平开启',
           buttonName: '知道了',
         });
         return;

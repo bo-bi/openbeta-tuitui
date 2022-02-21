@@ -1,5 +1,5 @@
 <template>
-  <div class="activity-list">
+  <div class="handpicked-report-list">
     <slot name="empty" v-if="state.isShowEmpty"></slot>
 
     <van-pull-refresh
@@ -19,13 +19,13 @@
         @load="onLoad"
       >
 
-        <feedback-list-item
+        <handpicked-report-list-item
           v-for="(item, index) in state.list"
           :key="item.id"
           :item="item"
-          :type="type"
+          :report-list-type="type"
         >
-        </feedback-list-item>
+        </handpicked-report-list-item>
 
       </van-list>
 
@@ -35,11 +35,11 @@
 </template>
 
 <script>
-import { reactive, toRef } from 'vue';
-import List                from 'vant/es/list';
-import PullRefresh         from 'vant/es/pull-refresh';
-import FeedbackListItem    from '/components/FeedbackListItem.vue';
-import * as api            from '/api';
+import { reactive }             from 'vue';
+import List                     from 'vant/es/list';
+import PullRefresh              from 'vant/es/pull-refresh';
+import HandpickedReportListItem from '/components/HandpickedReportListItem.vue';
+import * as api                 from '/api';
 import {
   removeLocalKey,
   initLogin,
@@ -51,7 +51,7 @@ export default {
   components: {
     [List.name]: List,
     [PullRefresh.name]: PullRefresh,
-    FeedbackListItem,
+    HandpickedReportListItem,
   },
 
   props: {
@@ -64,18 +64,8 @@ export default {
     },
   },
 
-  data() {
-    return {
-      // page: 1,
-    }
-  },
-
   setup(props) {
-    // type、params属性不一定有 所以用 toRef 包裹
-    const type = toRef(props, 'type');
-    const params = toRef(props, 'params');
-    console.log('params', params);
-    // console.log('status', params.value.status);
+    const params = props.params;
 
     const state = reactive({
       // 基础属性
@@ -99,7 +89,6 @@ export default {
 
      const onLoad = () => {
       // 下拉刷新
-      console.log('refreshing', state.refreshing);
       if (state.refreshing) {
         state.page = 0;
       }
@@ -107,7 +96,7 @@ export default {
       // 不放在请求接口内部, 是因为保证当前页码是正确的
       state.page ++;
 
-      // 请求接口(需登录)
+      // 请求接口
       initLogin()
       .then(data => {
         console.log('初始化登录成功后', data);
@@ -126,18 +115,6 @@ export default {
       state.loading = true;
       onLoad();
     };
-
-    const handleReset = () => {
-      state.finished = false;
-      state.loading = true;
-      state.page = 0;
-      state.list = [];
-      onLoad();
-
-      // 页面被通知刷新后, 将是否需要刷新的状态置为否
-      const appInstance = getApp();
-      appInstance.globalData.set('isNeedFreshMineFeedbackPage', 0);
-    }
 
     // 多条数据分页接口模拟 start
     // const fetchData = () => {
@@ -173,10 +150,10 @@ export default {
     // 多条数据分页接口模拟 end
 
     const fetchData = () => {
-      api.getActivityList(type, {
+      api.getReportList(params.act_id, {
         page: state.page,
         limit: state.pageSize,
-        status: params.value && params.value.status,
+        chosen: params.chosen,
       })
       .then(({ data }) => {
         const { code, msg } = data;
@@ -244,7 +221,6 @@ export default {
       onLoad,
       onRefresh,
       fetchData,
-      handleReset,
     }
   },
 
@@ -260,7 +236,6 @@ export default {
 
   methods: {
     getTime() {
-      console.log(formatDate(+new Date, 'hh:mm'))
       return `最后更新: 今天 ${formatDate(+new Date, 'hh:mm')}`;
     },
 

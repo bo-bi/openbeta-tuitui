@@ -1,11 +1,16 @@
-import * as api from '/api';
-import Banner   from '/components/Banner.vue';
-import Skeleton from 'vant/es/skeleton';
-import Empty    from 'vant/es/empty';
-import Button   from 'vant/es/button';
+import * as api  from '/api';
+import Banner    from '/components/Banner.vue';
+import Skeleton  from 'vant/es/skeleton';
+import Empty     from 'vant/es/empty';
+import Button    from 'vant/es/button';
+import Swipe     from 'vant/es/swipe';
+import SwipeItem from 'vant/es/swipe-item';
+import Icon      from 'vant/es/icon';
 import { 
   initLogin,
   removeLocalKey,
+  filterAllSpace,
+  filterAllTag,
 } from '/common/utils';
 import {
   activityStateList,
@@ -17,6 +22,9 @@ Page({
     [Skeleton.name]: Skeleton,
     [Empty.name]: Empty,
     [Button.name]: Button,
+    [Swipe.name]: Swipe,
+    [SwipeItem.name]: SwipeItem,
+    [Icon.name]: Icon,
   },
 
   data() {
@@ -47,6 +55,11 @@ Page({
       contributionUserListPage: 1,
       contributionUserList: [],
       contributionUserListHasMore: true,
+
+      // 报告列表
+      isShowReport: false,
+      reportListLoading: false,
+      reportList: [],
 
       defaultAvatar: 'https://p4.ssl.qhimg.com/d/inn/2c29efb0f3ff/default-avatar.jpg',
     }
@@ -171,6 +184,11 @@ Page({
 
         this.getActivityFilterPassedUserList();
         this.getActivityContributionList();
+      }
+
+      // 请求 报告列表 接口
+      if (this.activityDetail.status === 6) {
+        this.getActivityReportList();
       }
     },
 
@@ -485,10 +503,37 @@ Page({
       });
     },
 
+    getActivityReportList() {
+      api.getActivityReportList(this.id, {
+        limit: 100,
+      })
+      .then(({ data }) => {
+        console.log('报告列表接口', data);
+        const { code, msg } = data;
+
+        if (code === 200) {
+          this.reportList = data.data;
+        } else {
+          qh.showToast({
+            title: `${msg}`,
+          });
+        }
+
+        this.isShowReport = true;
+      })
+      .catch(e => {
+        this.isShowReport = true;
+        console.log('e', e);
+        qh.showToast({
+          title: `${e}`,
+        });
+      });
+    },
+
     handleClickStateButton() {
       const { id, name, reg_status, status, cid } = this.activityDetail;
 
-      if (reg_status === 2) {
+      if (reg_status === 2 && status === 4) {
         qh.navigateTo({
           url: `/pages/feedbackForm/index?activity_id=${id}&activity_name=${name}`,
         });
@@ -542,6 +587,33 @@ Page({
         // console.log("点击内容不为img")
       }
     },
+
+    handleGoToReportDetail(id) {
+      qh.navigateTo({
+        url: `/pages/handpicked/report-detail/index?id=${id}`,
+      });
+    },
+
+    handleGoToReportList() {
+      qh.navigateTo({
+        url: `/pages/handpicked/report-list/index?id=${this.id}`,
+      });
+    },
+
+    handleExplainContribution() {
+      qh.alert({
+        title: '产品体验贡献榜',
+        message: '指筛选通过的用户提交产品反馈的次数',
+        buttonName: '确认',
+        success () {
+          console.log('用户点击确定');
+        },
+      })
+    },
+
+    filterAllSpace,
+
+    filterAllTag,
 
   }
 })

@@ -150,9 +150,8 @@ Page({
 
   data() {
     return {
-      id: this.$route.query.id,
+      id: Number(this.$route.query.id),
       activity_name: this.$route.query.activity_name,
-      // 后台接口为强类型, 此处需要严格为数值型
       activity_id: Number(this.$route.query.activity_id),
       // activity_name: '哈哈哈哈哈',
       // activity_id: 11,
@@ -211,6 +210,7 @@ Page({
 
       isPC: isPC(),
 
+      // 是否有草稿
       draftDetail: {},
     }
   },
@@ -226,22 +226,9 @@ Page({
     .then(data => {
       console.log('初始化登录成功后', data);
 
-      // 有意见反馈表的id, 获取意见反馈表详情
       if (this.id) {
         this.fetchData();
       }
-
-      // 若没有意见反馈表的id, 说明还未提交过意见反馈表
-      if (!this.id) {
-        // 获取草稿详情(若有草稿, 显示是否应用草稿的模态框)
-        this.getDraftDetail()
-        .then(data => {
-          // 405 意见反馈草稿不存在
-          if (data.code === 405) return;
-          this.handleApplyDraft();
-        });
-      }
-
     })
     .catch(e => {
       console.log('初始化登录失败后', e);
@@ -255,11 +242,11 @@ Page({
     },
 
     fetchData() {
-      api.getFeedbackDetail(this.id, {
+      api.getDraftDetail({
         act_id: this.activity_id,
       })
       .then(({ data }) => {
-        console.log('意见反馈详情', data);
+        console.log('草稿详情接口', data);
         const { code, msg } = data;
 
         if (code === 200) {
@@ -336,18 +323,19 @@ Page({
     handleSubmit() {
       if (!this.handleValidate()) return;
 
-      if (this.id) {
-        this.updateActivityFeedback();
-      } else {
-        this.addActivityFeedback();
-      }
+      this.addActivityFeedback();
     },
 
     addActivityFeedback() {
       if (this.submitLoading) return;
       this.submitLoading = true;
 
-      api.addActivityFeedback(this.activity_id, this.form)
+      api.addActivityFeedback(this.activity_id, Object.assign(
+        this.form,
+        {
+          draft_id: this.id,
+        }
+      ))
       .then(({ data }) => {
         console.log('add接口', data);
         const { code, msg } = data;
@@ -359,6 +347,10 @@ Page({
             duration: 300,
             success: res => {
               this.submitLoading = false;
+
+              const appInstance = getApp();
+              appInstance.globalData.set('isNeedFreshMineFeedbackPage', 1);
+
               // 返回上一页
               qh.navigateBack({
                 delta: 1,
@@ -398,32 +390,38 @@ Page({
       });
     },
 
-    updateActivityFeedback() {
-      if (this.submitLoading) return;
-      this.submitLoading = true;
+    handleSaveDraft() {
+      if (!this.handleValidate()) return;
 
-      api.updateActivityFeedback(this.id, Object.assign(
+      this.updateDraft();
+    },
+
+    updateDraft() {
+      if (this.saveDraftLoading) return;
+      this.saveDraftLoading = true;
+
+      api.updateDraft(this.id, Object.assign(
         this.form,
         {
           act_id: this.activity_id,
         }
       ))
       .then(({ data }) => {
-        console.log('update接口', data);
+        console.log('更新草稿接口', data);
+
         const { code, msg } = data;
 
         if (code === 200) {
           qh.showToast({
             icon: 'success',
-            title: '更新成功',
+            title: '保存成功',
             // 将持续时间设置短些, 可快速走回调, 返回上一页(此方法toast显示完毕后, 才会走回调)
             duration: 300,
             success: res => {
               // 放置在此处, 不放置在最后, 是为了防止以下情况:
               // loading消失, 此时还没走到toast的回调, 即返回上一页, 可以重复点击
-              this.submitLoading = false;
+              this.saveDraftLoading = false;
 
-              // 返回上一页后需要刷新
               const appInstance = getApp();
               appInstance.globalData.set('isNeedFreshMineFeedbackPage', 1);
 
@@ -435,7 +433,7 @@ Page({
           })
 
         } else {
-          this.submitLoading = false;
+          this.saveDraftLoading = false;
           qh.showToast({
             title: `${msg}`,
           });
@@ -447,8 +445,8 @@ Page({
               // 再重新登录
               return initLogin();
             }).then(data => {
-              // 登录成功后 重新提交
-              this.handleSubmit();
+              // 登录成功后 重新保存
+              this.handleSaveDraft();
             }).catch(e => {
               console.log('token异常, 进行登录错误', e);
             });
@@ -459,198 +457,6 @@ Page({
       })
       .catch(e => {
         this.submitLoading = false;
-        console.log('e', e);
-        qh.showToast({
-          title: `${e}`,
-        });
-      });
-    },
-
-    getDraftDetail() {
-      return api.getDraftDetail({
-        act_id: this.activity_id,
-      })
-      .then(({ data }) => {
-        console.log('草稿详情接口', data);
-        const { code, msg } = data;
-
-        if (code === 200) {
-          this.draftDetail = data.data;
-          return data;
-        } else if (code === 405) {
-          // 405 意见反馈草稿不存在 不进行 toast 提示
-          return data;
-        } else {
-          qh.showToast({
-            title: `${msg}`,
-          });
-        }
-
-      })
-      .catch(e => {
-        console.log('e', e);
-        qh.showToast({
-          title: `${e}`,
-        });
-      });
-    },
-
-    handleApplyDraft() {
-      const { name, content } = this.draftDetail;
-
-      qh.showModal({
-        content: '检测到当前活动保存有草稿，是否应用?',
-        confirmText: '应用',
-        success: (res) => {
-          if (res.confirm) {
-            // 同步内容
-            this.form.name = name;
-            this.form.content = content;
-            this.$refs.customEditor.setHTML(this.form.content);
-          } else if (res.cancel) {
-            console.log('用户点击取消');
-          }
-        },
-      })
-    },
-
-    handleSaveDraft() {
-      if (!this.handleValidate()) return;
-
-      if (Object.keys(this.draftDetail).length) {
-        // 有草稿, 是否覆盖
-        this.handleCoverDraft();
-      } else {
-        // 没有草稿, 就添加
-        this.addDraft();
-      }
-    },
-
-    handleCoverDraft() {
-      qh.showModal({
-        content: '您确定要覆盖之前保存的草稿吗?',
-        success: (res) => {
-          if (res.confirm) {
-            // 更新草稿
-            this.updateDraft();
-          } else if (res.cancel) {
-            console.log('用户点击取消');
-          }
-        },
-      })
-    },
-
-    addDraft() {
-      if (this.saveDraftLoading) return;
-      this.saveDraftLoading = true;
-
-      api.addDraft(this.activity_id, this.form)
-      .then(({ data }) => {
-        console.log('添加草稿接口', data);
-        const { code, msg } = data;
-
-        if (code === 200) {
-          qh.showToast({
-            icon: 'success',
-            title: '保存成功',
-            duration: 300,
-            success: res => {
-              this.saveDraftLoading = false;
-            },
-          });
-        } else if(code === 405) {
-          // 405 表明之前已经有草稿 提示是否覆盖
-          // 此时先请求下 草稿详情接口
-          // 再用详情接口中数据 去调用更新草稿接口
-          this.saveDraftLoading = false;
-
-          this.getDraftDetail()
-          .then(data => {
-            this.handleCoverDraft();
-          });
-        } else {
-          this.saveDraftLoading = false;
-          qh.showToast({
-            title: `${msg}`,
-          });
-
-          if (code === 401) {
-            // 先清除本地存储的token
-            removeLocalKey(ACCESS_TOKEN)
-            .then(data => {
-              // 再重新登录
-              return initLogin();
-            }).then(data => {
-              // 登录成功后 重新保存
-              this.handleSaveDraft();
-            }).catch(e => {
-              console.log('token异常, 进行登录错误', e);
-            });
-          }
-
-        }
-
-      })
-      .catch(e => {
-        this.saveDraftLoading = false;
-        console.log('e', e);
-        qh.showToast({
-          title: `${e}`,
-        });
-      });
-    },
-
-    updateDraft() {
-      if (this.saveDraftLoading) return;
-      this.saveDraftLoading = true;
-
-      api.updateDraft(this.draftDetail.id, Object.assign(
-        this.form,
-        {
-          act_id: this.activity_id,
-        }
-      ))
-      .then(({ data }) => {
-        console.log('更新草稿接口', data);
-        const { code, msg } = data;
-
-        if (code === 200) {
-          qh.showToast({
-            icon: 'success',
-            title: '保存成功',
-            duration: 300,
-            success: res => {
-              // 放置在此处, 不放置在最后, 是为了防止以下情况:
-              // loading 消失, 此时还没走到 toast 的回调, 可以重复点击, toast 消失后才可继续点击
-              this.saveDraftLoading = false;
-            },
-          })
-
-        } else {
-          this.saveDraftLoading = false;
-          qh.showToast({
-            title: `${msg}`,
-          });
-
-          if (code === 401) {
-            // 先清除本地存储的token
-            removeLocalKey(ACCESS_TOKEN)
-            .then(data => {
-              // 再重新登录
-              return initLogin();
-            }).then(data => {
-              // 登录成功后 重新保存
-              this.handleSaveDraft();
-            }).catch(e => {
-              console.log('token异常, 进行登录错误', e);
-            });
-          }
-
-        }
-
-      })
-      .catch(e => {
-        this.saveDraftLoading = false;
         console.log('e', e);
         qh.showToast({
           title: `${e}`,

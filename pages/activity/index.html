@@ -57,6 +57,57 @@
     </van-skeleton>
   </div>
 
+  <div
+    class="report block"
+    v-if="
+      Object.keys(activityDetail).length &&
+      activityDetail.status === 6
+    "
+  >
+    <van-skeleton
+      title
+      :row="2"
+      :loading="!isShowReport"
+    >
+      <p class="primary-title">测评报告</p>
+
+      <van-icon
+        class="more"
+        v-if="reportList.length"
+        name="arrow"
+        color="#B5B5B5"
+        @click="handleGoToReportList"
+      />
+
+      <template v-if="reportList.length">
+        <van-swipe
+          class="report-swipe"
+          :autoplay="4000"
+          :show-indicators="false"
+          :touchable="false"
+          vertical
+        >
+          <van-swipe-item
+            class="report-swipe-item"
+            v-for="(item, index) in reportList"
+            :key="reportList.id"
+            @click="handleGoToReportDetail(item.id)"
+          >
+            <img class="avatar" :src="item.avatar_url || defaultAvatar" />
+
+            <p class="content text-overflow-line2">
+              {{ filterAllSpace(filterAllTag(item.content || '...')) }}
+            </p>
+          </van-swipe-item>
+        </van-swipe>
+      </template>
+
+      <template v-else>
+        <p class="empty-text">报告待公布</p>
+      </template>
+    </van-skeleton>
+  </div>
+
   <div class="steps block">
     <van-skeleton
       title
@@ -261,7 +312,9 @@
       :row="6"
       :loading="!Object.keys(activityDetail).length"
     >
-      <p class="primary-title">产品体验贡献榜</p>
+      <p class="primary-title">
+        产品体验贡献榜<van-icon name="question-o" @click="handleExplainContribution" />
+      </p>
 
       <template v-if="contributionUserList.length">
         <ul class="list clearfix">
@@ -300,10 +353,10 @@
   <!-- 产品体验贡献榜 end -->
 
   <template v-if="activityDetail.reg_status === 2 && currentActivityState.value === 4">
-    <div class="state-submit-feedback" @click="handleClickStateButton()">提交反馈</div>
+    <div class="state-submit-feedback" @click="handleClickStateButton">提交反馈</div>
   </template>
   <template v-else>
-    <div :class="currentActivityState.type" @click="handleClickStateButton()">
+    <div :class="currentActivityState.type" @click="handleClickStateButton">
       {{ currentActivityState.name }}
     </div>
   </template>

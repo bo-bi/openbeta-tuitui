@@ -1,5 +1,5 @@
 <template>
-  <div class="activity-list">
+  <div class="message-list">
     <slot name="empty" v-if="state.isShowEmpty"></slot>
 
     <van-pull-refresh
@@ -19,13 +19,12 @@
         @load="onLoad"
       >
 
-        <feedback-list-item
+        <message-list-medal-item
           v-for="(item, index) in state.list"
           :key="item.id"
           :item="item"
-          :type="type"
         >
-        </feedback-list-item>
+        </message-list-medal-item>
 
       </van-list>
 
@@ -35,11 +34,11 @@
 </template>
 
 <script>
-import { reactive, toRef } from 'vue';
-import List                from 'vant/es/list';
-import PullRefresh         from 'vant/es/pull-refresh';
-import FeedbackListItem    from '/components/FeedbackListItem.vue';
-import * as api            from '/api';
+import { reactive }         from 'vue';
+import List                 from 'vant/es/list';
+import PullRefresh          from 'vant/es/pull-refresh';
+import MessageListMedalItem from '/components/MessageListMedalItem.vue';
+import * as api             from '/api';
 import {
   removeLocalKey,
   initLogin,
@@ -51,31 +50,17 @@ export default {
   components: {
     [List.name]: List,
     [PullRefresh.name]: PullRefresh,
-    FeedbackListItem,
+    MessageListMedalItem,
   },
 
   props: {
     type: {
       type: String,
     },
-
-    params: {
-      type: Object,
-    },
-  },
-
-  data() {
-    return {
-      // page: 1,
-    }
   },
 
   setup(props) {
-    // type、params属性不一定有 所以用 toRef 包裹
-    const type = toRef(props, 'type');
-    const params = toRef(props, 'params');
-    console.log('params', params);
-    // console.log('status', params.value.status);
+    const type = props.type;
 
     const state = reactive({
       // 基础属性
@@ -127,18 +112,6 @@ export default {
       onLoad();
     };
 
-    const handleReset = () => {
-      state.finished = false;
-      state.loading = true;
-      state.page = 0;
-      state.list = [];
-      onLoad();
-
-      // 页面被通知刷新后, 将是否需要刷新的状态置为否
-      const appInstance = getApp();
-      appInstance.globalData.set('isNeedFreshMineFeedbackPage', 0);
-    }
-
     // 多条数据分页接口模拟 start
     // const fetchData = () => {
     //   api.getActivityListWG({
@@ -176,7 +149,6 @@ export default {
       api.getActivityList(type, {
         page: state.page,
         limit: state.pageSize,
-        status: params.value && params.value.status,
       })
       .then(({ data }) => {
         const { code, msg } = data;
@@ -244,7 +216,6 @@ export default {
       onLoad,
       onRefresh,
       fetchData,
-      handleReset,
     }
   },
 
@@ -260,7 +231,6 @@ export default {
 
   methods: {
     getTime() {
-      console.log(formatDate(+new Date, 'hh:mm'))
       return `最后更新: 今天 ${formatDate(+new Date, 'hh:mm')}`;
     },
 

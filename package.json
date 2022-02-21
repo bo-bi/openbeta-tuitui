@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "@vueup/vue-quill": "^1.0.0-beta.7",
-    "vant": "^3.1.5",
+    "vant": "^3.4.5",
     "vconsole": "^3.8.1"
   }
 }
