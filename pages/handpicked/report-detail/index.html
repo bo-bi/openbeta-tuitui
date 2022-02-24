@@ -1,17 +1,17 @@
-<div v-if="isShowEmpty" class="empty">
+<div class="empty" v-if="isShowEmpty">
   <van-empty image="https://p3.ssl.qhimg.com/d/inn/bf8a6ce0c558/placeholder-activity-detail.png">
     <p class="description">报告不存在</p>
   </van-empty>
 </div>
 
-<div v-else class="handpicked-report-detail">
+<div class="report-detail" :class="{ 'handpicked': detail.chosen === 2 }" v-else>
   <van-skeleton
     title
     :row="20"
     :loading="!Object.keys(detail).length"
   >
 
-    <p class="title">{{ detail.name }}</p>
+    <p class="title">{{ detail.name_modify || detail.name }}</p>
 
     <div class="author">
       <span>发布人：</span>

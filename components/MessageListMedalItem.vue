@@ -18,7 +18,9 @@
       </div>
 
       <div class="right">
-        <p class="title text-overflow-ellipsis">{{ item.name }}</p>
+        <p class="title text-overflow-ellipsis">
+          {{ item.name_modify || item.name }}
+        </p>
         <p class="content text-overflow-ellipsis">
           {{
             filterAllSpace(filterAllTag(item.content_modify || item.content || '...')) 

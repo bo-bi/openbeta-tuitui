@@ -1,4 +1,4 @@
-.handpicked-report-detail {
+.report-detail {
   padding: 22px 36px 60px;
 
   .van-skeleton {
@@ -13,7 +13,23 @@
     letter-spacing: 1px;
   }
 
+  &.handpicked {
+    .author {
+      &::after {
+        position: absolute;
+        right: 20px;
+        top: -80px;
+        content: "";
+        width: 150px;
+        height: 150px;
+        background: url("https://p5.ssl.qhimg.com/t01ac1f52bf359e43f0.png") no-repeat;
+        background-size: 100%;
+      }
+    }
+  }
+
   .author {
+    position: relative;
     display: flex;
     justify-content: space-between;
     align-items: center;
