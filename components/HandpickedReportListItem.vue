@@ -12,8 +12,11 @@
 
     <div class="right">
       <p class="content text-overflow-line3">
+        <!-- 若内容全为图片, 则显示标题 -->
         {{
-          filterAllSpace(filterAllTag(item.content_modify || item.content || '...'))
+          filterAllSpace(filterAllTag(item.content_modify || item.content || '...')) ?
+          filterAllSpace(filterAllTag(item.content_modify || item.content || '...')) :
+          (item.name_modify ? item.name_modify : item.name)
         }}
       </p>
 

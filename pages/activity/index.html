@@ -96,7 +96,12 @@
             <img class="avatar" :src="item.avatar_url || defaultAvatar" />
 
             <p class="content text-overflow-line2">
-              {{ filterAllSpace(filterAllTag(item.content || '...')) }}
+              <!-- 若内容全为图片, 则显示标题 -->
+              {{
+                filterAllSpace(filterAllTag(item.content_modify || item.content || '...')) ?
+                filterAllSpace(filterAllTag(item.content_modify || item.content || '...')) :
+                (item.name_modify ? item.name_modify : item.name)
+              }}
             </p>
           </van-swipe-item>
         </van-swipe>
