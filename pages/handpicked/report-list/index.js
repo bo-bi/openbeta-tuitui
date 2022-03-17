@@ -10,6 +10,13 @@ Page({
     this.getSectionDetailByActivityID();
   },
 
+  onShareAppMessage: function () {
+    return {
+      title: `${this.detail.name}，快来查看~`,
+      path: `/pages/handpicked/report-list/index?id=${this.id}`,
+    }
+  },
+
   components: {
     [Tabs.name]: Tabs,
     [Tab.name]: Tab,
