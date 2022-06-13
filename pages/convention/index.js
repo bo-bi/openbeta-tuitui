@@ -11,7 +11,8 @@ Page({
   data() {
     return {
       id: this.$route.query.id,
-      questionnaire_id: this.$route.query.questionnaire_id,
+      activity_id: this.$route.query.activity_id,
+      // questionnaire_id: this.$route.query.questionnaire_id,
       // id: 17,
       // id: 18,
       // questionnaire_id: 'a6955c6ff4c5d',
@@ -90,15 +91,19 @@ Page({
     handleGoToSignUp() {
       if (!this.isTimeUp) return;
 
-      qh.alert({
-        title: '提示',
-        message: '即将跳转问卷小程序, 进行报名, 提交成功后, 即完成报名.',
-        buttonName: '确定',
-        success: res => {
-          console.log('用户点击确定', res);
-          this.handleNavigateToMiniProgram();
-        },
+      qh.navigateTo({
+        url: `/pages/questionnaire/index?activity_id=${this.activity_id}`,
       });
+
+      // qh.alert({
+      //   title: '提示',
+      //   message: '即将跳转问卷小程序, 进行报名, 提交成功后, 即完成报名.',
+      //   buttonName: '确定',
+      //   success: res => {
+      //     console.log('用户点击确定', res);
+      //     this.handleNavigateToMiniProgram();
+      //   },
+      // });
     },
 
     handleNavigateToMiniProgram() {

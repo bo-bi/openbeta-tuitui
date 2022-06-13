@@ -84,6 +84,7 @@
     min-width: calc(100% - 80px);
     padding: 0 40px;
     background-color: #FFF;
+    box-sizing: content-box;
 
     div[role="tablist"] {
       align-items: center;

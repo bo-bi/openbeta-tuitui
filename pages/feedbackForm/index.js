@@ -212,6 +212,7 @@ Page({
       isPC: isPC(),
 
       draftDetail: {},
+      isApplyDraft: false,
     }
   },
 
@@ -347,7 +348,12 @@ Page({
       if (this.submitLoading) return;
       this.submitLoading = true;
 
-      api.addActivityFeedback(this.activity_id, this.form)
+      api.addActivityFeedback(this.activity_id, Object.assign(
+        this.form,
+        {
+          draft_id: this.isApplyDraft ? this.draftDetail.id : undefined,
+        },
+      ))
       .then(({ data }) => {
         console.log('add接口', data);
         const { code, msg } = data;
@@ -507,6 +513,9 @@ Page({
             this.form.name = name;
             this.form.content = content;
             this.$refs.customEditor.setHTML(this.form.content);
+
+            // 用于提交反馈消耗掉草稿
+            this.isApplyDraft = true;
           } else if (res.cancel) {
             console.log('用户点击取消');
           }

@@ -1,0 +1,283 @@
+.questionnaire {
+  position: absolute;
+  width: 100%;
+  min-height: 100%;
+  padding: 40px 25px 150px;
+
+  .van-skeleton {
+    padding: 0;
+    margin-top: 10px;
+  }
+
+  .success {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    .placeholder-image {
+      width: 450px;
+      height: 450px;
+      background: url("https://p1.ssl.qhimg.com/t0117418c5446c6ae7c.png") no-repeat;
+      background-size: 100%;
+    }
+
+    .title {
+      margin-top: 24px;
+      font-size: 44px;
+      font-weight: 700;
+      color: #000;
+    }
+
+    .copywriting {
+      width: 400px;
+      height: 140px;
+      margin-top: 12px;
+      font-size: 28px;
+      color: #666;
+      line-height: 48px;
+      text-align: center;
+      white-space: pre-wrap;
+      overflow: hidden;
+    }
+
+    .QR-code-container {
+      position: absolute;
+      left: 50%;
+      bottom: 180px;
+      width: 320px;
+      height: 320px;
+      padding: 20px;
+      margin-left: -160px;
+      box-shadow: 0px 2px 20px 0px rgba(26, 38, 65, 0.12), 0px 0px 0px 2px rgba(26, 38, 65, 0.02);
+
+      img {
+        width: 280px;
+        height: 280px;
+      }
+    }
+  }
+
+  .form {
+    .questionnaire-basic {
+      padding: 30px;
+      margin-bottom: 25px;
+      background-color: #FFF;
+      border-radius: 10px;
+
+      .title {
+        font-size: 47px;
+        color: #293349;
+        text-align: center;
+      }
+
+      .describe {
+        margin-top: 30px;
+        font-size: 28px;
+        line-height: 48px;
+        color: #3A4357;
+      }
+    }
+
+    .item {
+      width: 100%;
+      padding: 0 30px;
+      margin-bottom: 25px;
+      background-color: #FFF;
+      border-radius: 10px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      &.other {
+        input[type="text"] {
+          width: 78%;
+          border-bottom: 1px solid #ccc;
+          border-radius: 0;
+        }
+      }
+
+      .name {
+        padding: 40px 0;
+        font-size: 30px;
+        font-weight: 500;
+        color: #242424;
+        border-bottom: 1px solid rgba(239, 239, 239, .8);
+
+        .required-mark {
+          position: relative;
+          top: -8px;
+          color: #FF1818;
+          font-size: 20px;
+        }
+      }
+
+      input[type="text"] {
+        width: 100%;
+        font-size: 28px;
+        padding: 26px 0;
+        color: #3A4357;
+        // 设置光标颜色
+        caret-color: #1B69FF;
+
+        &::placeholder {
+          color: #858585;
+        }
+      }
+
+      .radio-list {
+        .radio-item {
+          display: flex;
+          align-items: center;
+          padding: 30px 0;
+          font-size: 28px;
+          color: #3A4357;
+          border-bottom: 1px solid rgba(239, 239, 239, .8);
+
+          &:last-child {
+            border: none;
+          }
+
+          .radio-wrapper {
+            position: relative;
+            width: 38px;
+            height: 38px;
+            margin-right: 16px;
+
+            .radio-icon {
+              position: absolute;
+              left: 0;
+              top: 0;
+              width: 100%;
+              height: 100%;
+              background: url("https://p5.ssl.qhimg.com/d/inn/db6e3831ad7d/radio-check.png") no-repeat;
+              background-size: 100%;
+              background-position: center center;
+            }
+
+            input[type="radio"] {
+              z-index: 1;
+              position: relative;
+              width: 100%;
+              height: 100%;
+              opacity: 0;
+
+              &:checked + .radio-icon {
+                background: url("https://p2.ssl.qhimg.com/d/inn/db6e3831ad7d/radio-checked.png") no-repeat;
+                background-size: 36px 36px;
+                background-position: center center;
+              }
+            }
+          }
+
+          .radio-item-label {
+            width: 96%;
+          }
+        }
+      }
+
+      .checkbox-list {
+        .checkbox-item {
+          display: flex;
+          align-items: center;
+          padding: 30px 0;
+          font-size: 28px;
+          color: #3A4357;
+          border-bottom: 1px solid rgba(239, 239, 239, .8);
+
+          &:last-child {
+            border: none;
+          }
+
+          .checkbox-wrapper {
+            position: relative;
+            width: 37px;
+            height: 37px;
+            margin-right: 16px;
+    
+            .checkbox-icon {
+              position: absolute;
+              left: 0;
+              top: 0;
+              width: 100%;
+              height: 100%;
+              background: url("https://p2.ssl.qhimg.com/d/inn/db6e3831ad7d/checkbox-check.png") no-repeat;
+              background-size: 100%;
+              background-position: center center;
+            }
+    
+            input[type="checkbox"] {
+              z-index: 1;
+              position: relative;
+              width: 100%;
+              height: 100%;
+              opacity: 0;
+    
+              &:checked + .checkbox-icon {
+                background: url("https://p3.ssl.qhimg.com/d/inn/db6e3831ad7d/checkbox-checked.png") no-repeat;
+                background-size: 36px 36px;
+                background-position: center center;
+              }
+            }
+          }
+
+          .checkbox-item-label {
+            width: 96%;
+          }
+        }
+      }
+
+    }
+  }
+
+  .foot-notation {
+    margin-top: 50px;
+    text-align: center;
+    overflow: hidden;
+    letter-spacing: 1px;
+
+    p:nth-child(1) {
+      font-size: 25px;
+      // color: rgba(137, 137, 137);
+      color: #6b6969;;
+      font-weight: 400;
+    }
+
+    p:nth-child(2) {
+      margin-top: 10px;
+      font-size: 20px;
+      // color: rgba(166, 166, 166);
+      color: rgb(165, 160, 160);
+      font-weight: 400;
+    }
+  }
+
+  .bottom-button {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    padding: 25px;
+    background-color: #FFF;
+    border-top: 1px solid #DADADA;
+
+    .submit {
+      display: block;
+      width: 100%;
+      height: 88px;
+      font-size: 34px;
+      color: #FFF;
+      line-height: 88px;
+      text-align: center;
+      letter-spacing: 8px;
+      background-color: #3873FA;
+      border-radius: 8px;
+    }
+
+  }
+}

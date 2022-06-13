@@ -360,6 +360,34 @@
   <template v-if="activityDetail.reg_status === 2 && currentActivityState.value === 4">
     <div class="state-submit-feedback" @click="handleClickStateButton">提交反馈</div>
   </template>
+
+  <!--
+    立即参加 start
+    两个接口决定状态, 不是同步请求, 为防止闪烁误点, 故先隐藏按钮, 待最后一个接口返回后再显示
+  -->
+  <!-- 1. 报名成功 -->
+  <!-- <template v-else-if="currentActivityState.value === 2 && isSignUp">
+    <div
+      v-show="isShowActivityState2Button"
+      class="state-sign-up-success"
+      @click="handleClickStateButton"
+    >
+      报名成功
+    </div>
+  </template> -->
+
+  <!-- 2. 立即参加 -->
+  <!-- <template v-else-if="currentActivityState.value === 2">
+    <div
+      v-show="isShowActivityState2Button"
+      :class="currentActivityState.type"
+      @click="handleClickStateButton"
+    >
+      {{ currentActivityState.name }}
+    </div>
+  </template> -->
+  <!-- 立即参加 end -->
+
   <template v-else>
     <div :class="currentActivityState.type" @click="handleClickStateButton">
       {{ currentActivityState.name }}

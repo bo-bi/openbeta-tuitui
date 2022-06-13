@@ -33,7 +33,7 @@ Page({
       // id: 11,
       activityDetail: {},
       imageList: [],
-      questionnaire_id: '',
+      // questionnaire_id: '',
       currentActivityState: {},
       isShowEmpty: false,
 
@@ -62,6 +62,10 @@ Page({
       reportList: [],
 
       defaultAvatar: 'https://p4.ssl.qhimg.com/d/inn/2c29efb0f3ff/default-avatar.jpg',
+
+      // 报名是否成功
+      isSignUp: false,
+      isShowActivityState2Button: false,
     }
   },
   onLoad: function () {
@@ -117,8 +121,8 @@ Page({
           // data.data.reg_status = 1;
           this.activityDetail = data.data;
           this.imageList = JSON.parse(this.activityDetail.image);
-          this.questionnaire_id =
-            this.activityDetail.link.slice(this.activityDetail.link.indexOf('sv/') + 3);
+          // this.questionnaire_id =
+          //   this.activityDetail.link.slice(this.activityDetail.link.indexOf('sv/') + 3);
 
           // 设置title
           qh.setNavigationBarTitle({
@@ -169,6 +173,11 @@ Page({
     },
 
     fetchList() {
+      // 请求 报名是否成功 接口
+      if (this.activityDetail.status === 2) {
+        this.getSignUpState();
+      }
+
       // 请求已报名接口
       if ([3, 4, 5, 6].includes(this.activityDetail.status)) {
         this.getActivitySignedUpUserList();
@@ -543,22 +552,26 @@ Page({
       if (status === 2) {
         cid ?
         qh.navigateTo({
-          url: `/pages/convention/index?id=${cid}&questionnaire_id=${this.questionnaire_id}`,
+          // url: `/pages/convention/index?id=${cid}&questionnaire_id=${this.questionnaire_id}`,
+          url: `/pages/convention/index?id=${cid}&activity_id=${id}`,
         }) :
-        qh.alert({
-          title: '提示',
-          message: '即将跳转问卷小程序, 进行报名, 提交成功后, 即完成报名.',
-          buttonName: '确定',
-          success: res => {
-            console.log('用户点击确定', res);
-            qh.navigateToMiniProgram({
-              appId: '7652669648848144',
-              path: `pages/view/index?id=${this.questionnaire_id}`,
-              success: res => {
-                console.log('跳转小程序成功', res);
-              },
-            });
-          },
+        // qh.alert({
+        //   title: '提示',
+        //   message: '即将跳转问卷小程序, 进行报名, 提交成功后, 即完成报名.',
+        //   buttonName: '确定',
+        //   success: res => {
+        //     console.log('用户点击确定', res);
+        //     qh.navigateToMiniProgram({
+        //       appId: '7652669648848144',
+        //       path: `pages/view/index?id=${this.questionnaire_id}`,
+        //       success: res => {
+        //         console.log('跳转小程序成功', res);
+        //       },
+        //     });
+        //   },
+        // });
+        qh.navigateTo({
+          url: `/pages/questionnaire/index?activity_id=${id}`,
         });
         return;
       }
@@ -567,6 +580,28 @@ Page({
         title: '提示',
         message: this.currentActivityState.detailMessage,
         buttonName: '好的',
+      });
+    },
+
+    getSignUpState() {
+      api.getSignUpState(this.id)
+      .then(({ data }) => {
+        console.log('报名是否成功接口', data);
+        const { code, msg } = data;
+        // 模拟数据 start
+        // let { code, msg } = data;
+        // code = 200
+        // 模拟数据 end
+        if (code === 200) {
+          this.isSignUp = true;
+        }
+        this.isShowActivityState2Button = true;
+      })
+      .catch(e => {
+        console.log('e', e);
+        qh.showToast({
+          title: `${e}`,
+        });
       });
     },
 

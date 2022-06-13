@@ -1,0 +1,253 @@
+<div
+  class="questionnaire"
+  :style="{ 'background-color': formData.length ? '' : '#FFF' }"
+>
+  <!-- 报名成功 -->
+  <template v-if="Object.keys(settingsData).length">
+    <div class="success">
+      <div
+        class="placeholder-image"
+        :style="{ 'margin-top': settingsData.qr_code_url ? '' : '25%' }"
+      >
+      </div>
+
+      <p class="title">
+        报名成功
+        <van-icon name="checked" color="#07C160" />
+      </p>
+
+      <p class="copywriting">
+        {{ settingsData.copy_writing || '等待名单筛选通过中～' }}
+      </p>
+
+      <div
+        class="QR-code-container"
+        v-if="settingsData.qr_code_url"
+        @click="handlePreviewImage"
+      >
+        <img :src="settingsData.qr_code_url" />
+      </div>
+    </div>
+  </template>
+
+  <!-- 问卷为空 -->
+  <template v-else-if="isShowEmpty">
+    <div class="empty">
+      <van-empty image="https://p3.ssl.qhimg.com/d/inn/bf8a6ce0c558/placeholder-activity-detail.png">
+        <p class="description">问卷不存在</p>
+      </van-empty>
+    </div>
+  </template>
+
+  <!-- 问卷 -->
+  <template v-else>
+    <van-skeleton
+      title
+      :row="20"
+      :loading="!formData.length"
+    >
+
+      <div class="form">
+        <div class="questionnaire-basic">
+          <p class="title">{{ questionnaireName }}</p>
+          <p class="describe">
+            根据要求完成下面的问卷，有机会参与产品公测哦~认真填写，通过筛选的概率更大，一起成为产品品鉴官吧！
+          </p>
+        </div>
+
+        <!-- 控件类型 start -->
+        <div
+          class="item"
+          v-for="(item, index) in formData"
+          :key="item.field_id"
+          :class="{ 'other': [6, 7].includes(item.field_type) }"
+        >
+          <p class="name">
+            {{ index + 1 }}. {{ item.name }}<span class="required-mark" v-if="item.required === 1">*</span>
+          </p>
+
+          <!-- input -->
+          <template v-if="item.field_type === 1">
+            <input
+              type="text"
+              v-model.trim="formList[index].value"
+              placeholder="请输入"
+            />
+          </template>
+
+          <!-- radio -->
+          <template v-if="item.field_type === 3">
+            <div class="radio-list">
+              <div
+                class="radio-item"
+                v-for="option in item.options"
+                :key="item.field_id + '_' + option"
+              >
+                <div class="radio-wrapper">
+                  <input
+                    type="radio"
+                    :id="item.field_id + '_' + option"
+                    :value="option"
+                    v-model="formList[index].value"
+                  >
+
+                  <i class="radio-icon"></i>
+                </div>
+
+                <label class="radio-item-label" :for="item.field_id + '_' + option">
+                  {{ option }}
+                </label>
+              </div>
+            </div>
+          </template>
+
+          <!-- radio + other -->
+          <template v-if="item.field_type === 6">
+            <div class="radio-list">
+
+              <div
+                class="radio-item"
+                v-for="option in item.options"
+                :key="item.field_id + '_' + option"
+              >
+                <div class="radio-wrapper">
+                  <input
+                    type="radio"
+                    :id="item.field_id + '_' + option"
+                    :value="option"
+                    v-model="formList[index].value"
+                  >
+      
+                  <i class="radio-icon"></i>
+                </div>
+
+                <label :for="item.field_id + '_' + option" class="radio-item-label">
+                  {{ option }}
+                </label>
+              </div>
+
+              <div class="radio-item">
+                <div class="radio-wrapper">
+                  <input
+                    type="radio"
+                    :id="item.field_id + '_other'"
+                    :value="null"
+                    v-model="formList[index].value"
+                  />
+                  <i class="radio-icon"></i>
+                </div>
+
+                  <label :for="item.field_id + '_other'" class="radio-item-other-label">
+                    其他:
+                  </label>
+
+                  <input
+                    type="text"
+                    class="other"
+                    v-model.trim="otherStore[item.field_id + '_other']"
+                    @focus="otherRadioFocus(index, item)"
+                    @input="otherRadioInput(index, item)"
+                  />
+              </div>
+            </div>
+          </template>
+
+          <!-- checkbox -->
+          <template v-if="item.field_type === 4">
+            <div class="checkbox-list">
+
+              <div
+                class="checkbox-item"
+                v-for="option in item.options"
+                :key="item.field_id + '_' + option"
+              >
+                <div class="checkbox-wrapper">
+                  <input
+                    type="checkbox"
+                    :id="item.field_id + '_' + option"
+                    :value="option"
+                    v-model="formList[index].value"
+                  />
+                  <i class="checkbox-icon"></i>
+                </div>
+      
+                <label :for="item.field_id + '_' + option" class="checkbox-item-label">
+                  {{ option }}
+                </label>
+              </div>
+            </div>
+          </template>
+
+          <!-- checkbox other -->
+          <template v-if="item.field_type === 7">
+            <div class="checkbox-list">
+
+              <div
+                class="checkbox-item"
+                v-for="option in item.options"
+                :key="item.field_id + '_' + option"
+              >
+                <div class="checkbox-wrapper">
+                  <input
+                    type="checkbox"
+                    :id="item.field_id + '_' + option"
+                    :value="option"
+                    v-model="formList[index].value"
+                  />
+                  <i class="checkbox-icon"></i>
+                </div>
+      
+                <label :for="item.field_id + '_' + option" class="checkbox-item-label">
+                  {{ option }}
+                </label>
+              </div>
+
+              <div class="checkbox-item">
+                <div class="checkbox-wrapper">
+                  <input
+                    type="checkbox"
+                    :id="item.field_id + '_other'"
+                    :value="null"
+                    v-model="formList[index].value"
+                  />
+                  <i class="checkbox-icon"></i>
+                </div>
+                
+                <label :for="item.field_id + '_other'" class="checkbox-item-other-label">
+                  其他:
+                </label>
+
+                <input
+                  type="text"
+                  class="other"
+                  v-model.trim="otherStore[item.field_id + '_other']"
+                  @focus="otherCheckboxFocus(index, item)"
+                  @input="otherCheckboxInput(index, item)"
+                />
+              </div>
+            </div>
+          </template>
+
+        </div>
+        <!-- 控件类型 end -->
+      </div>
+
+      <div class="foot-notation">
+        <p>- 360er 产品内测 -</p>
+        <p>用户至上 体验为王</p>
+      </div>
+
+      <div class="bottom-button" v-if="type === 'activity'">
+        <van-button
+          class="submit"
+          :loading="submitLoading"
+          loading-text="提交中..."
+          @click="handleSubmit"
+        >
+          提交
+        </van-button>
+      </div>
+
+    </van-skeleton>
+  </template>
+</div>

@@ -269,6 +269,10 @@ function formatDate(timeStamp, fmt) {
   return fmt
 }
 
+function copyObject(object) {
+  return JSON.parse(JSON.stringify(object));
+}
+
 const isWindows = () => {
   const ua = window.navigator.userAgent
   return ua.indexOf('Windows') > 0
@@ -302,6 +306,7 @@ export {
   initLogin,
   removeLocalKey,
   formatDate,
+  copyObject,
   isWindows,
   isMac,
   isPC,

@@ -6,7 +6,9 @@
     "pages/activity/index",
     "pages/longImage/index",
     "pages/convention/index",
+    "pages/questionnaire/index",
     "pages/feedbackForm/index",
+    "pages/draft/index",
 
     "pages/mine/index",
     "pages/mine/published/index",
@@ -23,10 +25,7 @@
 
     "pages/handpicked/index",
     "pages/handpicked/report-list/index",
-    "pages/handpicked/report-detail/index",
-
-    "pages/draft/index"
-
+    "pages/handpicked/report-detail/index"
   ],
   "tabBar": {
     "color": "#525252",

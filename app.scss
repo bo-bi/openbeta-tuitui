@@ -1,5 +1,16 @@
 @import '/common/reset', '/common/variables';
 
+* {
+  box-sizing: border-box;
+}
+
+input, textarea {
+  border: none;
+  outline: none;
+  resize: none;
+  -webkit-appearance: none;
+}
+
 p {
   margin: 0;
 }

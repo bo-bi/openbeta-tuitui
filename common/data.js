@@ -28,7 +28,7 @@ const activityStateList = [
     type: 'state-testing',
     name: '内测中',
     detailTimeName: '反馈截止时间',
-    detailMessage: '正在内测中哦~',
+    detailMessage: '您好, 很遗憾您已错过报名时间, 无法参加本次测评~',
   },
 
   {
@@ -36,7 +36,7 @@ const activityStateList = [
     type: 'state-results-summary',
     name: '结果汇总中',
     detailTimeName: '活动结束时间',
-    detailMessage: '结果汇总中哦~',
+    detailMessage: '优质报告筛选中, 快来与我猜一猜究竟会花落谁家!',
   },
 
   {
@@ -44,7 +44,7 @@ const activityStateList = [
     type: 'state-finished',
     name: '活动结束',
     detailTimeName: '活动结束时间',
-    detailMessage: '活动已结束~',
+    detailMessage: '活动已结束, 一起期待下一次活动开始吧~',
   },
 ];
 

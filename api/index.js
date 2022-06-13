@@ -129,6 +129,26 @@ const updateReadMessage = () => {
   return post(`/api/user/medal/mark/read`);
 }
 
+const getSignUpState = (id) => {
+  return get(`/api/activity/reg/user/${id}`);
+}
+
+const getQuestionnaireSettings = (id) => {
+  return get(`/api/activity/questionnaire/${id}`);
+}
+
+const getQuestionnaireDetail = (id, type) => {
+  if (type === 'preview') {
+    return get(`/api/questionnaire/show/${id}`);
+  } else {
+    return get(`/api/activity/form/${id}`);
+  }
+}
+
+const sendQuestionnaire = (id, params) => {
+  return post(`/api/activity/submit/form/${id}`, params);
+}
+
 export {
   getActivityListWG,
 
@@ -158,4 +178,8 @@ export {
   getSectionDetailByActivityID,
   getUnreadMessageNumber,
   updateReadMessage,
+  getSignUpState,
+  getQuestionnaireSettings,
+  getQuestionnaireDetail,
+  sendQuestionnaire,
 }
