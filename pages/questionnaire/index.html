@@ -66,13 +66,19 @@
             {{ index + 1 }}. {{ item.name }}<span class="required-mark" v-if="item.required === 1">*</span>
           </p>
 
-          <!-- input -->
+          <!-- 单行文本 -->
           <template v-if="item.field_type === 1">
             <input
               type="text"
               v-model.trim="formList[index].value"
               placeholder="请输入"
             />
+          </template>
+
+          <!-- 多行文本 -->
+          <template v-if="item.field_type === 2">
+            <textarea v-model.trim="formList[index].value" placeholder="请输入">
+            </textarea>
           </template>
 
           <!-- radio -->

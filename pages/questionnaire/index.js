@@ -129,6 +129,17 @@ Page({
         //       "remark": "",
         //       "required": 1
         //     },
+
+        //     {
+        //       "field_id": "field11",
+        //       "field_type": 2,
+        //       "id": 11,
+        //       "name": "您的意见",
+        //       "options": null,
+        //       "qm_id": 1,
+        //       "remark": "",
+        //       "required": 1
+        //     },
         
         //     // {
         //     //   "field_id": "field2",
@@ -561,14 +572,9 @@ Page({
 
       console.log('submitData', submitData)
 
-      // let aaa = JSON.stringify(submitData);
-      // console.log('aaa', JSON.parse(aaa))
-      // return;
-
       if (this.submitLoading) return;
       this.submitLoading = true;
 
-      // api.getBannerList(this.activity_id, {
       api.sendQuestionnaire(this.activity_id, {
         question_item: JSON.stringify(submitData),
       })

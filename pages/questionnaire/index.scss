@@ -114,7 +114,8 @@
         }
       }
 
-      input[type="text"] {
+      input[type="text"],
+      textarea {
         width: 100%;
         font-size: 28px;
         padding: 26px 0;
@@ -125,6 +126,11 @@
         &::placeholder {
           color: #858585;
         }
+      }
+
+      textarea {
+        height: 210px;
+        line-height: 37px;
       }
 
       .radio-list {
