@@ -1,7 +1,6 @@
 <div class="feedback-form">
   <input
     class="name"
-    :class="{ pc: isPC }"
     type="text"
     v-model="form.name"
     placeholder="请输入标题"
@@ -32,7 +31,6 @@
   <div class="bottom-button" v-else>
     <van-button
       class="save-draft pull-left"
-      :class="{ pc: isPC }"
       color="#3873FA"
       plain
       :loading="saveDraftLoading"

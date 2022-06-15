@@ -22,10 +22,6 @@
     &::placeholder {
       color: #A5A5A5;
     }
-
-    &.pc {
-      background-color: #FFF;
-    }
   }
 
   .editor-wrapper {
@@ -83,10 +79,6 @@
 
     .save-draft {
       background-color: #EFEFEF;
-
-      &.pc {
-        background-color: #FFF;
-      }
     }
 
     .direct-submit {

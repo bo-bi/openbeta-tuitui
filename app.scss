@@ -33,6 +33,39 @@ p {
   }
 }
 
+.flex-center {
+  @include flex-center();
+}
+
+.flex-between {
+  @include flex-between();
+}
+
+.text-overflow-ellipsis {
+  @include text-overflow-line(1);
+}
+
+.text-overflow-line2 {
+  @include text-overflow-line(2);
+}
+
+.text-overflow-line3 {
+  @include text-overflow-line(3);
+}
+
+.center-item {
+  @include center-item();
+}
+
+.center-block {
+  @include center-block();
+}
+
+#app {
+  min-height: 100vh;
+  background-color: #EFEFEF;
+}
+
 .empty {
   // position: absolute;
   // top: 0;
@@ -74,32 +107,4 @@ p {
       }
     }
   }
-}
-
-.flex-center {
-  @include flex-center();
-}
-
-.flex-between {
-  @include flex-between();
-}
-
-.text-overflow-ellipsis {
-  @include text-overflow-line(1);
-}
-
-.text-overflow-line2 {
-  @include text-overflow-line(2);
-}
-
-.text-overflow-line3 {
-  @include text-overflow-line(3);
-}
-
-.center-item {
-  @include center-item();
-}
-
-.center-block {
-  @include center-block();
 }
