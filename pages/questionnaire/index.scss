@@ -104,7 +104,6 @@
         font-size: 30px;
         font-weight: 500;
         color: #242424;
-        border-bottom: 1px solid rgba(239, 239, 239, .8);
 
         .required-mark {
           position: relative;
@@ -112,6 +111,17 @@
           color: #FF1818;
           font-size: 20px;
         }
+      }
+
+      .remark {
+        padding-bottom: 20px;
+        font-size: 25px;
+        color: #9199A5;
+      }
+
+      .split-line {
+        height: 1px;
+        background-color: rgba(239, 239, 239, .8);
       }
 
       input[type="text"],

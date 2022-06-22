@@ -41,7 +41,7 @@ Page({
           list: [
             {
               type: 'feedback',
-              name: '意见反馈表',
+              name: '测评报告',
               image: 'https://p2.ssl.qhimg.com/d/inn/e0b87c129e81/feedback.jpg',
             },
           ]
