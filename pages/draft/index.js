@@ -1,12 +1,12 @@
 import { QuillEditor } from '@vueup/vue-quill';
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
-import * as api from '/api';
-import Button   from 'vant/es/button';
+import * as api  from '/api';
+import Button    from 'vant/es/button';
+import RatePanel from '/components/RatePanel.vue';
 import {
   uploadImage,
   initLogin,
   removeLocalKey,
-  isPC,
   filterAllSpace,
   filterAllTagExceptImg,
 } from '/common/utils';
@@ -146,6 +146,7 @@ Page({
   components: {
     QuillEditor,
     [Button.name]: Button,
+    RatePanel,
   },
 
   data() {
@@ -208,10 +209,8 @@ Page({
         探索者俱乐部的孩子们被鼓励做一些项目，乔布斯决定做一台频率计数器。他需要一些惠普制造的零件，于是他拿起电话打给了惠普的CEO：“那个时候，所有的电话号码都是登记在册的，所以我在电话簿上寻找住在帕洛奥图的比尔·休利特，然后打到了他家。他接了电话并和我聊了20分钟。之后他给了我那些零件，还给了我一份工作，就在他们制造频率计数器的工厂。”乔布斯第一年的暑假就在那里工作。“我爸爸早上开车送我去，晚上再把我接回家。`,
       },
 
-      isPC: isPC(),
-
-      // 是否有草稿
-      draftDetail: {},
+      rateData: {},
+      readonly: false,
     }
   },
 
@@ -241,6 +240,49 @@ Page({
       console.log('Quill初始化完成', Quill);
     },
 
+    syncAll(data, readonly = true) {
+      const {
+        name,
+        content,
+        satisfaction,
+        recommend,
+        satisfaction_reason,
+        recommend_reason,
+      } = data;
+
+      // 同步评分 + 原因
+      this.rateData = {
+        satisfaction,
+        recommend,
+        satisfaction_reason,
+        recommend_reason,
+      };
+
+      // 同步内容
+      this.form.name = name;
+      this.form.content = content;
+      this.$refs.customEditor.setHTML(this.form.content);
+
+      // 评分 + 原因 为只读
+      this.readonly = readonly;
+    },
+
+    getRatePanelComponentData() {
+      const {
+        satisfaction,
+        recommend,
+        satisfaction_reason,
+        recommend_reason,
+      } = this.$refs.ratePanel;
+
+      return {
+        satisfaction,
+        recommend,
+        satisfaction_reason,
+        recommend_reason,
+      }
+    },
+
     fetchData() {
       api.getDraftDetail({
         act_id: this.activity_id,
@@ -250,10 +292,7 @@ Page({
         const { code, msg } = data;
 
         if (code === 200) {
-          const { data: { name, content }} = data;
-          this.form.name = name;
-          this.form.content = content;
-          this.$refs.customEditor.setHTML(this.form.content);
+          this.syncAll(data.data, false);
         } else {
           qh.showToast({
             title: `${msg}`,
@@ -321,6 +360,7 @@ Page({
     },
 
     handleSubmit() {
+      if (!this.$refs.ratePanel.handleValidate()) return;
       if (!this.handleValidate()) return;
 
       this.addActivityFeedback();
@@ -334,7 +374,8 @@ Page({
         this.form,
         {
           draft_id: this.id,
-        }
+        },
+        this.getRatePanelComponentData(),
       ))
       .then(({ data }) => {
         console.log('add接口', data);
@@ -391,6 +432,7 @@ Page({
     },
 
     handleSaveDraft() {
+      if (!this.$refs.ratePanel.handleValidate()) return;
       if (!this.handleValidate()) return;
 
       this.updateDraft();
@@ -404,7 +446,8 @@ Page({
         this.form,
         {
           act_id: this.activity_id,
-        }
+        },
+        this.getRatePanelComponentData(),
       ))
       .then(({ data }) => {
         console.log('更新草稿接口', data);

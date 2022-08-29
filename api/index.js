@@ -30,6 +30,10 @@ const getActivityList = (type, params) => {
       return get(`/api/user/opinion/feedback/draft/list`, params);
     case 'message':
       return get(`/api/user/report/medal/log`, params);
+    case 'personal-joined':
+      return get(`/api/other/user/reg/activity/list`, params);
+    case 'personal-report':
+      return get(`/api/other/user/report/list`, params);
     default:
       return post('http://qaapiclub.bbs.360.cn/api/resource/imagelist', params);
   }
@@ -69,6 +73,10 @@ const getConventionDetail = (id) => {
 
 const getFeedbackDetail = (id, params) => {
   return get(`/api/feedback/show/${id}`, params);
+}
+
+const getLatestFeedbackDetail = (params) => {
+  return get(`/api/feedback/latest`, params);
 }
 
 const addActivityFeedback = (id, params) => {
@@ -149,6 +157,14 @@ const sendQuestionnaire = (id, params) => {
   return post(`/api/activity/submit/form/${id}`, params);
 }
 
+const getUserProfile = (params) => {
+  return get(`/api/other/user/show`, params);
+}
+
+const getUserReportDataStatistics = (params) => {
+  return get(`/api/other/user/report/statistics`, params);
+}
+
 export {
   getActivityListWG,
 
@@ -164,6 +180,7 @@ export {
   getActivityReportList,
   getConventionDetail,
   getFeedbackDetail,
+  getLatestFeedbackDetail,
   addActivityFeedback,
   updateActivityFeedback,
   getSectionList,
@@ -182,4 +199,6 @@ export {
   getQuestionnaireSettings,
   getQuestionnaireDetail,
   sendQuestionnaire,
+  getUserProfile,
+  getUserReportDataStatistics,
 }

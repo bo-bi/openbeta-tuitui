@@ -25,7 +25,9 @@
 
     "pages/handpicked/index",
     "pages/handpicked/report-list/index",
-    "pages/handpicked/report-detail/index"
+    "pages/handpicked/report-detail/index",
+
+    "pages/personalHomePage/index"
   ],
   "tabBar": {
     "color": "#525252",

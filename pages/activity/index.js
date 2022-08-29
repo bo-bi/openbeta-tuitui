@@ -650,5 +650,11 @@ Page({
 
     filterAllTag,
 
+    handleGoToPersonalHomePage(uid) {
+      qh.navigateTo({
+        url: `/pages/personalHomePage/index?uid=${uid}`,
+      });
+    },
+
   }
 })

@@ -1,7 +1,8 @@
 import { QuillEditor } from '@vueup/vue-quill';
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
-import * as api from '/api';
-import Button   from 'vant/es/button';
+import * as api  from '/api';
+import Button    from 'vant/es/button';
+import RatePanel from '/components/RatePanel.vue';
 import {
   uploadImage,
   initLogin,
@@ -145,6 +146,7 @@ Page({
   components: {
     QuillEditor,
     [Button.name]: Button,
+    RatePanel,
   },
 
   data() {
@@ -208,6 +210,12 @@ Page({
         探索者俱乐部的孩子们被鼓励做一些项目，乔布斯决定做一台频率计数器。他需要一些惠普制造的零件，于是他拿起电话打给了惠普的CEO：“那个时候，所有的电话号码都是登记在册的，所以我在电话簿上寻找住在帕洛奥图的比尔·休利特，然后打到了他家。他接了电话并和我聊了20分钟。之后他给了我那些零件，还给了我一份工作，就在他们制造频率计数器的工厂。”乔布斯第一年的暑假就在那里工作。“我爸爸早上开车送我去，晚上再把我接回家。`,
       },
 
+      isFinishGetLatestFeedbackDetail: false,
+      latestFeedbackDetail: {},
+      rateData: {},
+      readonly: false,
+      noticeText: '',
+
       draftDetail: {},
       isApplyDraft: false,
     }
@@ -227,19 +235,31 @@ Page({
       // 有意见反馈表的id, 获取意见反馈表详情
       if (this.id) {
         this.fetchData();
+        this.noticeText = '您已填写过打分和原因，本次更新只更新反馈内容哦～';
       }
 
-      // 若没有意见反馈表的id, 说明还未提交过意见反馈表
+      // 若没有意见反馈表的id, 说明是从活动详情页进入的
       if (!this.id) {
-        // 获取草稿详情(若有草稿, 显示是否应用草稿的模态框)
-        this.getDraftDetail()
+        // 首先查询下这个活动之前是否提交过意见反馈表
+        this.getLatestFeedbackDetail()
         .then(data => {
-          // 405 意见反馈草稿不存在
-          if (data.code === 405) return;
-          this.handleApplyDraft();
-        });
-      }
+          if (data.code === 405) {
+            // 若为405 则说明本活动未提交过意见反馈表, 查询草稿详情
+            // 获取草稿详情(若有草稿, 显示是否应用草稿的模态框)
+            this.getDraftDetail()
+            .then(data => {
+              // 405 意见反馈草稿不存在
+              if (data.code === 405) return;
+              this.handleApplyDraft();
+            });
 
+            this.noticeText = '360er请注意：以下打分和原因提交后无法修改，只能更新反馈内容哦～';
+          } else {
+            // 不为405 则说明本活动已提交过意见反馈表, 可进行更新反馈
+            this.noticeText = '您已填写过打分和原因，本次更新只更新反馈内容哦～';
+          }
+        })
+      }
     })
     .catch(e => {
       console.log('初始化登录失败后', e);
@@ -252,6 +272,83 @@ Page({
       console.log('Quill初始化完成', Quill);
     },
 
+    // 获取详情后(1. 最新意见反馈表详情 2. 根据id查询到的意见反馈表详情 3. 草稿), 同步页面所有内容
+    syncAll(data, readonly = true) {
+      const {
+        name,
+        content,
+        satisfaction,
+        recommend,
+        satisfaction_reason,
+        recommend_reason,
+      } = data;
+
+      // 同步评分 + 原因
+      this.rateData = {
+        satisfaction,
+        recommend,
+        satisfaction_reason,
+        recommend_reason,
+      };
+
+      // 同步内容
+      this.form.name = name;
+      this.form.content = content;
+      this.$refs.customEditor.setHTML(this.form.content);
+
+      // 评分 + 原因 为只读
+      this.readonly = readonly;
+    },
+
+    getRatePanelComponentData() {
+      const {
+        satisfaction,
+        recommend,
+        satisfaction_reason,
+        recommend_reason,
+      } = this.$refs.ratePanel;
+
+      return {
+        satisfaction,
+        recommend,
+        satisfaction_reason,
+        recommend_reason,
+      }
+    },
+
+    getLatestFeedbackDetail() {
+      return api.getLatestFeedbackDetail({
+        act_id: this.activity_id,
+      })
+      .then(({ data }) => {
+        console.log('是否提交过意见反馈详情接口', data);
+        const { code, msg } = data;
+
+        if (code === 200) {
+          this.latestFeedbackDetail = data.data;
+          this.syncAll(this.latestFeedbackDetail);
+          return data;
+        } else if (code === 405) {
+          // 405 意见反馈详情不存在 不进行 toast 提示
+          return data;
+        } else {
+          qh.showToast({
+            title: `${msg}`,
+          });
+        }
+
+      })
+      .catch(e => {
+        console.log('e', e);
+        qh.showToast({
+          title: `${e}`,
+        });
+      })
+      .finally(() => {
+        this.isFinishGetLatestFeedbackDetail = true;
+      });
+    },
+
     fetchData() {
       api.getFeedbackDetail(this.id, {
         act_id: this.activity_id,
@@ -261,10 +358,7 @@ Page({
         const { code, msg } = data;
 
         if (code === 200) {
-          const { data: { name, content }} = data;
-          this.form.name = name;
-          this.form.content = content;
-          this.$refs.customEditor.setHTML(this.form.content);
+          this.syncAll(data.data);
         } else {
           qh.showToast({
             title: `${msg}`,
@@ -331,10 +425,18 @@ Page({
       return true;
     },
 
-    handleSubmit() {
+    handleSubmit(type) {
+      /**
+       * 若为 更新反馈 操作, 则不对评分及原因进行校验,
+       * 若是 首次提交 操作, 则需要对评分及原因校验
+       *
+       * update: 更新反馈
+       * first:  直接提交
+       */
+      if (type === 'first' && !this.$refs.ratePanel.handleValidate()) return;
       if (!this.handleValidate()) return;
 
-      if (this.id) {
+      if (type === 'update') {
         this.updateActivityFeedback();
       } else {
         this.addActivityFeedback();
@@ -350,6 +452,7 @@ Page({
         {
           draft_id: this.isApplyDraft ? this.draftDetail.id : undefined,
         },
+        this.getRatePanelComponentData(),
       ))
       .then(({ data }) => {
         console.log('add接口', data);
@@ -405,12 +508,18 @@ Page({
       if (this.submitLoading) return;
       this.submitLoading = true;
 
-      api.updateActivityFeedback(this.id, Object.assign(
-        this.form,
-        {
-          act_id: this.activity_id,
-        }
-      ))
+      // 从 我的意见反馈列表 进入, 是用 该意见反馈表id 进行更新
+      // 从 活动详情页      进入, 是用获取到的最新详情中的id 进行更新
+      api.updateActivityFeedback(
+        this.id ? this.id : this.latestFeedbackDetail.id,
+        Object.assign(
+          this.form,
+          {
+            act_id: this.activity_id,
+          },
+          this.getRatePanelComponentData(),
+        )
+      )
       .then(({ data }) => {
         console.log('update接口', data);
         const { code, msg } = data;
@@ -426,9 +535,11 @@ Page({
               // loading消失, 此时还没走到toast的回调, 即返回上一页, 可以重复点击
               this.submitLoading = false;
 
-              // 返回上一页后需要刷新
-              const appInstance = getApp();
-              appInstance.globalData.set('isNeedFreshMineFeedbackPage', 1);
+              // 在意见反馈列表中对单条进行更新, 返回上一页后需要刷新
+              if (this.id) {
+                const appInstance = getApp();
+                appInstance.globalData.set('isNeedFreshMineFeedbackPage', 1);
+              }
 
               // 返回上一页
               qh.navigateBack({
@@ -499,17 +610,12 @@ Page({
     },
 
     handleApplyDraft() {
-      const { name, content } = this.draftDetail;
-
       qh.showModal({
         content: '检测到当前活动保存有草稿，是否应用?',
         confirmText: '应用',
         success: (res) => {
           if (res.confirm) {
-            // 同步内容
-            this.form.name = name;
-            this.form.content = content;
-            this.$refs.customEditor.setHTML(this.form.content);
+            this.syncAll(this.draftDetail, false);
 
             // 用于提交反馈消耗掉草稿
             this.isApplyDraft = true;
@@ -521,6 +627,7 @@ Page({
     },
 
     handleSaveDraft() {
+      if (!this.$refs.ratePanel.handleValidate()) return;
       if (!this.handleValidate()) return;
 
       if (Object.keys(this.draftDetail).length) {
@@ -550,7 +657,10 @@ Page({
       if (this.saveDraftLoading) return;
       this.saveDraftLoading = true;
 
-      api.addDraft(this.activity_id, this.form)
+      api.addDraft(this.activity_id, Object.assign(
+        this.form,
+        this.getRatePanelComponentData(),
+      ))
       .then(({ data }) => {
         console.log('添加草稿接口', data);
         const { code, msg } = data;
@@ -614,7 +724,8 @@ Page({
         this.form,
         {
           act_id: this.activity_id,
-        }
+        },
+        this.getRatePanelComponentData(),
       ))
       .then(({ data }) => {
         console.log('更新草稿接口', data);

@@ -1,7 +1,13 @@
+<rate-panel
+  ref="ratePanel"
+  :readonly="readonly"
+  :rateData="rateData"
+  text="360er请注意：以下打分和原因提交后无法修改，只能更新反馈内容哦～"
+/>
+
 <div class="feedback-form draft-detail">
   <input
     class="name"
-    :class="{ pc: isPC }"
     type="text"
     v-model="form.name"
     placeholder="请输入标题"
@@ -22,7 +28,6 @@
   <div class="bottom-button">
     <van-button
       class="save-draft pull-left"
-      :class="{ pc: isPC }"
       color="#3873FA"
       plain
       :loading="saveDraftLoading"

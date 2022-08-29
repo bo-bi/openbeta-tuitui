@@ -1,0 +1,240 @@
+.personal-home-page {
+  .wall {
+    height: 400px;
+    background: linear-gradient(127deg, #6670FF 0%, #1C69FE 100%);
+    overflow: hidden;
+
+    .basic-wrapper {
+      .van-skeleton {
+        display: flex;
+        align-items: center;
+        margin: 45px 0 0 30px;
+
+        ::v-deep(.van-skeleton__avatar) {
+          margin-right: 32px;
+        }
+
+        ::v-deep(.van-skeleton__row) {
+          margin-top: 25px;
+        }
+      }
+    }
+
+    .basic {
+      display: flex;
+      align-items: center;
+      margin: 48px 0 0 64px;
+      color: #FFF;
+
+      .avtar {
+        width: 120px;
+        height: 120px;
+        margin-right: 32px;
+        background-color: #F2F3F5;
+        border: 2px solid #FFF;
+        border-radius: 50%;
+        overflow: hidden;
+
+        img {
+          width: 100%;
+        }
+      }
+
+      .name {
+        display: flex;
+        align-items: center;
+        font-size: 36px;
+        font-weight: 500;
+        letter-spacing: 1px;
+
+        .chat {
+          width: 52px;
+          height: 54px;
+          margin-left: 18px;
+          background: url("https://p0.ssl.qhimg.com/t01ce22ee40792f6998.png") no-repeat;
+          background-size: 100%;
+        }
+      }
+
+      .number {
+        margin-top: 8px;
+        font-size: 28px;
+        letter-spacing: 1px;
+
+        b {
+          font-weight: 500;
+        }
+      }
+    }
+
+    .total {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 40px;
+
+      .van-skeleton {
+        padding: 0;
+  
+        ::v-deep(.van-skeleton__row) {
+          width: 100px;
+          height: 100px;
+          background-color: #F2F3F5;
+        }
+      }
+
+      .item {
+        flex: 1;
+        color: #FFF;
+        text-align: center;
+
+        .inner {
+          height: 88px;
+
+          &::after {
+            border-color: rgba(255, 255, 255, 0.3);
+          }
+
+          .number {
+            font-size: 44px;
+            font-weight: 500;
+          }
+  
+          .name {
+            margin-top: 8px;
+            font-size: 28px;
+          }
+        }
+      }
+    }
+  }
+
+  .tabs {
+    // 此处若为 position: fixed; 由于overflow: auto; Tabs将显示不出来
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: calc(100vh - 430px);
+    margin-top: 430px;
+    background-color: #F4F1F4;
+    overflow: auto;
+
+    // 内容区域
+    ::v-deep(.van-tabs__content) {
+      padding-top: 0px;
+
+      .inner {
+        padding: 0 24px;
+
+        .activity-list,
+        .feedback-list {
+          // 当占位图出现时, 使页面不能滚动
+          .van-pull-refresh {
+            min-height: inherit !important;
+          }
+        }
+
+        .activity-list .activity-list-item,
+        .feedback-list .feedback-list-item {
+          &:first-child {
+            margin-top: 0;
+          }
+
+          padding: 24px;
+          margin-top: 24px;
+          border-radius: 16px;
+        }
+    
+        .activity-list {
+          .activity-list-item {
+            height: 518px;
+
+            .cover {
+              width: 100%;
+            }
+          }
+        }
+
+        .feedback-list {
+          .feedback-list-item {
+            height: 188px;
+          }
+        }
+      }
+    }
+
+    ::v-deep(.van-tabs__wrap) {
+      position: fixed;
+      left: 0;
+      top: 328px;
+      width: 100%;
+      height: 104px;
+
+      div[role="tablist"] {
+        display: flex;
+        align-items: flex-end;
+        height: 100%;
+        margin: 0;
+        background: transparent;
+        border: none;
+
+        // 用于修补两个Tab之间的空隙
+        &::after {
+          z-index: -1;
+          position: absolute;
+          left: 50%;
+          bottom: 0;
+          content: "";
+          width: 80%;
+          height: 88px;
+          margin-left: -40%;
+          background: linear-gradient(#D7DEFF 0%, #F1F1F3 100%);
+        }
+
+        .van-tab {
+          width: 47%;
+          height: 88px;
+          border: none;
+          background: linear-gradient(#D7DEFF 0%, #F1F1F3 100%);
+
+          .van-tab__text {
+            font-size: 30px;
+            color: #767E85;
+            letter-spacing: 1px;
+          }
+
+          &.van-tab--active {
+            width: 53%;
+            height: 100%;
+            // 此处不能用 background-color, 因为渐变用的是background, 需统一
+            background: #F4F1F4;
+            border: none;
+
+            .van-tab__text {
+              font-size: 32px;
+              font-weight: 500;
+              color: #181818;
+              letter-spacing: 1px;
+            }
+          }
+
+          &:nth-child(1) {
+            border-top-left-radius: 50px 50px;
+            &.van-tab--active {
+              border-top-left-radius: 50px 50px;
+              border-top-right-radius: 70px 110px;
+            }
+          }
+
+          &:nth-child(2) {
+            border-top-right-radius: 50px 50px;
+            &.van-tab--active {
+              border-top-left-radius: 70px 110px;
+              border-top-right-radius: 50px 50px;
+            }
+          }
+        }
+      }
+    }
+  }
+}

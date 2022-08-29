@@ -1,3 +1,10 @@
+<rate-panel
+  ref="ratePanel"
+  :readonly="readonly"
+  :rateData="rateData"
+  :text="noticeText"
+/>
+
 <div class="feedback-form">
   <input
     class="name"
@@ -18,35 +25,63 @@
     </QuillEditor>
   </div>
 
-  <van-button
-    class="submit"
-    v-if="id"
-    :loading="submitLoading"
-    loading-text="更新中..."
-    @click="handleSubmit"
-  >
-    更新反馈
-  </van-button>
+  <div class="bottom-button">
+    <!--
+      首先判断 url 是否是带 id 的意见反馈表页面, 若是, 底部直接显示 更新反馈 按钮
+      1. 我的 - 意见反馈列表 - 意见反馈表页面    url 中 含有 id activity_id 都有
+      2. 活动详情页 - 意见反馈表页面            url 中 只含有 activity_id 没有 id
+    -->
+    <template v-if="id">
+      <van-button
+        class="submit"
+        :loading="submitLoading"
+        loading-text="更新中..."
+        @click="handleSubmit('update')"
+      >
+        更新反馈
+      </van-button>
+    </template>
 
-  <div class="bottom-button" v-else>
-    <van-button
-      class="save-draft pull-left"
-      color="#3873FA"
-      plain
-      :loading="saveDraftLoading"
-      loading-text="保存中..."
-      @click="handleSaveDraft"
-    >
-      保存草稿
-    </van-button>
+    <!--
+      其次判断若是从活动详情页进入的, 底部按钮要根据实际情况进行显示
 
-    <van-button
-      class="direct-submit pull-right"
-      :loading="submitLoading"
-      loading-text="提交中..."
-      @click="handleSubmit"
-    >
-      直接提交
-    </van-button>
+      需要等待获取 是否提交过意见反馈详情的接口(即获取最新意见反馈表详情接口) 完毕, 才显示底部按钮, 否则底部按钮会有闪烁
+    -->
+    <template v-else-if="isFinishGetLatestFeedbackDetail">
+      <!-- 有最新详情 显示 更新反馈 -->
+      <template v-if="Object.keys(latestFeedbackDetail).length">
+        <van-button
+          class="submit"
+          :loading="submitLoading"
+          loading-text="更新中..."
+          @click="handleSubmit('update')"
+        >
+          更新反馈
+        </van-button>
+      </template>
+
+      <!-- 否则显示 保存草稿、直接提交 -->
+      <template v-else>
+        <van-button
+          class="save-draft pull-left"
+          color="#3873FA"
+          plain
+          :loading="saveDraftLoading"
+          loading-text="保存中..."
+          @click="handleSaveDraft"
+        >
+          保存草稿
+        </van-button>
+
+        <van-button
+          class="direct-submit pull-right"
+          :loading="submitLoading"
+          loading-text="提交中..."
+          @click="handleSubmit('first')"
+        >
+          直接提交
+        </van-button>
+      </template>
+    </template>
   </div>
 </div>

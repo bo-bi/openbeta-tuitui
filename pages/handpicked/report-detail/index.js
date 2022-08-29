@@ -1,6 +1,7 @@
-import * as api from '/api';
-import Skeleton from 'vant/es/skeleton';
-import Empty    from 'vant/es/empty';
+import * as api   from '/api';
+import Skeleton   from 'vant/es/skeleton';
+import Empty      from 'vant/es/empty';
+import CommentBox from '/components/CommentBox.vue';
 import {
   initLogin,
   removeLocalKey,
@@ -11,6 +12,7 @@ Page({
   components: {
     [Skeleton.name]: Skeleton,
     [Empty.name]: Empty,
+    CommentBox,
   },
 
   data() {
@@ -260,6 +262,12 @@ Page({
         qh.showToast({
           title: `${e}`,
         });
+      });
+    },
+
+    handleGoToPersonalHomePage(uid) {
+      qh.navigateTo({
+        url: `/pages/personalHomePage/index?uid=${uid}`,
       });
     },
 

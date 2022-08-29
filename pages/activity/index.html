@@ -1,8 +1,10 @@
-<div class="empty" v-if="isShowEmpty">
-  <van-empty image="https://p3.ssl.qhimg.com/d/inn/bf8a6ce0c558/placeholder-activity-detail.png">
-    <p class="description">活动不存在或下线</p>
-    <!-- <div class="bottom-button" @click="handleGoToHomePage">返回首页</div> -->
-  </van-empty>
+<div class="activity" v-if="isShowEmpty">
+  <div class="empty">
+    <van-empty image="https://p3.ssl.qhimg.com/d/inn/bf8a6ce0c558/placeholder-activity-detail.png">
+      <p class="description">活动不存在或下线</p>
+      <!-- <div class="bottom-button" @click="handleGoToHomePage">返回首页</div> -->
+    </van-empty>
+  </div>
 </div>
 
 <div class="activity" v-else>
@@ -185,6 +187,7 @@
             class="item"
             v-for="(item, index) in signedUpUserList.slice(0, 6)"
             :key="index"
+            @click="handleGoToPersonalHomePage(item.uid)"
           >
             <img class="avatar" :src="item.avatar_url || defaultAvatar" />
           </li>
@@ -258,6 +261,7 @@
             class="item pull-left"
             v-for="(item, index) in filterPassedUserList"
             :key="index"
+            @click="handleGoToPersonalHomePage(item.uid)"
           >
             <img class="avatar" :src="item.avatar_url || defaultAvatar" />
           </li>
@@ -327,6 +331,7 @@
             class="item pull-left"
             v-for="(item, index) in contributionUserList"
             :key="index"
+            @click="handleGoToPersonalHomePage(item.uid)"
           >
             <span>
               <img class="avatar" :src="item.avatar_url || defaultAvatar" />
@@ -358,7 +363,7 @@
   <!-- 产品体验贡献榜 end -->
 
   <template v-if="activityDetail.reg_status === 2 && currentActivityState.value === 4">
-    <div class="state-submit-feedback" @click="handleClickStateButton">提交反馈</div>
+    <div class="state-submit-feedback" @click="handleClickStateButton">更新反馈</div>
   </template>
 
   <!--

@@ -1,5 +1,5 @@
 <template>
-  <div class="activity-list">
+  <div class="feedback-list">
     <slot name="empty" v-if="state.isShowEmpty"></slot>
 
     <van-pull-refresh
@@ -177,6 +177,7 @@ export default {
         page: state.page,
         limit: state.pageSize,
         status: params.value && params.value.status,
+        uid: params.value && params.value.uid,
       })
       .then(({ data }) => {
         const { code, msg } = data;

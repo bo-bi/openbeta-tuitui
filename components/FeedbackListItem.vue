@@ -61,7 +61,7 @@ export default {
 
   methods: {
     handleGoToDetail(item) {
-      const { id, act_id, act_name } = item;
+      const { id, act_id, act_name, report_id } = item;
 
       if (this.type === 'feedback') {
         qh.navigateTo({
@@ -72,6 +72,12 @@ export default {
       if (this.type === 'draft') {
         qh.navigateTo({
           url: `/pages/draft/index?id=${id}&activity_id=${act_id}&activity_name=${act_name}`,
+        });
+      }
+
+      if (this.type === 'personal-report') {
+        qh.navigateTo({
+          url: `/pages/handpicked/report-detail/index?id=${report_id}`,
         });
       }
     },

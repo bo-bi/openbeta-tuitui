@@ -47,7 +47,7 @@
 
     <template v-if="item.reg_status === 2 && currentActivityState.value === 4">
       <div class="state-submit-feedback">
-        提交反馈
+        更新反馈
       </div>
     </template>
     <template v-else>

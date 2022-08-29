@@ -1,7 +1,9 @@
-<div class="empty" v-if="isShowEmpty">
-  <van-empty image="https://p3.ssl.qhimg.com/d/inn/bf8a6ce0c558/placeholder-activity-detail.png">
-    <p class="description">报告不存在</p>
-  </van-empty>
+<div class="report-detail" v-if="isShowEmpty">
+  <div class="empty">
+    <van-empty image="https://p3.ssl.qhimg.com/d/inn/bf8a6ce0c558/placeholder-activity-detail.png">
+      <p class="description">报告不存在</p>
+    </van-empty>
+  </div>
 </div>
 
 <div class="report-detail" :class="{ 'handpicked': detail.chosen === 2 }" v-else>
@@ -15,7 +17,11 @@
 
     <div class="author">
       <span>发布人：</span>
-      <img class="avatar" :src="detail.avatar_url || defaultAvatar" />
+      <img
+        class="avatar"
+        :src="detail.avatar_url || defaultAvatar"
+        @click="handleGoToPersonalHomePage(detail.opinion_uid)"
+      />
       <span class="time">{{ detail.submit_time }}</span>
     </div>
 
@@ -52,6 +58,10 @@
     </div>
 
   </van-skeleton>
+
+  <!-- 评论 start -->
+  <!-- <CommentBox /> -->
+  <!-- 评论 end -->
 </div>
 
 <!-- 用于测试 start -->

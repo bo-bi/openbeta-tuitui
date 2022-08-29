@@ -93,11 +93,11 @@ Page({
       settingsData: {},
 
       activity_id: this.$route.query.activity_id,
-    // activity_id: 34,
+      // activity_id: 34,
 
       qm_id: this.$route.query.qm_id,
       type: this.$route.query.qm_id ? 'preview' : 'activity',
-      // qm_id: 10,
+      // qm_id: 41,
       // type: 'preview',
 
       questionnaireName: '',

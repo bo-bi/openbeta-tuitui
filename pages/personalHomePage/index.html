@@ -1,0 +1,125 @@
+<div class="personal-home-page">
+  <div class="wall">
+    <div class="basic-wrapper">
+      <van-skeleton
+        title
+        avatar
+        avatar-size="65"
+        :row="1"
+        :loading="Object.keys(userProfile).length <= 0"
+      >
+
+        <div class="basic">
+          <div class="avtar" @click="handleShowTip">
+            <img :src="userProfile.avatar_url || defaultAvatar" />
+          </div>
+
+          <div>
+            <p class="name">
+              {{ userProfile.name || '未知' }}
+              <span class="chat" @click="handleToConversation"></span>
+            </p>
+
+            <p class="number">
+              <span>已参加活动：</span><b>{{ userProfile.act_count || 0 }} 场</b>
+            </p>
+          </div>
+        </div>
+
+      </van-skeleton>
+    </div>
+
+    <div class="total">
+      <van-skeleton
+        row="1"
+        row-width="['100%']"
+        :loading="!Object.keys(dataStatistics).length"
+      >
+        <div class="item">
+          <div class="inner  van-hairline--right">
+            <p class="number">{{ dataStatistics.medal_count || 0 }}</p>
+            <p class="name">奖章</p>
+          </div>
+        </div>
+      </van-skeleton>
+
+      <!-- <van-skeleton
+          row="1"
+          row-width="['100%']"
+          :loading="!Object.keys(dataStatistics).length"
+        >
+        <div class="item">
+          <div class="inner">
+            <p class="number">{{ dataStatistics.total_post || 0 }}</p>
+            <p class="name">评论</p>
+          </div>
+        </div>
+      </van-skeleton> -->
+
+      <van-skeleton
+        row="1"
+        row-width="['100%']"
+        :loading="!Object.keys(dataStatistics).length"
+      >
+        <div class="item">
+          <div class="inner van-hairline--left">
+            <p class="number">{{ dataStatistics.total_view || 0 }}</p>
+            <p class="name">浏览量</p>
+          </div>
+        </div>
+      </van-skeleton>
+    </div>
+  </div>
+
+  <van-tabs
+    class="tabs"
+    v-model:active="activeTab"
+    type="card"
+    title-active-color="#181818"
+    title-inactive-color="#ccc"
+    offset-top="-1px"
+    :ellipsis="false"
+  >
+    <van-tab title="参与活动" name="personal-joined">
+      <div class="inner">
+        <ActivityList
+          v-if="activeTab === 'personal-joined'"
+          type="personal-joined"
+          :params="{
+            uid,
+          }"
+        >
+          <template #empty>
+            <div class="empty">
+              <van-empty style="margin-top: 10%;" image="https://p3.ssl.qhimg.com/d/inn/2582c2d5e360/placeholder-joined.png">
+                <p class="description">还没有哦, 赶快参与吧~</p>
+              </van-empty>
+            </div>
+          </template>
+        </ActivityList>
+      </div>
+    </van-tab>
+
+    <van-tab title="测试报告" name="personal-report">
+      <div class="inner">
+        <FeedbackList
+          ref="submitted"
+          v-if="activeTab === 'personal-report'"
+          type="personal-report"
+          :params="{
+            uid,
+          }"
+        >
+          <template #empty>
+            <div class="empty">
+              <van-empty style="margin-top: 10%;" image="https://p3.ssl.qhimg.com/d/inn/f534277ed579/placeholder-feedback.png">
+                <p class="description">还没有哦~</p>
+              </van-empty>
+            </div>
+          </template>
+        </FeedbackList>
+      </div>
+    </van-tab>
+
+  </van-tabs>
+</div>

@@ -186,6 +186,7 @@ export default {
         page: state.page,
         limit: state.pageSize,
         status: params.value && params.value.status,
+        uid: params.value && params.value.uid,
       })
       .then(({ data }) => {
         const { code, msg } = data;

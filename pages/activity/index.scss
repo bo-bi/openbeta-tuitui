@@ -1,5 +1,7 @@
 .activity {
+  min-height: 100vh;
   padding-bottom: 116px;
+  overflow: hidden;
 
   .block {
     position: relative;
