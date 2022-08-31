@@ -209,8 +209,11 @@ Page({
         探索者俱乐部的孩子们被鼓励做一些项目，乔布斯决定做一台频率计数器。他需要一些惠普制造的零件，于是他拿起电话打给了惠普的CEO：“那个时候，所有的电话号码都是登记在册的，所以我在电话簿上寻找住在帕洛奥图的比尔·休利特，然后打到了他家。他接了电话并和我聊了20分钟。之后他给了我那些零件，还给了我一份工作，就在他们制造频率计数器的工厂。”乔布斯第一年的暑假就在那里工作。“我爸爸早上开车送我去，晚上再把我接回家。`,
       },
 
+      isSubmittedFeedback: false,
+      isFinishGetLatestFeedbackDetail: false,
       rateData: {},
       readonly: false,
+      noticeText: '',
     }
   },
 
@@ -226,7 +229,19 @@ Page({
       console.log('初始化登录成功后', data);
 
       if (this.id) {
-        this.fetchData();
+        this.getLatestFeedbackDetail()
+        .then(data => {
+          if (data.code === 405) {
+            // 若为405 则说明本活动未提交过意见反馈表
+            this.noticeText = '360er请注意：以下打分和原因提交后无法修改，只能更新报告内容哦～';
+          } else {
+            // 不为405 则说明本活动已提交过意见反馈表
+            this.noticeText = '360er：因您已提交正式测评报告，故本次草稿不可启用～（活动只能提交一个报告哦～）';
+            this.isSubmittedFeedback = true;
+          }
+
+          this.fetchData();
+        })
       }
     })
     .catch(e => {
@@ -322,6 +337,37 @@ Page({
         qh.showToast({
           title: `${e}`,
         });
+      });
+    },
+
+    getLatestFeedbackDetail() {
+      return api.getLatestFeedbackDetail({
+        act_id: this.activity_id,
+      })
+      .then(({ data }) => {
+        console.log('是否提交过意见反馈详情接口', data);
+        const { code, msg } = data;
+
+        if (code === 200) {
+          return data;
+        } else if (code === 405) {
+          // 405 意见反馈详情不存在 不进行 toast 提示
+          return data;
+        } else {
+          qh.showToast({
+            title: `${msg}`,
+          });
+        }
+
+      })
+      .catch(e => {
+        console.log('e', e);
+        qh.showToast({
+          title: `${e}`,
+        });
+      })
+      .finally(() => {
+        this.isFinishGetLatestFeedbackDetail = true;
       });
     },
 

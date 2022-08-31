@@ -27,7 +27,7 @@
 
   <div class="bottom-button">
     <!--
-      首先判断 url 是否是带 id 的意见反馈表页面, 若是, 底部直接显示 更新反馈 按钮
+      首先判断 url 是否是带 id 的意见反馈表页面, 若是, 底部直接显示 更新报告 按钮
       1. 我的 - 意见反馈列表 - 意见反馈表页面    url 中 含有 id activity_id 都有
       2. 活动详情页 - 意见反馈表页面            url 中 只含有 activity_id 没有 id
     -->
@@ -38,7 +38,7 @@
         loading-text="更新中..."
         @click="handleSubmit('update')"
       >
-        更新反馈
+        更新报告
       </van-button>
     </template>
 
@@ -48,7 +48,7 @@
       需要等待获取 是否提交过意见反馈详情的接口(即获取最新意见反馈表详情接口) 完毕, 才显示底部按钮, 否则底部按钮会有闪烁
     -->
     <template v-else-if="isFinishGetLatestFeedbackDetail">
-      <!-- 有最新详情 显示 更新反馈 -->
+      <!-- 有最新详情 显示 更新报告 -->
       <template v-if="Object.keys(latestFeedbackDetail).length">
         <van-button
           class="submit"
@@ -56,7 +56,7 @@
           loading-text="更新中..."
           @click="handleSubmit('update')"
         >
-          更新反馈
+          更新报告
         </van-button>
       </template>
 

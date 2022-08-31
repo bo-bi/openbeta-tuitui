@@ -2,7 +2,7 @@
   ref="ratePanel"
   :readonly="readonly"
   :rateData="rateData"
-  text="360er请注意：以下打分和原因提交后无法修改，只能更新反馈内容哦～"
+  :text="noticeText"
 />
 
 <div class="feedback-form draft-detail">
@@ -25,13 +25,14 @@
     </QuillEditor>
   </div>
 
-  <div class="bottom-button">
+  <div class="bottom-button" v-show="isFinishGetLatestFeedbackDetail">
     <van-button
       class="save-draft pull-left"
       color="#3873FA"
       plain
       :loading="saveDraftLoading"
       loading-text="保存中..."
+      :disabled="isSubmittedFeedback"
       @click="handleSaveDraft"
     >
       保存草稿
@@ -41,6 +42,7 @@
       class="direct-submit pull-right"
       :loading="submitLoading"
       loading-text="提交中..."
+      :disabled="isSubmittedFeedback"
       @click="handleSubmit"
     >
       直接提交

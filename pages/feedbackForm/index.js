@@ -235,7 +235,7 @@ Page({
       // 有意见反馈表的id, 获取意见反馈表详情
       if (this.id) {
         this.fetchData();
-        this.noticeText = '您已填写过打分和原因，本次更新只更新反馈内容哦～';
+        this.noticeText = '您已填写过打分和原因，本次更新只更新报告内容哦～';
       }
 
       // 若没有意见反馈表的id, 说明是从活动详情页进入的
@@ -253,10 +253,10 @@ Page({
               this.handleApplyDraft();
             });
 
-            this.noticeText = '360er请注意：以下打分和原因提交后无法修改，只能更新反馈内容哦～';
+            this.noticeText = '360er请注意：以下打分和原因提交后无法修改，只能更新报告内容哦～';
           } else {
-            // 不为405 则说明本活动已提交过意见反馈表, 可进行更新反馈
-            this.noticeText = '您已填写过打分和原因，本次更新只更新反馈内容哦～';
+            // 不为405 则说明本活动已提交过意见反馈表, 可进行更新报告
+            this.noticeText = '您已填写过打分和原因，本次更新只更新报告内容哦～';
           }
         })
       }
@@ -427,10 +427,10 @@ Page({
 
     handleSubmit(type) {
       /**
-       * 若为 更新反馈 操作, 则不对评分及原因进行校验,
+       * 若为 更新报告 操作, 则不对评分及原因进行校验,
        * 若是 首次提交 操作, 则需要对评分及原因校验
        *
-       * update: 更新反馈
+       * update: 更新报告
        * first:  直接提交
        */
       if (type === 'first' && !this.$refs.ratePanel.handleValidate()) return;
