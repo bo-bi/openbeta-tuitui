@@ -26,7 +26,7 @@
   <div class="feedback-list-item" @click="handleGoToDetail(item)">
     <div class="info">
       <p class="title text-overflow-ellipsis">
-        {{ item.name }}
+        {{ item.name_modify || item.name }}
       </p>
 
       <p class="activity text-overflow-ellipsis">
